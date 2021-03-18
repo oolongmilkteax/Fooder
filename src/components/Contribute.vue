@@ -14,45 +14,45 @@
         <h1 class="myTitles">Contribute to Fooder!</h1>
         <hr />
         <form>
-            <label for="contributing">Contributing:</label><br />
-            <button  v-on:click="Restaurant()">Restaurant</button>
-            <button  v-on:click="Recipe()">Recipe</button>
-            <br />
-            <div v-if="contributeType == 1">
-                <label for="restName">Restaurant Name:</label><br />
+            <label for="contributing">Contributing:</label><br>
+            <button type = "button" v-on:click="Restaurant">Restaurant</button>
+            <button type = "button" v-on:click="Recipe">Recipe</button>
+            <br>
+            <div v-show="contributeType === 'restaurant'">
+                <label for="restName">Restaurant Name:</label><br>
                 <input
                 class="contriInput"
                 type="text"
                 id="restName2"
                 name="restName"
-                /><br />
+                ><br>
 
-                <label for="restAddress">Restaurant Address:</label><br />
+                <label for="restAddress">Restaurant Address:</label><br>
                 <input
                 class="contriInput"
                 type="text"
                 id="restAddress"
                 name="restAddress"
-                /><br />
+                ><br>
 
-                <label for="openingHours">Opening hours:</label><br />
+                <label for="openingHours">Opening hours:</label><br>
                 <input
                 class="contriInput"
                 type="text"
                 id="openingHours"
                 name="openingHours"
-                /><br />
+                ><br>
             </div>
 
-            <div v-show="contributeType == 2">
-                <label for="ingredients">Ingredients:</label><br />
+            <div v-show="contributeType === 'recipe'">
+                <label for="ingredients">Ingredients:</label><br>
                 <textarea
                 class="contriInput"
                 type="text"
                 id="ingre"
                 name="fullName"
                 ></textarea
-                ><br />
+                ><br>
 
                 <label for="instructins">Instructions:</label><br />
                 <textarea
@@ -61,7 +61,7 @@
                 id="ingre"
                 name="fullName"
                 ></textarea
-                ><br />
+                ><br>
             </div>
             <button id="submitContributionButton">Submit!</button>
         </form>
@@ -76,15 +76,15 @@
 export default {
     data(){
         return{
-            contributeType: 0,
+            contributeType: "nothing"
         }
     },
     methods:{
         Restaurant: function(){
-            this.contributeType = 1;
+            this.contributeType = 'restaurant'
         },
         Recipe: function(){
-            this.contributeType = 2;
+            this.contributeType = 'recipe'
         },
     },
 }
