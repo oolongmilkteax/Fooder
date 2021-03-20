@@ -1,7 +1,7 @@
 <template>
   <div class = "body">
     <ul class="ul">
-            <router-link to="/" class="routes">LandingPage</router-link>
+            <router-link to="/" class="routes">LandingPages</router-link>
             <router-link to='/contribute' class="routes">Contribute</router-link>
             <router-link to="/favpage" class="routes">favpage</router-link>
             <router-link to="/ingredients" class="routes">Ingredients</router-link>
