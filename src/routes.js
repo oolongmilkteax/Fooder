@@ -7,6 +7,7 @@ import Restaurant from "./components/Restaurant"
 import SearchPage from "./components/SearchPage"
 import SignUp from "./components/SignUp.vue"
 import Recipe from "./components/Recipe.vue"
+import FullRecipe from "./components/FullRecipe.vue"
 
 export default [
   { name: "Contribute", path: '/contribute', component: Contribute },
@@ -17,5 +18,6 @@ export default [
   { name: "Restaurant", path: '/restaurant', component: Restaurant},
   { name: "SearchPage", path: '/searchpage', component: SearchPage},
   { name: "SignUp", path:'/signup', component: SignUp},
-  { name: "Recipe", path:'/recipe', component: Recipe}
+  { name: "Recipe", path:'/recipe', component: Recipe},
+  { name: "FullRecipe", path:'/fullrecipe', component: FullRecipe}
 ]
