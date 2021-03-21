@@ -54,6 +54,10 @@
         <p class="footerText">Design by JKJR</p>
       </div>
     </div>
+
+    <div class="footerContainer">
+      <p class="footerText">Design by JKJR</p>
+    </div>
   </div>
 </template>
 
