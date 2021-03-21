@@ -13,20 +13,6 @@
       <div class="borderDiv">
             <div class="RecipeContainer">
                 <div id="Recipe">
-                    <div id="FullRecipe" v-show="show">
-                        <h2>Ingredients</h2>
-                        <ul v-for="(ingredient) in recipeIngredients" v-bind:key="ingredient">
-                            <li>
-                                <span>{{ingredient}}</span> 
-                            </li>
-                        </ul>
-                        <h2>Steps</h2>
-                        <ul id="Directions" v-for="(direction, index) in recipeDirections" v-bind:key="index">
-                            <li>
-                                <span>{{index+1}}) {{direction}}</span> 
-                            </li>
-                        </ul>
-                    </div>
                     <ul id="BriefDescription">
                         <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
                             <h2>{{recipe.name}}</h2>
@@ -38,7 +24,7 @@
                             <span>Cuisine: {{recipe.cuisine}}</span><br>
                             <span>Type: {{recipe.type}}</span>
                             </div>
-                            <button id="beginCookingButton" v-on:click="reveal(recipe)">Begin Cooking!</button>
+                            <button id="beginCookingButton" v-on:click="go(recipe.ingredients, recipe.directions);" >Begin Cooking!</button>
                         </li>
                     </ul>
                 </div>
@@ -55,10 +41,7 @@ import db from "../firebase.js"
 export default {
     data() {
         return {
-            recipes: [],
-            recipeIngredients: [],
-            recipeDirections: [],
-            show : false
+            recipes: []
         }
     },
     methods: {
@@ -69,10 +52,8 @@ export default {
             })
             })
         },
-        reveal: function(recipe) {
-            this.show = true;
-            this.recipeIngredients= recipe.ingredients;
-            this.recipeDirections= recipe.directions;
+        go: function(ingredients, directions) {
+            this.$router.push({ name: "FullRecipe", params: { i: ingredients, d: directions} })
         }
     },
     created() {
@@ -100,7 +81,7 @@ export default {
     border-radius: 8px;
     color: #ffffff;
     font-family: Helvetica;
-    font-size: 10px;
+    font-size: 18px;
     font-weight: 100;
     padding: 5px;
     border: solid 	#0088cc 1px;
@@ -117,7 +98,7 @@ export default {
 } 
 #Description {
     line-height: 20px;
-    text-align: left;
+    text-align: center;
     padding: 5px 80px;
 }
 
