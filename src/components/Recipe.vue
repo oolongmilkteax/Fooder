@@ -15,7 +15,7 @@
                 <div id="Recipe">
                     <div id="FullRecipe" v-show="show">
                         <h2>Ingredients</h2>
-                        <ul v-for="(ingredient) in recipeIngredients" v-bind:key="index">
+                        <ul v-for="(ingredient) in recipeIngredients" v-bind:key="ingredient">
                             <li>
                                 <span>{{ingredient}}</span> 
                             </li>
