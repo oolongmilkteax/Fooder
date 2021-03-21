@@ -46,7 +46,7 @@ export default {
     },
     methods: {
         fetchItems: function() {
-            db.collection('restaurant').get().then(snapshot => {
+            db.firestore().collection('restaurant').get().then(snapshot => {
             snapshot.docs.forEach(doc => {
             this.restaurants.push(doc.data()) 
             })
