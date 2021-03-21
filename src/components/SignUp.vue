@@ -1,90 +1,157 @@
 <template>
-  <div class = "body">
-      <div class = "borderDiv">
+  <div class="body">
+    <div class="borderDiv">
       <ul class="ul">
-            <router-link to="/" class="routes">LandingPage</router-link>
-            <router-link to='/contribute' class="routes">Contribute</router-link>
-            <router-link to="/favpage" class="routes">favpage</router-link>
-            <router-link to='/preferencing' class="routes">Preferencing</router-link>
-            <router-link to="/restaurant" class="routes">Restaurant</router-link>
-            <router-link to="/searchpage" class="routes">Search Page</router-link>
-            <router-link to='/signup' class="routes">Sign Up</router-link>
+        <router-link to="/" class="routes">LandingPage</router-link>
+        <router-link to="/contribute" class="routes">Contribute</router-link>
+        <router-link to="/favpage" class="routes">favpage</router-link>
+        <router-link to="/preferencing" class="routes">Preferencing</router-link>
+        <router-link to="/restaurant" class="routes">Restaurant</router-link>
+        <router-link to="/searchpage" class="routes">Search Page</router-link>
+        <router-link to="/signup" class="routes">Sign Up</router-link>
       </ul>
-          <p class="signupHeader">Welcome to Fooder!</p>
-        <input type="text" class="signupInput" placeholder="First Name">
-        <input type="text" class="signupInput" placeholder="Last Name">
-        <input type="text" class="signupInput" placeholder="Email">
-        <input type="text" class="signupInput" placeholder="Phone Number">
-        <input type="text" class="signupInput" placeholder="Company Name">
-        <input type="text" class="signupInput" placeholder="Job Title">
-        <input type="password" class="signupInput" placeholder="Password">
-        <div class="button-centraliser">
-          <button class="signupButton" onclick="location.href='./Preference.html'">C R E A T E</button>
-        </div>
+      <p class="signupHeader">Welcome to Fooder!</p>
+      <input type="text" class="signupInput" v-model="displayName" placeholder="Full Name" />
+      <p class="errorMsg" v-show="this.emptyNameErr">Pease enter your full name.</p>
+      <input type="text" class="signupInput" v-model="email" placeholder="Email" />
+      <p class="errorMsg" v-show="this.invalidEmailErr">Pease enter a valid email address.</p>
+      <p class="errorMsg" v-show="this.usedEmailErr">This email is already in use.</p>
+      <!--<input type="text" class="signupInput" placeholder="Phone Number" />
+      <input type="text" class="signupInput" placeholder="Company Name" />
+      <input type="text" class="signupInput" placeholder="Job Title" />-->
+      <input type="password" class="signupInput" v-model="password" placeholder="Password" />
+      <p class="errorMsg" v-show="this.emptyPasswordErr">Pease enter a password.</p>
+      <p class="errorMsg" v-show="this.weakPasswordErr">Pease enter a stronger password.</p>
+      <div class="button-centraliser">
+        <button class="signupButton" v-on:click="registerUser()">C R E A T E</button>
       </div>
-      <div class="footerContainer">
-          <p class="footerText">Design by JKJR</p>
+    </div>
+    <div class="footerContainer">
+      <p class="footerText">Design by JKJR</p>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import firebase from "../firebase.js";
 
-}
+export default {
+  data() {
+    return {
+      emptyNameErr: false,
+      invalidEmailErr: false,
+      usedEmailErr: false,
+      emptyPasswordErr: false,
+      weakPasswordErr: false,
+      displayName: "",
+      email: "",
+      password: ""
+    };
+  },
+  methods: {
+    registerUser: function() {
+      if (this.displayName === "") {
+        this.emptyNameErr = true;
+      }
+      if (this.email === "") {
+        this.invalidEmailErr = true;
+      }
+      if (this.password === "") {
+        this.emptyPasswordErr = true;
+      } else {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .then(res => {
+            res.user.updateProfile({
+              displayName: this.displayName
+            });
+            res.user.sendEmailVerification();
+            alert(
+              "Registered successfully. Please verify email before signing in."
+            );
+            location.href = "./";
+          })
+          .catch(error => {
+            if (error.code === "auth/invalid-email") {
+              this.invalidEmailErr = true;
+            }
+            if (error.code === "auth/weak-password") {
+              this.weakPasswordErr = true;
+            }
+            if (error.code === "auth/email-already-in-use") {
+              this.usedEmailErr = true;
+            }
+          });
+      }
+    }
+  },
+  watch: {
+    displayName: function() {
+      this.emptyNameErr = false;
+    },
+    email: function() {
+      this.invalidEmailErr = false;
+      this.usedEmailErr = false;
+    },
+    password: function() {
+      this.emptyPasswordErr = false;
+      this.weakPasswordErr = false;
+    }
+  }
+};
 </script>
 
 <style>
-
-
-
+.errorMsg {
+  text-align: left;
+  margin-left: 30%;
+  color: red;
+}
 
 .signupInput {
-    padding: 5px;
-    border-radius: 30px;
-    border-color: #ffffff;
-    border-style: solid;
-    outline: none;
-    margin: 5px 0px 5px 0px;
-    width: 40%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto; 
-    font-size: 20px;
-  }
-  
-  
-  .signupButton {
-    background: #0088cc;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 8px;
-    color: #ffffff;
-    font-family: Helvetica;
-    font-size: 28px;
-    font-weight: 100;
-    margin: 50px 0px 5px 0px;
-    border: solid #666666 1px;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    text-align: center;
-    width: 30%;
-    padding: 10px;
-  }
-  
-  .signupButton:hover {
-    border: solid #979797 1px;
-    background: #979797;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 14px;
-    border-radius: 8px;
-    text-decoration: none;
-  }
+  padding: 5px;
+  border-radius: 30px;
+  border-color: #ffffff;
+  border-style: solid;
+  outline: none;
+  margin: 15px;
+  width: 40%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px;
+}
 
+.signupButton {
+  background: #0088cc;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: Helvetica;
+  font-size: 28px;
+  font-weight: 100;
+  margin: 20px 0px 5px 0px;
+  border: solid #666666 1px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  width: 30%;
+  padding: 10px;
+}
 
+.signupButton:hover {
+  border: solid #979797 1px;
+  background: #979797;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+}
 
-.ul{
+.ul {
   display: flex;
   flex-direction: row;
 }
@@ -100,7 +167,7 @@ export default {
   margin: 10px;
 }
 
-.signupHeader{
+.signupHeader {
   font-family: Helvetica;
   color: black;
   font-size: 32px;
