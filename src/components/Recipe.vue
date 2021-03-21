@@ -46,10 +46,11 @@ export default {
     },
     methods: {
         fetchItems: function() {
+            
             db.collection('recipe').get().then(snapshot => {
             snapshot.docs.forEach(doc => {
-            this.recipes.push(doc.data()) 
-            })
+                    this.recipes.push(doc.data()) 
+                })
             })
         },
         go: function(ingredients, directions) {
