@@ -29,6 +29,7 @@
 
 <script>
 import firebase from "../firebase.js";
+import { makeUser, getUid } from "../userObj.js";
 
 export default {
   data() {
@@ -62,6 +63,8 @@ export default {
               displayName: this.displayName
             });
             res.user.sendEmailVerification();
+            console.log(getUid());
+            makeUser(getUid());
             alert(
               "Registered successfully. Please verify email before signing in."
             );

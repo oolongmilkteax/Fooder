@@ -46,7 +46,8 @@
 </template>
 
 <script>
-import db from "../firebase.js";
+import firebase from "../firebase.js";
+
 export default {
   data() {
     return {
@@ -55,7 +56,8 @@ export default {
   },
   methods: {
     fetchItems: function() {
-      db.firestore()
+      firebase
+        .firestore()
         .collection("restaurant")
         .get()
         .then(snapshot => {
