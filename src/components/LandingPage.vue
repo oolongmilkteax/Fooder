@@ -1,13 +1,7 @@
 <template>
   <div class="body">
     <ul class="ul">
-      <router-link to="/" class="routes">LandingPage</router-link>
-      <router-link to="/contribute" class="routes">Contribute</router-link>
-      <router-link to="/favpage" class="routes">favpage</router-link>
-      <router-link to="/recipe" class="routes">Recipe</router-link>
-      <router-link to="/preferencing" class="routes">Preferencing</router-link>
-      <router-link to="/restaurant" class="routes">Restaurant</router-link>
-      <router-link to="/searchpage" class="routes">Search Page</router-link>
+      <router-link to="/" class="routes">Sign In</router-link>
       <router-link to="/signup" class="routes">Sign Up</router-link>
     </ul>
     <div class="borderDiv">
