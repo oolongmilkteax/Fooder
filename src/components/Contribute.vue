@@ -36,19 +36,39 @@
         </div>
 
         <div v-show="contributeType === 'recipe'">
-          <label for="recipeName">Name of Recipe: </label><span>{{recipe.name}}</span>
+          <label for="recipeName">Name of Recipe: </label>
+          <span>{{recipe.name}}</span>
+
           <br />
-          <input class="contriInput" type="text" id="recipeName" name="recipeName" v-model="recipe.name" required/>
+          <input class="contriInput" 
+          type="text" 
+          id="recipeName" 
+          name="recipeName" 
+          v-model="recipe.name" 
+          required/>
           <br />
 
-          <label for="cuisine">Cuisine: </label><span>{{recipe.cuisine}}</span>
-          <br />
-          <input class="contriInput" type="text" id="cuisine" name="cuisine" v-model="recipe.cuisine" required/>
+          <label for="cuisine">Cuisine: </label>
+          <span>{{recipe.cuisine}}</span>
           <br />
 
-          <label for="difficulty">Difficulty: </label> <span>{{recipe.difficulty}}</span>
+          <input class="contriInput" 
+          type="text" 
+          id="cuisine" 
+          name="cuisine" 
+          v-model="recipe.cuisine" 
+          required/>
           <br />
-          <select class="contriInput" id="difficulty" name="difficulty" v-model="recipe.difficulty" required>
+
+          <label for="difficulty">Difficulty: </label> 
+          <span>{{recipe.difficulty}}</span>
+          <br />
+
+          <select class="contriInput" 
+          id="difficulty" 
+          name="difficulty" 
+          v-model="recipe.difficulty" 
+          required>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
@@ -57,12 +77,23 @@
 
           <label for="image">ImageURL: </label> 
           <br />
-          <input class="contriInput" type="text" id="image" name="image" v-model="recipe.image" required/>
+          <input class="contriInput" 
+          type="text" 
+          id="image" 
+          name="image" 
+          v-model="recipe.image" 
+          required/>
           <br />
 
-          <label for="serving">No. of servings: </label> <span>{{recipe.servings}}</span>
+          <label for="serving">No. of servings: </label> 
+          <span>{{recipe.servings}}</span>
           <br />
-          <select class="contriInput" id="serving" name="serving" v-model="recipe.servings" required>
+
+          <select class="contriInput" 
+          id="serving" 
+          name="serving" 
+          v-model="recipe.servings" 
+          required>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -77,9 +108,14 @@
           </select>
           <br />
 
-          <label for="time">Duration to make: </label> <span>{{recipe.time}}</span>
+          <label for="time">Duration to make: </label> 
+          <span>{{recipe.time}}</span>
           <br />
-          <select class="contriInput" id="time" name="time" v-model="recipe.time" required>
+          <select class="contriInput" 
+          id="time" 
+          name="time" 
+          v-model="recipe.time" 
+          required>
             <option value="less than 30mins">less than 30mins</option>
             <option value="30mins to 1h">30mins to 1h</option>
             <option value="1h to 2h">1h to 2h</option>
@@ -94,10 +130,16 @@
             <option value="more than 10h">more than 10h</option>
           </select>
           <br />
-          <label for="type">Type: </label> <span>{{recipe.type}}</span>
+
+          <label for="type">Type: </label> 
+          <span>{{recipe.type}}</span>
           <br />
       
-          <select class="contriInput" id="type" name="type" v-model="recipe.type" required>
+          <select class="contriInput" 
+          id="type" 
+          name="type" 
+          v-model="recipe.type" 
+          required>
             <option value="Main">Main</option>
             <option value="Side">Side</option>
           </select>
@@ -105,6 +147,7 @@
 
           <label for="ingredients">Ingredients: </label>
           <button type="button" v-on:click="removeIngre">Clear All</button>
+
           <div>
             <ul v-for="ingredient in recipe.ingredients" v-bind:key="ingredient">
               <li>
@@ -113,12 +156,17 @@
             </ul>
           </div>
           <br />
-          <input class="contriInput" type="text" id="ingredients" name="ingredients" v-model="ingredient"/>
+
+          <input class="contriInput" 
+          type="text" id="ingredients" 
+          name="ingredients" 
+          v-model="ingredient"/>
           <button type="button" v-on:click="addIngre">Add Ingredient!</button>
           
           <br />
           <label for="instructions">Instructions: </label>
           <button type="button" v-on:click="removeInstru">Clear All</button>
+
           <div>
             <ul v-for="instruction in recipe.directions" v-bind:key="instruction">
               <li>
@@ -127,7 +175,12 @@
             </ul>
           </div>
           <br />
-          <input class="contriInput" type="text" id="instructions" name="instructions" v-model="instruction"/>
+
+          <input class="contriInput" 
+          type="text" 
+          id="instructions" 
+          name="instructions" 
+          v-model="instruction"/>
           <button type="button" v-on:click="addInstru">Add Instruction!</button>
           <br />
 
