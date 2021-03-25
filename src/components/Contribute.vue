@@ -235,8 +235,6 @@ export default {
           }).then(() => {location.reload()});  
         }
 
-        db.collection("restaurant").doc("25").delete()
-
     }             
   },
   created() {
