@@ -2,12 +2,7 @@
   <div class="body">
     <div class="borderDiv">
       <ul class="ul">
-        <router-link to="/" class="routes">LandingPage</router-link>
-        <router-link to="/contribute" class="routes">Contribute</router-link>
-        <router-link to="/favpage" class="routes">favpage</router-link>
-        <router-link to="/preferencing" class="routes">Preferencing</router-link>
-        <router-link to="/restaurant" class="routes">Restaurant</router-link>
-        <router-link to="/searchpage" class="routes">Search Page</router-link>
+        <router-link to="/" class="routes">Sign In</router-link>
         <router-link to="/signup" class="routes">Sign Up</router-link>
       </ul>
       <p class="signupHeader">Welcome to Fooder!</p>
@@ -34,6 +29,7 @@
 
 <script>
 import firebase from "../firebase.js";
+import { makeUser, getUid } from "../userObj.js";
 
 export default {
   data() {
@@ -67,6 +63,8 @@ export default {
               displayName: this.displayName
             });
             res.user.sendEmailVerification();
+            console.log(getUid());
+            makeUser(getUid());
             alert(
               "Registered successfully. Please verify email before signing in."
             );
