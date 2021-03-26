@@ -251,7 +251,7 @@ export default {
           "contributeRecipe": firebase.firestore.FieldValue.arrayUnion(this.id)
         })
       })
-      alert(this.recipe.name + " successfully added to Recipes!")
+      alert(this.recipe.name + " has been successfully added to Recipes!")
     }
   }
 };
