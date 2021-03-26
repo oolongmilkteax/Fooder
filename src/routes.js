@@ -8,6 +8,8 @@ import SearchPage from "./components/SearchPage"
 import SignUp from "./components/SignUp.vue"
 import Recipe from "./components/Recipe.vue"
 import FullRecipe from "./components/FullRecipe.vue"
+import ProfilePage from "./components/ProfilePage"
+import ProfileSearchPage from "./components/ProfileSearchPage"
 
 export default [
   { name: "Contribute", path: '/contribute', component: Contribute },
@@ -18,6 +20,8 @@ export default [
   { name: "Restaurant", path: '/restaurant', component: Restaurant},
   { name: "SearchPage", path: '/searchpage', component: SearchPage},
   { name: "SignUp", path:'/signup', component: SignUp},
-  { name: "Recipe", path:'/recipe', component: Recipe},
-  { name: "FullRecipe", path:'/fullrecipe', component: FullRecipe}
+  { name: "Recipe", path:'/recipe', component: Recipe, props: true},
+  { name: "FullRecipe", path:'/fullrecipe', component: FullRecipe},
+  { name: "ProfilePage", path:'/profile', component: ProfilePage},
+  { name: "ProfileSearchPage", path:'/profilesearch', component: ProfileSearchPage},
 ]

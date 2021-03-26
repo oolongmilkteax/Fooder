@@ -13,9 +13,9 @@
     </ul>
     <div class="borderDiv">
       <p class="searchHeader">Fooder</p>
-      <input type="text" class="searchInput" v-model="searchValue" placeholder="Search for Restaurants or Recipes!" />
+      <input type="text" class="searchInput" placeholder="Search for Users!" />
       <div class="button-centraliser">
-        <button class="myButton" v-on:click='search()'>Search</button>
+        <button class="myButton" onclick="location.href='./SearchResults.html'">Search</button>
       </div>
       <div class="footerContainer">
         <p class="footerText">Design by JKJR</p>
@@ -25,18 +25,7 @@
 </template>
 
 <script>
-export default {
-  methods:{
-    search: function(){
-      this.$router.push({ name: 'Recipe', params: {searchedValue: this.searchValue}})
-    }
-  },
-  data() {
-    return {
-      searchValue: "",
-    };
-  },
-};
+export default {};
 </script>
 
 <style>

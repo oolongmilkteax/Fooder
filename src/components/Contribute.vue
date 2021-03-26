@@ -8,6 +8,8 @@
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
       <router-link to="/" class="routes">Logout</router-link>
+      <router-link to="/profile" class="routes">Profile</router-link>
+      <router-link to="/profilesearch" class="routes">ProfileSearchPage</router-link>
     </ul>
     <div class="borderDiv">
       <h1 class="myTitles">Contribute to Fooder!</h1>
