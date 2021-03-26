@@ -22,7 +22,7 @@
               <br />
               <br />
               <div id="Description">
-                <span>Total preparation time: {{recipe.time}}</span>
+                <span>Total time: {{recipe.time}}</span>
                 <br />
                 <span>Number of servings: {{recipe.servings}}</span>
                 <br />
@@ -127,7 +127,7 @@ export default {
 #Description {
   line-height: 20px;
   text-align: center;
-  padding: 5px 80px;
+  padding: 5px 50px;
 }
 
 #list {
