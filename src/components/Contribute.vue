@@ -8,48 +8,23 @@
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
       <router-link to="/" class="routes">Logout</router-link>
-      <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/profilesearch" class="routes">ProfileSearchPage</router-link>
     </ul>
     <div class="borderDiv">
       <h1 class="myTitles">Contribute to Fooder!</h1>
       <hr />
-      <form>
         <label for="contributing">Contributing:</label>
         <br />
         <button type="button" v-on:click="Restaurant">Restaurant</button>
         <button type="button" v-on:click="Recipe">Recipe</button>
         <br />
         <div v-show="contributeType === 'restaurant'">
-          <label for="restName">Restaurant Name:</label>
-          <br />
-          <input class="contriInput" type="text" id="restName2" name="restName" />
-          <br />
-
-          <label for="restAddress">Restaurant Address:</label>
-          <br />
-          <input class="contriInput" type="text" id="restAddress" name="restAddress" />
-          <br />
-
-          <label for="openingHours">Opening hours:</label>
-          <br />
-          <input class="contriInput" type="text" id="openingHours" name="openingHours" />
-          <br />
+          <restaurantform></restaurantform>
         </div>
 
         <div v-show="contributeType === 'recipe'">
-          <label for="ingredients">Ingredients:</label>
-          <br />
-          <textarea class="contriInput" type="text" id="ingre" name="fullName"></textarea>
-          <br />
-
-          <label for="instructins">Instructions:</label>
-          <br />
-          <textarea class="contriInput" type="text" id="ingre" name="fullName"></textarea>
-          <br />
+          <recipeform></recipeform>
         </div>
-        <button id="submitContributionButton">Submit!</button>
-      </form>
+          
       <div class="footerContainer">
         <p class="footerText">Design by JKJR</p>
       </div>
@@ -82,6 +57,7 @@ export default {
   margin-top: 30px;
   text-align: left;
 }
+
 .contriInput {
   padding: 10px;
   border-radius: 10px;
@@ -92,7 +68,8 @@ export default {
   margin-bottom: 20px;
   width: 40%;
 }
-#submitContributionButton {
+
+#submitRecipeButton {
   background: #0088cc;
   width: 20%;
   border-radius: 8px;
@@ -105,7 +82,8 @@ export default {
   border: solid #0088cc 1px;
   margin-top: 30px;
 }
-#submitContributionButton:hover {
+
+#submitRecipeButton:hover {
   border: solid #979797 1px;
   background: #979797;
   -webkit-border-radius: 20px;
