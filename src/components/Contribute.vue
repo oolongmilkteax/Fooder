@@ -21,24 +21,8 @@
         <button type="button" v-on:click="Recipe">Recipe</button>
         <br />
         <div v-show="contributeType === 'restaurant'">
-<<<<<<< HEAD
           <contribRest></contribRest>>
-=======
-          <label for="restName">Restaurant Name:</label>
-          <br />
-          <input class="contriInput" type="text" id="restName2" name="restName" />
-          <br />
 
-          <label for="restAddress">Restaurant Address:</label>
-          <br />
-          <input class="contriInput" type="text" id="restAddress" name="restAddress" />
-          <br />
-
-          <label for="openingHours">Opening hours:</label>
-          <br />
-          <input class="contriInput" type="text" id="openingHours" name="openingHours" />
-          <br />
->>>>>>> 6e419ff9c8c4cfe44b1183ac198847d487d71a02
         </div>
 
         <div v-show="contributeType === 'recipe'">
@@ -52,10 +36,6 @@
           <textarea class="contriInput" type="text" id="ingre" name="fullName"></textarea>
           <br />
         </div>
-<<<<<<< HEAD
-=======
-        <button id="submitContributionButton">Submit!</button>
->>>>>>> 6e419ff9c8c4cfe44b1183ac198847d487d71a02
       </form>
       <div class="footerContainer">
         <p class="footerText">Design by JKJR</p>
@@ -68,11 +48,7 @@
 export default {
   data() {
     return {
-<<<<<<< HEAD
       contributeType: "nothing", 
-=======
-      contributeType: "nothing"
->>>>>>> 6e419ff9c8c4cfe44b1183ac198847d487d71a02
     };
   },
   methods: {
@@ -81,11 +57,7 @@ export default {
     },
     Recipe: function() {
       this.contributeType = "recipe";
-<<<<<<< HEAD
     },
-=======
-    }
->>>>>>> 6e419ff9c8c4cfe44b1183ac198847d487d71a02
   }
 };
 </script>
