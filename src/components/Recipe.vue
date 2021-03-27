@@ -8,6 +8,8 @@
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
       <router-link to="/" class="routes">Logout</router-link>
+      <router-link to="/profile" class="routes">Profile</router-link>
+      <router-link to="/profilesearch" class="routes">ProfileSearchPage</router-link>
     </ul>
     <div class="borderDiv">
       <div class="RecipeContainer">
@@ -48,6 +50,7 @@
 <script>
 import db from "../firebase.js";
 export default {
+  props: ['searchedValue'],
   data() {
     return {
       recipes: []
@@ -60,7 +63,18 @@ export default {
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
-            this.recipes.push(doc.data());
+            //if empty search return all
+            if(this.searchedValue == null){
+              this.recipes.push(doc.data());
+            }
+            //if search contain name return recipe
+            if(doc.data().name.indexOf(this.searchedValue) >= 0){
+              this.recipes.push(doc.data());
+            }
+            // if search contain cuisine return recipe
+            if(doc.data().cuisine.indexOf(this.searchedValue) >= 0){
+              this.recipes.push(doc.data());
+            }
           });
         });
     },
