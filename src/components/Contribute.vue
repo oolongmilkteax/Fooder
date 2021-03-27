@@ -18,7 +18,6 @@
         <button type="button" class="selectButton" v-on:click="Recipe">Recipe</button>
         <br />
         <div v-show="contributeType === 'restaurant'">
-          <!-- <contribRest></contribRest>> -->
           <restaurantform></restaurantform>
         </div>
         <div v-show="contributeType === 'recipe'">
