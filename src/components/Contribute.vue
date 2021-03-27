@@ -9,22 +9,20 @@
       <router-link to="/searchpage" class="routes">Search Page</router-link>
       <router-link to="/" class="routes">Logout</router-link>
     </ul>
-    <div class="borderDiv">
+    <div class="ContriDiv">
       <h1 class="myTitles">Contribute to Fooder!</h1>
       <hr />
         <label for="contributing">Contributing:</label>
         <br />
-        <button type="button" v-on:click="Restaurant">Restaurant</button>
-        <button type="button" v-on:click="Recipe">Recipe</button>
+        <button type="button" class="selectButton" v-on:click="Restaurant">Restaurant</button>
+        <button type="button" class="selectButton" v-on:click="Recipe">Recipe</button>
         <br />
         <div v-show="contributeType === 'restaurant'">
           <restaurantform></restaurantform>
         </div>
-
         <div v-show="contributeType === 'recipe'">
           <recipeform></recipeform>
         </div>
-          
       <div class="footerContainer">
         <p class="footerText">Design by JKJR</p>
       </div>
@@ -36,7 +34,7 @@
 export default {
   data() {
     return {
-      contributeType: "nothing"
+      contributeType: "nothing", 
     };
   },
   methods: {
@@ -45,12 +43,16 @@ export default {
     },
     Recipe: function() {
       this.contributeType = "recipe";
-    }
+    },
   }
 };
 </script>
 
 <style>
+
+.ContriDiv{
+  margin: 0% 5% 0% 5%;
+}
 .myTitles {
   font-size: 60px;
   margin-bottom: 5px;
@@ -58,18 +60,7 @@ export default {
   text-align: left;
 }
 
-.contriInput {
-  padding: 10px;
-  border-radius: 10px;
-  border-color: #ffffff;
-  border-style: solid;
-  outline: none;
-  margin-top: 7px;
-  margin-bottom: 20px;
-  width: 40%;
-}
-
-#submitRecipeButton {
+.selectButton {
   background: #0088cc;
   width: 20%;
   border-radius: 8px;
@@ -81,9 +72,10 @@ export default {
   padding: 14px;
   border: solid #0088cc 1px;
   margin-top: 30px;
+  margin: 5px;
 }
 
-#submitRecipeButton:hover {
+.selectButton:hover {
   border: solid #979797 1px;
   background: #979797;
   -webkit-border-radius: 20px;

@@ -199,3 +199,41 @@ export default {
   }
 };
 </script>
+
+<style>
+
+
+.contriInput {
+  padding: 10px;
+  border-radius: 10px;
+  border-color: #ffffff;
+  border-style: solid;
+  outline: none;
+  margin-top: 7px;
+  margin-bottom: 20px;
+  width: 40%;
+}
+
+#submitRecipeButton {
+  background: #0088cc;
+  width: 20%;
+  border-radius: 8px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: Helvetica;
+  font-size: 28px;
+  font-weight: 100;
+  padding: 14px;
+  border: solid #0088cc 1px;
+  margin-top: 30px;
+}
+
+#submitRecipeButton:hover {
+  border: solid #979797 1px;
+  background: #979797;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+</style>
