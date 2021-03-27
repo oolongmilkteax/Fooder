@@ -18,13 +18,11 @@
         <button type="button" v-on:click="Recipe">Recipe</button>
         <br />
         <div v-show="contributeType === 'restaurant'">
-          <restaurantform></restaurantform>
+          <contribRest></contribRest>>
         </div>
-
         <div v-show="contributeType === 'recipe'">
           <recipeform></recipeform>
         </div>
-          
       <div class="footerContainer">
         <p class="footerText">Design by JKJR</p>
       </div>
@@ -36,7 +34,7 @@
 export default {
   data() {
     return {
-      contributeType: "nothing"
+      contributeType: "nothing", 
     };
   },
   methods: {
@@ -45,7 +43,7 @@ export default {
     },
     Recipe: function() {
       this.contributeType = "recipe";
-    }
+    },
   }
 };
 </script>
