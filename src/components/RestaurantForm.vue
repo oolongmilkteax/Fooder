@@ -84,7 +84,7 @@
         v-model="restaurant.websiteLink"/>
         <br>
 
-        <button type="button" id="submitRestaurantButton" v-on:click="submitRestaurant">Submit!</button>
+        <button type="button" id="submitContributionButton" v-on:click="submitRestaurant">Submit!</button>
     </form>
 </template>
 
@@ -121,3 +121,53 @@ export default {
   }
 }
 </script>
+
+
+<style>
+.myTitles {
+  font-size: 60px;
+  margin-bottom: 5px;
+  margin-top: 30px;
+  text-align: left;
+}
+
+.contriInput {
+  padding: 10px;
+  border-radius: 10px;
+  border-color: #ffffff;
+  border-style: solid;
+  outline: none;
+  margin-top: 7px;
+  margin-bottom: 20px;
+  width: 40%;
+}
+
+#submitContributionButton {
+  background: #0088cc;
+  width: 20%;
+  border-radius: 8px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: Helvetica;
+  font-size: 28px;
+  font-weight: 100;
+  padding: 14px;
+  border: solid #0088cc 1px;
+  margin-top: 30px;
+}
+
+#submitContributionButton:hover {
+  border: solid #979797 1px;
+  background: #979797;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.errorMsgs {
+  text-align: left;
+  color: red;
+}
+
+</style>
