@@ -11,9 +11,6 @@
       <input type="text" class="signupInput" v-model="email" placeholder="Email" />
       <p class="errorMsg" v-show="this.invalidEmailErr">Pease enter a valid email address.</p>
       <p class="errorMsg" v-show="this.usedEmailErr">This email is already in use.</p>
-      <!--<input type="text" class="signupInput" placeholder="Phone Number" />
-      <input type="text" class="signupInput" placeholder="Company Name" />
-      <input type="text" class="signupInput" placeholder="Job Title" />-->
       <input type="password" class="signupInput" v-model="password" placeholder="Password" />
       <p class="errorMsg" v-show="this.emptyPasswordErr">Pease enter a password.</p>
       <p class="errorMsg" v-show="this.weakPasswordErr">Pease enter a stronger password.</p>
@@ -45,6 +42,14 @@ export default {
     };
   },
   methods: {
+    titleCase: function(string) {
+      string.trim();
+      var sentence = string.toLowerCase().split(" ");
+      for (var i = 0; i < sentence.length; i++) {
+        sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
+      }
+      return sentence.join(" ");
+    },
     registerUser: function() {
       if (this.displayName === "") {
         this.emptyNameErr = true;
@@ -59,16 +64,22 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
           .then(res => {
-            res.user.updateProfile({
-              displayName: this.displayName
-            });
             res.user.sendEmailVerification();
-            console.log(getUid());
             makeUser(getUid());
+            firebase
+              .firestore()
+              .collection("user")
+              .doc(getUid())
+              .update({
+                name: this.titleCase(this.displayName)
+              });
             alert(
               "Registered successfully. Please verify email before signing in."
             );
-            location.href = "./";
+            // somehow without the timeout, the userobj doesnt get created in the firebase
+            setTimeout(function() {
+              location.href = "./";
+            }, 1000);
           })
           .catch(error => {
             if (error.code === "auth/invalid-email") {

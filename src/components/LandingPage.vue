@@ -44,12 +44,15 @@ export default {
         firebase
           .auth()
           .signInWithEmailAndPassword(this.email, this.password)
-          .then(res => {
+          .then(() => {
+            location.href = "./preferencing";
+            /*
             if (res.user.emailVerified) {
               location.href = "./preferencing";
             } else {
               this.verifyEmail = true;
             }
+            */
           })
           .catch(() => {
             this.showErrMsg = true;
