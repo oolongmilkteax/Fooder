@@ -38,20 +38,20 @@
                 v-on:click="go(recipe[1].ingredients, recipe[1].directions);"
               >Begin Cooking!</button>
               <button 
-              v-if = "favRecipeCheck(recipe[0])" 
-              v-on:click = "unfav(recipe[0])"
-              id = "fav"
+                v-if = "favRecipeCheck(recipe[0])" 
+                v-on:click = "unfav(recipe[0])"
+                id = "fav"
               >
                 <img 
-                src ="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
+                  src ="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
                 >
               </button>
               <button 
-              v-if= "!favRecipeCheck(recipe[0])" 
-              v-on:click = "fav(recipe[0])"
-              id = "unfav">
+                v-if= "!favRecipeCheck(recipe[0])" 
+                v-on:click = "fav(recipe[0])"
+                id = "unfav">
                 <img 
-                src ="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
+                  src ="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
                 >
               </button>
               </div>

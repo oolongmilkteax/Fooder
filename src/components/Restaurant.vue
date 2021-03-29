@@ -16,29 +16,48 @@
         <div id="Restaurant">
           <ul id="BriefDescription">
             <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
-              <h2>{{restaurant.name}}</h2>
-              <img v-bind:src="restaurant.image" alt="Restaurant image" />
+              <h2>{{restaurant[1].name}}</h2>
+              <img v-bind:src="restaurant[1].image" alt="Restaurant image" />
               <br />
               <br />
               <br />
               <div id="Description">
-                <span>Cuisine: {{restaurant.cuisine}}</span>
+                <span>Cuisine: {{restaurant[1].cuisine}}</span>
                 <br />
-                <span>Opening hours: {{restaurant.openingHours}}</span>
+                <span>Opening hours: {{restaurant[1].openingHours}}</span>
                 <br />
-                <span>Price range: {{restaurant.priceRange}}</span>
+                <span>Price range: {{restaurant[1].priceRange}}</span>
                 <br />
-                <span>Address: {{restaurant.address}}</span>
+                <span>Address: {{restaurant[1].address}}</span>
                 <br />
                 <br />
                 <button
                   id="restaurantWebsite"
-                  v-on:click="go(restaurant.websiteLink);"
-                >Visit Restaurant's Website!</button>
+                  v-on:click="go(restaurant[1].websiteLink);"
+                >Visit Restaurant's Website!
+                </button>
+                <button
+                  v-if = "favRestaurantCheck(restaurant[0])"
+                  v-on:click = "unfav(restaurant[0])" 
+                  id = "fav"
+                >
+                  <img 
+                    src ="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
+                  >
+                </button>
+                <button 
+                  v-if= "!favRestaurantCheck(restaurant[0])" 
+                  v-on:click = "fav(restaurant[0])"
+                  id = "unfav"
+                >
+                  <img 
+                    src ="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
+                  >
+                </button>
               </div>
               <br />
               <br />
-              <span id="credits">Contributed by: {{restaurant.contributor}}</span>
+              <span id="credits">Contributed by: {{restaurant[1].contributor}}</span>
             </li>
           </ul>
         </div>
@@ -51,32 +70,59 @@
 </template>
 
 <script>
-import firebase from "../firebase.js";
+import firebase from '../firebase.js'
+var db = firebase.firestore()
+import {getUid} from '../userObj.js'
 
 export default {
   data() {
     return {
-      restaurants: []
+      restaurants: [],
+      favRestaurant: []
     };
   },
   methods: {
     fetchItems: function() {
-      firebase
-        .firestore()
-        .collection("restaurant")
+      db.collection("restaurant")
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
-            this.restaurants.push(doc.data());
+            this.restaurants.push([doc.id,doc.data()]);
           });
         });
     },
     go: function(url) {
       window.open(url);
+    },
+    getFavourites: function() {
+      db.collection('user').doc(getUid()).get().then((doc) => {
+        this.favRestaurant = doc.data().favRestaurant;
+      });
+    },
+    favRestaurantCheck: function(id) {
+      return this.favRestaurant.includes(id);
+    },
+    unfav: function(id) {
+      db.collection('user').doc(getUid()).update({
+        "favRestaurant": firebase.firestore.FieldValue.arrayRemove(id)})
+        .then (() =>
+        location.reload()
+      )
+    },
+    fav: function(id) {
+      db.collection('user').doc(getUid()).update({
+        "favRestaurant": firebase.firestore.FieldValue.arrayUnion(id)})
+        .then(() =>
+        location.reload()
+      )
     }
   },
   created() {
     this.fetchItems();
+    this.favRestauantCheck();
+  },
+  updated() {
+    this.getFavourites();
   }
 };
 </script>
@@ -149,5 +195,42 @@ img {
 
 #credits {
   float: right;
+}
+
+#fav img {
+  height: 35px;  
+  width: 35px;
+}
+
+#fav {
+  border: none;
+  width: 50px;
+  height: 43px;
+  text-align: center;
+  border-radius: 8px;
+  transform: translate(0px, 10px);
+}
+
+#fav:hover {
+  cursor: pointer;
+}
+
+#unfav img {
+  height: 30px;  
+  width: 33px;
+}
+
+#unfav {
+  border: none;
+  width: 50px;
+  height: 43px;
+  text-align: center;
+  border-radius: 8px;
+  padding-top: 5px;
+  transform: translate(0px, 9px);
+}
+
+#unfav:hover {
+  cursor: pointer;
 }
 </style>
