@@ -22,20 +22,24 @@
               <br />
               <br />
               <div id="Description">
-                <span>Total preparation time: {{recipe.time}}</span>
-                <br />
-                <span>Number of servings: {{recipe.servings}}</span>
-                <br />
-                <span>Difficulty: {{recipe.difficulty}}</span>
-                <br />
                 <span>Cuisine: {{recipe.cuisine}}</span>
                 <br />
                 <span>Type: {{recipe.type}}</span>
+                <br />                
+                <span>Difficulty: {{recipe.difficulty}}</span>
+                <br />
+                <span>Number of servings: {{recipe.servings}}</span>
+                <br />
+                <span>Total preparation time: {{recipe.time}}</span>
               </div>
               <button
                 id="beginCookingButton"
                 v-on:click="go(recipe.ingredients, recipe.directions);"
               >Begin Cooking!</button>
+              <br />
+              <br />
+              <br />
+              <span id ="credits">Contributed by: {{recipe.contributor}}</span>
             </li>
           </ul>
         </div>
@@ -130,7 +134,6 @@ export default {
 #Description {
   line-height: 20px;
   text-align: center;
-  padding: 5px 80px;
 }
 
 #list {
@@ -140,6 +143,10 @@ export default {
   padding: 5px;
   border: 1px solid #222;
   margin: 10px;
+  width: 300px;
+  max-width: 300px;
+  height: 350px;
+  max-height: 350px;
 }
 img {
   width: 100px;
@@ -157,5 +164,9 @@ img {
 
 #Directions {
   list-style-type: none;
+}
+
+#credits {
+  float: right;
 }
 </style>

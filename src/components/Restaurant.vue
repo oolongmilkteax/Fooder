@@ -36,6 +36,9 @@
                   v-on:click="go(restaurant.websiteLink);"
                 >Visit Restaurant's Website!</button>
               </div>
+              <br />
+              <br />
+              <span id="credits">Contributed by: {{restaurant.contributor}}</span>
             </li>
           </ul>
         </div>
@@ -115,16 +118,20 @@ export default {
 #Description {
   line-height: 20px;
   text-align: center;
-  padding: 5px 80px;
+  padding: 5px 30px;
 }
 
 #list {
   flex-grow: 1;
   flex-basis: 300px;
   text-align: center;
-  padding: 5px;
+  padding: 10px;
   border: 1px solid #222;
   margin: 10px;
+  width: 400px;
+  max-width: 400px;
+  height: 330px;
+  max-height: 330px;
 }
 img {
   width: 100px;
@@ -142,5 +149,9 @@ img {
 
 #Directions {
   list-style-type: none;
+}
+
+#credits {
+  float: right;
 }
 </style>
