@@ -17,25 +17,48 @@
           <ul id="BriefDescription">
             <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
               <h2>{{recipe.name}}</h2>
-              <img v-bind:src="recipe.image" alt="Food image" />
+              <img v-bind:src="recipe[1].image" alt="Food image" />
               <br />
               <br />
               <br />
               <div id="Description">
-                <span>Total preparation time: {{recipe.time}}</span>
+                <span>Cuisine: {{recipe[1].cuisine}}</span>
                 <br />
-                <span>Number of servings: {{recipe.servings}}</span>
+                <span>Type: {{recipe[1].type}}</span>
+                <br />                
+                <span>Difficulty: {{recipe[1].difficulty}}</span>
                 <br />
-                <span>Difficulty: {{recipe.difficulty}}</span>
+                <span>Number of servings: {{recipe[1].servings}}</span>
                 <br />
-                <span>Cuisine: {{recipe.cuisine}}</span>
-                <br />
-                <span>Type: {{recipe.type}}</span>
+                <span>Total preparation time: {{recipe[1].time}}</span>
               </div>
+              <div id = "buttons">
               <button
                 id="beginCookingButton"
-                v-on:click="go(recipe.ingredients, recipe.directions);"
+                v-on:click="go(recipe[1].ingredients, recipe[1].directions);"
               >Begin Cooking!</button>
+              <button 
+                v-if = "favRecipeCheck(recipe[0])" 
+                v-on:click = "unfav(recipe[0])"
+                id = "fav"
+              >
+                <img 
+                  src ="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
+                >
+              </button>
+              <button 
+                v-if= "!favRecipeCheck(recipe[0])" 
+                v-on:click = "fav(recipe[0])"
+                id = "unfav">
+                <img 
+                  src ="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
+                >
+              </button>
+              </div>
+              <br />
+              <br />
+              <br />
+              <span id ="credits">Contributed by: {{recipe[1].contributor}}</span>
             </li>
           </ul>
         </div>
@@ -48,36 +71,41 @@
 </template>
 
 <script>
-import db from "../firebase.js";
+import firebase from '../firebase.js'
+var db = firebase.firestore()
+import {getUid} from '../userObj.js'
+
 export default {
   props: ['searchedValue'],
   data() {
     return {
-      recipes: []
+      recipes: [],
+      favRecipe: []
     };
   },
   methods: {
     fetchItems: function() {
-      db.firestore()
-        .collection("recipe") 
+      db.collection("recipe")
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
             //if empty search return all
             if(this.searchedValue == null){
-              this.recipes.push(doc.data());
-            }else{
+              this.recipes.push([doc.id,doc.data()]);
+            }
+            else{
+
               //if search contain name return recipe
               if(doc.data().name.toUpperCase().includes(this.searchedValue.toUpperCase())) {
-                this.recipes.push(doc.data());
+                this.recipes.push([doc.id,doc.data()]);
               }else if(doc.data().cuisine.toUpperCase().includes(this.searchedValue.toUpperCase())){
-                this.recipes.push(doc.data());
+                this.recipes.push([doc.id,doc.data()]);
               }else if(doc.data().difficulty.toUpperCase().includes(this.searchedValue.toUpperCase())){
-                this.recipes.push(doc.data());
+                this.recipes.push([doc.id,doc.data()]);
               }else if(doc.data().contributor.toUpperCase().includes(this.searchedValue.toUpperCase())){
-                this.recipes.push(doc.data());
+                this.recipes.push([doc.id,doc.data()]);
               }else if(doc.data().type.toUpperCase().includes(this.searchedValue.toUpperCase())){
-                this.recipes.push(doc.data());
+                this.recipes.push([doc.id,doc.data()]);
               }
             }
           });
@@ -88,10 +116,36 @@ export default {
         name: "FullRecipe",
         params: { i: ingredients, d: directions }
       });
+    },
+    getFavourites: function() {
+      db.collection('user').doc(getUid()).get().then((doc) => {
+        this.favRecipe = doc.data().favRecipe;
+      });
+    },
+    favRecipeCheck: function(id) {
+      return this.favRecipe.includes(id);
+    },
+    unfav: function(id) {
+      db.collection('user').doc(getUid()).update({
+        "favRecipe": firebase.firestore.FieldValue.arrayRemove(id)})
+        .then (() =>
+        location.reload()
+      )
+    },
+    fav: function(id) {
+      db.collection('user').doc(getUid()).update({
+        "favRecipe": firebase.firestore.FieldValue.arrayUnion(id)})
+        .then(() =>
+        location.reload()
+      )
     }
   },
   created() {
     this.fetchItems();
+    this.getFavourites();
+  },
+  updated() {
+    this.getFavourites();
   }
 };
 </script>
@@ -128,11 +182,11 @@ export default {
   -moz-border-radius: 14px;
   border-radius: 8px;
   text-decoration: none;
+  cursor: pointer;
 }
 #Description {
   line-height: 20px;
   text-align: center;
-  padding: 5px 80px;
 }
 
 #list {
@@ -142,15 +196,20 @@ export default {
   padding: 5px;
   border: 1px solid #222;
   margin: 10px;
+  width: 300px;
+  max-width: 300px;
+  height: 350px;
+  max-height: 350px;
 }
 img {
   width: 100px;
   height: 100px;
 }
 
-h2,
-img {
+h2,img {
   padding-right: 20px;
+  text-align: center;
+  justify-content: center;
 }
 
 #FullRecipe {
@@ -159,5 +218,46 @@ img {
 
 #Directions {
   list-style-type: none;
+}
+
+#credits {
+  float: right;
+}
+
+#fav img {
+  height: 35px;  
+  width: 35px;
+}
+
+#fav {
+  border: none;
+  width: 50px;
+  height: 43px;
+  text-align: center;
+  border-radius: 8px;
+  transform: translate(0px, 10px);
+}
+
+#fav:hover {
+  cursor: pointer;
+}
+
+#unfav img {
+  height: 30px;  
+  width: 33px;
+}
+
+#unfav {
+  border: none;
+  width: 50px;
+  height: 43px;
+  text-align: center;
+  border-radius: 8px;
+  padding-top: 5px;
+  transform: translate(0px, 9px);
+}
+
+#unfav:hover {
+  cursor: pointer;
 }
 </style>

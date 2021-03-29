@@ -2,8 +2,13 @@
     <form>
     <label for="recipeName">Name of Recipe: </label>
           <span>{{recipe.name}}</span>
-
           <br />
+          <span class = "alert" 
+          v-show="alert.name"
+          >Please enter name of recipe.
+          </span>
+          <br>
+
           <input class="contriInput" 
           type="text" 
           id="recipeName" 
@@ -14,6 +19,11 @@
           <label for="cuisine">Cuisine: </label>
           <span>{{recipe.cuisine}}</span>
           <br />
+          <span class = "alert" 
+          v-show="alert.cuisine"
+          >Please enter cuisine of recipe.
+          </span>
+          <br>
 
           <input class="contriInput" 
           type="text" 
@@ -25,6 +35,11 @@
           <label for="difficulty">Difficulty: </label> 
           <span>{{recipe.difficulty}}</span>
           <br />
+          <span class = "alert" 
+          v-show="alert.difficulty"
+          >Please select difficulty of recipe.
+          </span>
+          <br>
 
           <select class="contriInput" 
           id="difficulty" 
@@ -38,6 +53,12 @@
 
           <label for="image">ImageURL: (for display purposes)</label> 
           <br />
+          <span class = "alert" 
+          v-show="alert.image"
+          >Please enter image URL of recipe.
+          </span>
+          <br>
+
           <input class="contriInput" 
           type="text" 
           id="image" 
@@ -49,6 +70,11 @@
           <label for="serving">No. of servings: </label> 
           <span>{{recipe.servings}}</span>
           <br />
+          <span class = "alert" 
+          v-show="alert.servings"
+          >Please select serving size of recipe.
+          </span>
+          <br>
 
           <select class="contriInput" 
           id="serving" 
@@ -71,6 +97,11 @@
           <label for="time">Duration to make: </label> 
           <span>{{recipe.time}}</span>
           <br />
+          <span class = "alert" 
+          v-show="alert.time"
+          >Please select duration to make recipe.
+          </span>
+          <br>
 
           <select class="contriInput" 
           id="time" 
@@ -94,6 +125,11 @@
           <label for="type">Type: </label> 
           <span>{{recipe.type}}</span>
           <br />
+          <span class = "alert" 
+          v-show="alert.type"
+          >Please select recipe type.
+          </span>
+          <br>
       
           <select class="contriInput" 
           id="type" 
@@ -106,6 +142,12 @@
 
           <label for="ingredients">Ingredients: </label>
           <button type="button" v-on:click="removeIngre">Clear All</button>
+          <br>
+          <span class = "alert" 
+          v-show="alert.ingredients"
+          >Please input ingredients of recipe.
+          </span>
+          <br>
 
           <div>
             <ul v-for="ingredient in recipe.ingredients" v-bind:key="ingredient">
@@ -125,7 +167,13 @@
           <br />
           <label for="instructions">Instructions: </label>
           <button type="button" v-on:click="removeInstru">Clear All</button>
-
+          <br>
+          <span class = "alert" 
+          v-show="alert.directions"
+          >Please input instructions of recipe.
+          </span>
+          <br>
+          
           <div>
             <ul v-for="instruction in recipe.directions" v-bind:key="instruction">
               <li>
@@ -142,6 +190,12 @@
           v-model="instruction"/>
           <button type="button" v-on:click="addInstru">Add Instruction!</button>
           <br />
+
+          <span class = "alert" 
+          v-show="alert.submission"
+          >Please make sure to fill in every field before submitting!
+          </span>
+          <br>
 
           <button type="button" id="submitRecipeButton" v-on:click="submitRecipe">Submit!</button>
       </form>
@@ -164,7 +218,20 @@ export default {
         name: "",
         servings: "",
         time: "",
-        type: ""
+        type: "",
+        contributor: ""
+      },
+      alert: {
+        cuisine: false,
+        difficulty: false,
+        directions: false,
+        image: false,
+        ingredients: false,
+        name: false,
+        servings: false,
+        time: false,
+        type: false,
+        submission: false
       },
       ingredient: "",
       instruction: "",
@@ -187,15 +254,62 @@ export default {
       this.recipe.directions = []
     },
     submitRecipe: function() {
-      db.collection('recipe').add(this.recipe)
-      .then( (doc) => {
-        this.id = doc.id;
-        db.collection('user').doc(getUid()).update({
-          "contributeRecipe": firebase.firestore.FieldValue.arrayUnion(this.id)
+      this.alert.cuisine = false;
+      this.alert.difficulty = false;
+      this.alert.directions = false;
+      this.alert.image = false;
+      this.alert.ingredients = false;
+      this.alert.name = false;
+      this.alert.servings = false;
+      this.alert.time = false;
+      this.alert.type = false;
+      this.alert.submission= false;
+      if (this.recipe.name === "") {
+        this.alert.name=true;
+        this.alert.submission=true;
+      } else if (this.recipe.cuisine === "") {
+        this.alert.cuisine=true;
+        this.alert.submission=true;
+      } else if (this.recipe.difficulty === "") {
+        this.alert.difficulty=true;
+        this.alert.submission=true;
+      } else if (this.recipe.image === "") {
+        this.alert.image=true;
+        this.alert.submission=true;
+      } else if (this.recipe.servings === "") {
+        this.alert.servings=true;
+        this.alert.submission=true;
+      } else if (this.recipe.time === "") {
+        this.alert.time=true;
+        this.alert.submission=true;
+      } else if (this.recipe.type === "") {
+        this.alert.type=true;
+        this.alert.submission=true;
+      } else if (this.recipe.ingredients.length === 0) {
+        this.alert.ingredients=true;
+        this.alert.submission=true;
+      } else if (this.recipe.directions.length === 0) {
+        this.alert.directions=true;
+        this.alert.submission=true;
+      } else {
+        db.collection('recipe').add(this.recipe)
+        .then( (doc) => {
+          this.id = doc.id;
+          db.collection('user').doc(getUid()).update({
+            "contributeRecipe": firebase.firestore.FieldValue.arrayUnion(this.id)
+          })
+          location.reload()
         })
-        location.reload()
+      }  
+    },
+    getContributor: function() {
+      db.collection('user').doc(getUid()).get().then((doc) => {
+        this.recipe.contributor = doc.data().name;
       })
     }
+  },
+  created() {
+    this.getContributor();
   }
 };
 </script>
@@ -235,5 +349,9 @@ export default {
   -moz-border-radius: 14px;
   border-radius: 8px;
   text-decoration: none;
+}
+
+.alert {
+  color: red;
 }
 </style>

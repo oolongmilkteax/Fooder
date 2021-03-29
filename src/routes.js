@@ -3,8 +3,8 @@ import FavPage from './components/FavPage.vue'
 import Ingredients from './components/Ingredients.vue'
 import LandingPage from "./components/LandingPage.vue"
 import Preferencing from "./components/Preferencing.vue"
-import Restaurant from "./components/Restaurant"
-import SearchPage from "./components/SearchPage"
+import Restaurant from "./components/Restaurant.vue"
+import SearchPage from "./components/SearchPage.vue"
 import SignUp from "./components/SignUp.vue"
 import Recipe from "./components/Recipe.vue"
 import FullRecipe from "./components/FullRecipe.vue"
