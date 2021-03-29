@@ -9,7 +9,7 @@
       <router-link to="/searchpage" class="routes">Search Page</router-link>
       <router-link to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/profilesearch" class="routes">ProfileSearchPage</router-link>
+      <router-link to="/characteristic" class="routes">Characteristic</router-link>
     </ul>
     <div class="borderDiv">
       <div class="RecipeContainer">
@@ -93,15 +93,19 @@ export default {
             if(this.searchedValue == null){
               this.recipes.push([doc.id,doc.data()]);
             }
-     
             else{
+
               //if search contain name return recipe
               if(doc.data().name.toUpperCase().includes(this.searchedValue.toUpperCase())) {
-                this.recipes.push(doc.data());
-              }
-              // if search contain cuisine return recipe
-              if(doc.data().cuisine.toUpperCase().includes(this.searchedValue.toUpperCase())){
-                this.recipes.push(doc.data());
+                this.recipes.push([doc.id,doc.data()]);
+              }else if(doc.data().cuisine.toUpperCase().includes(this.searchedValue.toUpperCase())){
+                this.recipes.push([doc.id,doc.data()]);
+              }else if(doc.data().difficulty.toUpperCase().includes(this.searchedValue.toUpperCase())){
+                this.recipes.push([doc.id,doc.data()]);
+              }else if(doc.data().contributor.toUpperCase().includes(this.searchedValue.toUpperCase())){
+                this.recipes.push([doc.id,doc.data()]);
+              }else if(doc.data().type.toUpperCase().includes(this.searchedValue.toUpperCase())){
+                this.recipes.push([doc.id,doc.data()]);
               }
             }
           });

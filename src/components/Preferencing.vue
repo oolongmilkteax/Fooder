@@ -9,7 +9,7 @@
       <router-link to="/searchpage" class="routes">Search Page</router-link>
       <router-link to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/profilesearch" class="routes">ProfileSearchPage</router-link>
+      <router-link to="/characteristic" class="routes">Characteristic</router-link>
     </ul>
     <div>
       <div class="myQuestions starter">
@@ -53,15 +53,15 @@
           <button
             class="myButton"
             name="question3"
-            v-on:click="makeSelection('Indian Food', 2)"
-            id="Indian Food"
+            v-on:click="makeSelection('Italian Food', 2)"
+            id="Italian Food"
           >Indian Food</button>
           <br />
           <button
             class="myButton"
             name="question3"
-            v-on:click="makeSelection('Western Food', 2)"
-            id="Western Food"
+            v-on:click="makeSelection('Singaporean Food', 2)"
+            id="Singaporean Food"
           >Western Food</button>
           <br />
           <button
@@ -74,8 +74,8 @@
           <button
             class="myButton"
             name="question3"
-            v-on:click="makeSelection('Viet Food', 2)"
-            id="Viet Food"
+            v-on:click="makeSelection('Western Food', 2)"
+            id="Western Food"
           >Viet Food</button>
         </div>
       </div>
@@ -158,7 +158,8 @@ export default {
       responses: ["", "", "", "", ""],
       numberOfQuestions: 5,
       slideIndex: 1,
-      outputValue: 0
+      outputValue: 0,
+      preferences:[],
     };
   },
   methods: {
@@ -214,88 +215,114 @@ export default {
       var ans3 = this.responses[2];
       var ans4 = this.responses[3];
       var ans5 = this.responses[4];
-      var ansValues = [0, 0, 0, 0, 0];
-      //these configs assign different weightage to each question
-      //These are changed, whereas the values associated with each answer
-      //will remain constant
-      var configA = [0.3, 0.3, 0.1, 0.2, 0.1];
-      var configB = [0.2, 0.3, 0.1, 0.3, 0.1];
-      var configC = [0.15, 0.35, 0.2, 0.3, 0.1];
-      var configs = [[], configA, configB, configC];
-      //Here we use a random number generator get select a config to use
-      var selectedConfig = Math.floor(Math.random() * 3) + 1;
-      // alert(selectedConfig);
+      var Budget = [0, 0, 0, 0];
+      var Cooking = [0, 0, 0, 0];
+      var EatingOut = [0, 0, 0, 0];
+      var Traveling = [0, 0, 0, 0];
+      var cuisine = '';
       if (ans1 == "Cooking") {
-        ansValues[0] = 1;
+        Cooking[0] = 10;
+        EatingOut[0] = 0;
+        Traveling[0] = 5;
+        Budget[0] = 5;
       }
       if (ans1 == "Eating out") {
-        ansValues[0] = 2;
+        Cooking[0] = 0;
+        EatingOut[0] = 10;
+        Traveling[0] = 10;
+        Budget[0] = 8;
       }
       if (ans2 == "$$$") {
-        ansValues[1] = 3;
+        Cooking[1] = 5;
+        EatingOut[1] = 5;
+        Traveling[1] = 8;
+        Budget[1] = 10;
       }
       if (ans2 == "$$") {
-        ansValues[1] = 2;
+        Cooking[1] = 5;
+        EatingOut[1] = 5;
+        Traveling[1] = 5;
+        Budget[1] = 5;
       }
       if (ans2 == "$") {
-        ansValues[1] = 1;
+        Cooking[1] = 5;
+        EatingOut[1] = 5;
+        Traveling[1] = 3;
+        Budget[1] = 0;
       }
       if (ans3 == "Chinese Food") {
-        ansValues[2] = 2;
+        cuisine = "Chinese Food";
       }
-      if (ans3 == "Indian Food") {
-        ansValues[2] = 2;
+      if (ans3 == "Italian Food") {
+        cuisine = "Italian Food";
       }
-      if (ans3 == "Western Food") {
-        ansValues[2] = 2;
+      if (ans3 == "Singaporean Food") {
+        cuisine = "Singaporean Food";
       }
       if (ans3 == "Thai Food") {
-        ansValues[2] = 2;
+        cuisine = "Thai Food";
       }
-      if (ans3 == "Viet Food") {
-        ansValues[2] = 2;
+      if (ans3 == "Western Food") {
+        cuisine = "Western Food";
       }
       if (ans4 == "Expert") {
-        ansValues[3] = 1;
+        Cooking[2] = 10;
+        EatingOut[2] = 5;
+        Traveling[2] = 5;
+        Budget[2] = 5;
       }
       if (ans4 == "Intermediate") {
-        ansValues[3] = 1;
+        Cooking[2] = 5;
+        EatingOut[2] = 5;
+        Traveling[2] = 5;
+        Budget[2] = 5;
       }
       if (ans4 == "Beginner") {
-        ansValues[3] = 1;
+        Cooking[2] = 0;
+        EatingOut[2] = 5;
+        Traveling[2] = 5;
+        Budget[2] = 5;
       }
       if (ans5 == "2km") {
-        ansValues[4] = 1;
+        Cooking[3] = 5;
+        EatingOut[3] = 5;
+        Traveling[3] = 3;
+        Budget[3] = 3;
       }
       if (ans5 == "5km") {
-        ansValues[4] = 1;
+        Cooking[3] = 5;
+        EatingOut[3] = 5;
+        Traveling[3] = 5;
+        Budget[3] = 5;
       }
       if (ans5 == "10km") {
-        ansValues[4] = 1;
+        Cooking[3] = 5;
+        EatingOut[3] = 5;
+        Traveling[3] = 10;
+        Budget[3] = 7;
       }
-      this.outputValue = 0;
-      var i = 0;
-      for (i = 0; i < ansValues.length; i++) {
-        //alert(ansValues[i] + " " + configs[selectedConfig][i]);
-        this.outputValue += ansValues[i] * configs[selectedConfig][i];
+      
+      var compliedList = [0,0,0,0,cuisine];
+      for(var i = 0; i < 4;i++){
+        compliedList[0] += Cooking[i];
+        compliedList[1] += EatingOut[i];
+        compliedList[2] += Traveling[i];
+        compliedList[3] += Budget[i];
       }
-      //*0.5 since we are doing normalization on the dataset and expected value of any individual is 0.5
-      alert(this.outputValue * 0.5);
+      this.preferences = compliedList;
     },
     submitQuestionaire: function() {
-      alert(this.responses);
       var checker = true;
-      var i = 0;
-      for (i = 0; i < this.responses.length; i++) {
-        if (this.responses[i] == "") {
+      for (var j = 0; j < this.responses.length; j++) {
+        if (this.responses[j] == "") {
           checker = false;
         }
       }
       if (!checker) {
         alert("Please answer all required questions!");
       } else {
-        //preferenceCalculator();
-        alert("HAHAHH");
+        this.preferenceCalculator();
+        this.$router.push({ name: 'Characteristic', params: {preferences:this.preferences}})
       }
     }
   },
