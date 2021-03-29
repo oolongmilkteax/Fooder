@@ -9,7 +9,8 @@
       <router-link to="/searchpage" class="routes">Search Page</router-link>
       <router-link to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/profilesearch" class="routes">ProfileSearchPage</router-link>
+      <router-link to="/characteristic" class="routes">Characteristic</router-link>
+      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
     <div class="borderDiv">
       <div class="RestaurantContainer">
@@ -51,6 +52,7 @@
 import firebase from "../firebase.js";
 
 export default {
+  props: ['searchedValue'],
   data() {
     return {
       restaurants: []
@@ -58,13 +60,26 @@ export default {
   },
   methods: {
     fetchItems: function() {
-      firebase
-        .firestore()
+       firebase.firestore()
         .collection("restaurant")
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
-            this.restaurants.push(doc.data());
+            //if empty search return all
+            if(this.searchedValue == null){
+              this.restaurants.push(doc.data());
+            }
+            else{
+              if(doc.data().name.toUpperCase().includes(this.searchedValue.toUpperCase())) {
+                this.restaurants.push(doc.data());
+              }else if(doc.data().cuisine.toUpperCase().includes(this.searchedValue.toUpperCase())){
+                this.restaurants.push(doc.data());
+              }else if(doc.data().contributor.toUpperCase().includes(this.searchedValue.toUpperCase())){
+                this.restaurants.push(doc.data());
+              }else if(doc.data().address.toUpperCase().includes(this.searchedValue.toUpperCase())){
+                this.restaurants.push(doc.data());
+              }
+            }
           });
         });
     },
