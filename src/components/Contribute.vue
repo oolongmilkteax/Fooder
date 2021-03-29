@@ -9,15 +9,16 @@
       <router-link to="/searchpage" class="routes">Search Page</router-link>
       <router-link to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/profilesearch" class="routes">ProfileSearchPage</router-link>
+      <router-link to="/characteristic" class="routes">Characteristic</router-link>
+      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
     <div class="ContriDiv">
       <h1 class="myTitles">Contribute to Fooder!</h1>
       <hr />
         <label for="contributing">Contributing:</label>
         <br />
-        <button type="button" class="selectButton" v-on:click="Restaurant">Restaurant</button>
-        <button type="button" class="selectButton" v-on:click="Recipe">Recipe</button>
+        <button type="button" id = "Restaurant" class="selectButton" v-on:click="Restaurant">Restaurant</button>
+        <button type="button" id = "Recipe" class="selectButton" v-on:click="Recipe">Recipe</button>
         <br />
         <div v-show="contributeType === 'restaurant'">
           <restaurantform></restaurantform>
@@ -42,9 +43,13 @@ export default {
   methods: {
     Restaurant: function() {
       this.contributeType = "restaurant";
+      document.getElementById("Restaurant").style.background = "#979797";
+      document.getElementById("Recipe").style.background = "#0088cc";
     },
     Recipe: function() {
       this.contributeType = "recipe";
+      document.getElementById("Restaurant").style.background = "#0088cc";
+      document.getElementById("Recipe").style.background = "#979797";
     },
   }
 };

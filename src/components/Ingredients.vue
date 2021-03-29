@@ -9,7 +9,8 @@
       <router-link to="/searchpage" class="routes">Search Page</router-link>
       <router-link to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/profilesearch" class="routes">ProfileSearchPage</router-link>
+      <router-link to="/characteristic" class="routes">Characteristic</router-link>
+      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
     <div class="borderDiv">
       <div class="IngredientContainer">

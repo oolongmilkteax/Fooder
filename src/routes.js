@@ -9,7 +9,8 @@ import SignUp from "./components/SignUp.vue"
 import Recipe from "./components/Recipe.vue"
 import FullRecipe from "./components/FullRecipe.vue"
 import ProfilePage from "./components/ProfilePage"
-import ProfileSearchPage from "./components/ProfileSearchPage"
+import Characteristic from "./components/Characteristic"
+import ProfileSearch from "./components/ProfileSearch"
 
 export default [
   { name: "Contribute", path: '/contribute', component: Contribute },
@@ -17,11 +18,12 @@ export default [
   { name: "Ingredients", path: '/ingredients', component: Ingredients},
   { name: "LandingPage", path: '/', component: LandingPage},
   { name: "Preferencing", path: '/preferencing', component: Preferencing},
-  { name: "Restaurant", path: '/restaurant', component: Restaurant},
+  { name: "Restaurant", path: '/restaurant', component: Restaurant, props: true},
   { name: "SearchPage", path: '/searchpage', component: SearchPage},
   { name: "SignUp", path:'/signup', component: SignUp},
   { name: "Recipe", path:'/recipe', component: Recipe, props: true},
   { name: "FullRecipe", path:'/fullrecipe', component: FullRecipe},
   { name: "ProfilePage", path:'/profile', component: ProfilePage},
-  { name: "ProfileSearchPage", path:'/profilesearch', component: ProfileSearchPage},
+  { name: "Characteristic", path:'/characteristic', component: Characteristic, props: true},
+  { name: "ProfileSearch", path: '/profileresults', component: ProfileSearch, props: true}
 ]

@@ -9,10 +9,17 @@
       <router-link to="/searchpage" class="routes">Search Page</router-link>
       <router-link to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/profilesearch" class="routes">ProfileSearchPage</router-link>
+      <router-link to="/characteristic" class="routes">Characteristic</router-link>
+      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
-    <div class="borderDiv">
+    <div class="BorderDiv">
       <p class="searchHeader">Fooder</p>
+        <div class="searchDiv">
+        <h2>Search for:</h2>
+        <button type="button" id = "Restaurant" class="searchButton" v-on:click="Restaurant">Restaurant</button>
+        <button type="button" id = "Recipe" class="searchButton" v-on:click="Recipe">Recipe</button>
+        <button type="button" id = "Profile" class="searchButton" v-on:click="Profile">Profile</button>
+      </div>
       <input type="text" class="searchInput" v-model="searchValue" placeholder="Search for Restaurants or Recipes!" />
       <div class="button-centraliser">
         <button class="myButton" v-on:click='search()'>Search</button>
@@ -27,19 +34,85 @@
 <script>
 export default {
   methods:{
-    search: function(){
+    Restaurant: function() {
+      document.getElementById("Restaurant").style.background = "#979797";
+      document.getElementById("Recipe").style.background = "#0088cc";
+      document.getElementById("Profile").style.background = "#0088cc";
+      this.recipe = false;
+      this.restaurant = true;
+      this.profile = false;
+    },
+    Recipe: function() {
+      document.getElementById("Restaurant").style.background = "#0088cc";
+      document.getElementById("Recipe").style.background = "#979797";
+      document.getElementById("Profile").style.background = "#0088cc";
+      this.recipe = true;
+      this.restaurant = false;
+      this.profile = false;
+    },
+    Profile: function() {
+      document.getElementById("Restaurant").style.background = "#0088cc";
+      document.getElementById("Recipe").style.background = "#0088cc";
+      document.getElementById("Profile").style.background = "#979797";
+      this.recipe = false;
+      this.restaurant = false;
+      this.profile = true;
+    },
+    searchRecipe: function(){
       this.$router.push({ name: 'Recipe', params: {searchedValue: this.searchValue}})
-    }
+    },
+    searchRestaurant: function(){
+      this.$router.push({ name: 'Restaurant', params: {searchedValue: this.searchValue}})
+    },
+    searchProfile: function(){
+      this.$router.push({ name: 'ProfileSearch', params: {searchedValue: this.searchValue}})
+    },
+    search: function(){
+      if(this.recipe){
+        this.searchRecipe();
+      }
+      if(this.restaurant){
+        this.searchRestaurant();
+      }
+      if(this.profile){
+        this.searchProfile();
+      }
+    },
   },
   data() {
     return {
       searchValue: "",
+      recipe: true,
+      restaurant: false,
+      profile:false,
     };
   },
 };
 </script>
 
 <style>
+
+.searchButton {
+  background: #0088cc;
+  width: 10%;
+  border-radius: 8px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: Helvetica;
+  font-size: 21px;
+  font-weight: 100;
+  padding: 5px;
+  border: solid #0088cc 1px;
+  margin-top: 30px;
+  margin: 5px;
+}
+.searchDiv{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10px;
+}
+
 .contriInput {
   padding: 10px;
   border-radius: 30px;
