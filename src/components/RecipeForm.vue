@@ -267,31 +267,40 @@ export default {
       if (this.recipe.name === "") {
         this.alert.name=true;
         this.alert.submission=true;
-      } else if (this.recipe.cuisine === "") {
+      } 
+      if (this.recipe.cuisine === "") {
         this.alert.cuisine=true;
         this.alert.submission=true;
-      } else if (this.recipe.difficulty === "") {
+      } 
+      if (this.recipe.difficulty === "") {
         this.alert.difficulty=true;
         this.alert.submission=true;
-      } else if (this.recipe.image === "") {
+      } 
+      if (this.recipe.image === "") {
         this.alert.image=true;
         this.alert.submission=true;
-      } else if (this.recipe.servings === "") {
+      } 
+      if (this.recipe.servings === "") {
         this.alert.servings=true;
         this.alert.submission=true;
-      } else if (this.recipe.time === "") {
+      } 
+      if (this.recipe.time === "") {
         this.alert.time=true;
         this.alert.submission=true;
-      } else if (this.recipe.type === "") {
+      } 
+      if (this.recipe.type === "") {
         this.alert.type=true;
         this.alert.submission=true;
-      } else if (this.recipe.ingredients.length === 0) {
+      } 
+      if (this.recipe.ingredients.length === 0) {
         this.alert.ingredients=true;
         this.alert.submission=true;
-      } else if (this.recipe.directions.length === 0) {
+      } 
+      if (this.recipe.directions.length === 0) {
         this.alert.directions=true;
         this.alert.submission=true;
-      } else {
+      } 
+      if (((this.recipe.name && this.recipe.cuisine && this.recipe.difficulty && this.recipe.image && this.recipe.servings && this.recipe.time && this.recipe.type) != "") && ((this.recipe.ingredients.length && this.recipe.directions.length) != 0)) {
         db.collection('recipe').add(this.recipe)
         .then( (doc) => {
           this.id = doc.id;
