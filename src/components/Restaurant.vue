@@ -40,6 +40,7 @@
                   v-if = "favRestaurantCheck(restaurant[0])"
                   v-on:click = "unfav(restaurant[0])" 
                   id = "fav"
+                  title = "Unfavourite"
                 >
                   <img 
                     src ="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
@@ -49,6 +50,7 @@
                   v-if= "!favRestaurantCheck(restaurant[0])" 
                   v-on:click = "fav(restaurant[0])"
                   id = "unfav"
+                  title = "Favourite"
                 >
                   <img 
                     src ="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
