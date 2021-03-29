@@ -12,28 +12,29 @@
       <router-link to="/profilesearch" class="routes">ProfileSearchPage</router-link>
     </ul>
     <div class="borderDiv">
+      <loading id="loading" :active.sync="isLoading"></loading>
       <div class="RestaurantContainer">
         <div id="Restaurant">
           <ul id="BriefDescription">
             <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
-              <h2>{{restaurant.name}}</h2>
+              <h2>{{ restaurant.name }}</h2>
               <img v-bind:src="restaurant.image" alt="Restaurant image" />
               <br />
               <br />
               <br />
               <div id="Description">
-                <span>Cuisine: {{restaurant.cuisine}}</span>
+                <span>Cuisine: {{ restaurant.cuisine }}</span>
                 <br />
-                <span>Opening hours: {{restaurant.openingHours}}</span>
+                <span>Opening hours: {{ restaurant.openingHours }}</span>
                 <br />
-                <span>Price range: {{restaurant.priceRange}}</span>
+                <span>Price range: {{ restaurant.priceRange }}</span>
                 <br />
-                <span>Address: {{restaurant.address}}</span>
+                <span>Address: {{ restaurant.address }}</span>
                 <br />
                 <br />
                 <button
                   id="restaurantWebsite"
-                  v-on:click="go(restaurant.websiteLink);"
+                  v-on:click="go(restaurant.websiteLink)"
                 >Visit Restaurant's Website!</button>
               </div>
             </li>
@@ -49,12 +50,17 @@
 
 <script>
 import firebase from "../firebase.js";
+import Loading from "vue-loading-overlay";
 
 export default {
   data() {
     return {
+      isLoading: true,
       restaurants: []
     };
+  },
+  components: {
+    Loading
   },
   methods: {
     fetchItems: function() {
@@ -66,6 +72,7 @@ export default {
           snapshot.docs.forEach(doc => {
             this.restaurants.push(doc.data());
           });
+          this.isLoading = false;
         });
     },
     go: function(url) {
@@ -142,5 +149,12 @@ img {
 
 #Directions {
   list-style-type: none;
+}
+
+#loading {
+  min-height: 30em;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 </style>

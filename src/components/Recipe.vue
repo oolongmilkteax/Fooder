@@ -12,29 +12,30 @@
       <router-link to="/profilesearch" class="routes">ProfileSearchPage</router-link>
     </ul>
     <div class="borderDiv">
+      <loading id="loading" :active.sync="isLoading"></loading>
       <div class="RecipeContainer">
         <div id="Recipe">
           <ul id="BriefDescription">
             <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
-              <h2>{{recipe.name}}</h2>
+              <h2>{{ recipe.name }}</h2>
               <img v-bind:src="recipe.image" alt="Food image" />
               <br />
               <br />
               <br />
               <div id="Description">
-                <span>Total preparation time: {{recipe.time}}</span>
+                <span>Total preparation time: {{ recipe.time }}</span>
                 <br />
-                <span>Number of servings: {{recipe.servings}}</span>
+                <span>Number of servings: {{ recipe.servings }}</span>
                 <br />
-                <span>Difficulty: {{recipe.difficulty}}</span>
+                <span>Difficulty: {{ recipe.difficulty }}</span>
                 <br />
-                <span>Cuisine: {{recipe.cuisine}}</span>
+                <span>Cuisine: {{ recipe.cuisine }}</span>
                 <br />
-                <span>Type: {{recipe.type}}</span>
+                <span>Type: {{ recipe.type }}</span>
               </div>
               <button
                 id="beginCookingButton"
-                v-on:click="go(recipe.ingredients, recipe.directions);"
+                v-on:click="go(recipe.ingredients, recipe.directions)"
               >Begin Cooking!</button>
             </li>
           </ul>
@@ -49,12 +50,18 @@
 
 <script>
 import db from "../firebase.js";
+import Loading from "vue-loading-overlay";
+
 export default {
-  props: ['searchedValue'],
+  props: ["searchedValue"],
   data() {
     return {
+      isLoading: true,
       recipes: []
     };
+  },
+  components: {
+    Loading
   },
   methods: {
     fetchItems: function() {
@@ -64,21 +71,30 @@ export default {
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
             //if empty search return all
-            if(this.searchedValue == null){
+            if (this.searchedValue == null) {
               this.recipes.push(doc.data());
-            }
-     
-            else{
+            } else {
               //if search contain name return recipe
-              if(doc.data().name.toUpperCase().includes(this.searchedValue.toUpperCase())) {
+              if (
+                doc
+                  .data()
+                  .name.toUpperCase()
+                  .includes(this.searchedValue.toUpperCase())
+              ) {
                 this.recipes.push(doc.data());
               }
               // if search contain cuisine return recipe
-              if(doc.data().cuisine.toUpperCase().includes(this.searchedValue.toUpperCase())){
+              if (
+                doc
+                  .data()
+                  .cuisine.toUpperCase()
+                  .includes(this.searchedValue.toUpperCase())
+              ) {
                 this.recipes.push(doc.data());
               }
             }
           });
+          this.isLoading = false;
         });
     },
     go: function(ingredients, directions) {
@@ -157,5 +173,12 @@ img {
 
 #Directions {
   list-style-type: none;
+}
+
+#loading {
+  min-height: 30em;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 </style>
