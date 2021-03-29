@@ -12,7 +12,7 @@
       <router-link to="/characteristic" class="routes">Characteristic</router-link>
     </ul>
     <div class="borderDiv">
-      <loading id="loading" :active.sync="isLoading"></loading>
+      <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
       <div class="RecipeContainer">
         <div id="Recipe">
           <ul id="BriefDescription">
@@ -74,8 +74,8 @@
 <script>
 import firebase from '../firebase.js'
 var db = firebase.firestore()
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import {getUid} from '../userObj.js'
-
 export default {
   props: ["searchedValue"],
   data() {
@@ -86,7 +86,7 @@ export default {
     };
   },
   components: {
-    Loading
+    PulseLoader
   },
   methods: {
     fetchItems: function() {

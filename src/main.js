@@ -9,7 +9,7 @@ Vue.config.productionTip = false;
 Vue.use(VueRouter);
 Vue.component("recipeform", RecipeForm);
 Vue.component("restaurantform", RestaurantForm);
-Vue.component("pulse-loader", require("vue-spinner/src/PulseLoader.vue"));
+Vue.component('pulse-loader', require('vue-spinner/src/PulseLoader.vue'));
 
 const myRouter = new VueRouter({
   routes: routes,

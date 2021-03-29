@@ -13,7 +13,7 @@
       <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
     <div class="borderDiv">
-      <loading id="loading" :active.sync="isLoading"></loading>
+      <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
       <div class="RestaurantContainer">
         <div id="Restaurant">
           <ul id="BriefDescription">
@@ -77,7 +77,7 @@
 import firebase from '../firebase.js'
 var db = firebase.firestore()
 import {getUid} from '../userObj.js'
-
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 export default {
   props: ['searchedValue'],
   data() {
@@ -87,7 +87,7 @@ export default {
     };
   },
   components: {
-    Loading
+    PulseLoader
   },
   methods: {
     fetchItems: function() {
@@ -264,5 +264,5 @@ img {
   cursor: pointer;
 }
 </style>
-</style>
+
 
