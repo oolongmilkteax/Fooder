@@ -128,10 +128,6 @@ export default {
   padding: 10px;
   border: 1px solid #222;
   margin: 10px;
-  width: 400px;
-  max-width: 400px;
-  height: 330px;
-  max-height: 330px;
 }
 img {
   width: 100px;
