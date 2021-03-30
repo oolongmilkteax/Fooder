@@ -353,10 +353,8 @@ export default {
 <style scoped>
 
 .borderDiv {
-  
   position:relative;
   bottom:50px;
-  
 }
 
 .RecipeContainer {

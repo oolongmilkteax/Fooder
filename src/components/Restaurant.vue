@@ -292,10 +292,8 @@ export default {
 <style scoped>
 
 .borderDiv {
-  
   position:relative;
-  bottom:55px;
-  
+  bottom:30px;
 }
 
 .RestaurantContainer {
