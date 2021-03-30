@@ -13,7 +13,7 @@
       <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
     <div class="profileBorder">
-      <h1 style="text-align:center">Contributed Recipes</h1>
+      <h1 style="text-align:center" v-if="contribRecipe!=''">Contributed Recipes</h1>
         <ul id="BriefDescription">
         <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
           <h2>{{recipe.name}}</h2>
@@ -23,7 +23,7 @@
           <br />
         </li>
         </ul>
-        <h1 style="text-align:center">Contributed Restaurants</h1>
+        <h1 style="text-align:center" v-if="contribRestaurant!=''">Contributed Restaurants</h1>
         <ul id="BriefDescription">
         <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
           <h2>{{restaurant.name}}</h2>
