@@ -12,34 +12,88 @@
       <router-link to="/characteristic" class="routes">Characteristic</router-link>
       <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
-    <div class="favDiv">
-      <p class="resultsHeader">Restaurants</p>
-      <ul class="resultsList">
-        <li
-          class="resultsItem"
-          onclick="location.href='./RestaurantSample.html'"
-        >Fong Seng Nasi Lemak</li>
-      </ul>
+    <div class="profileBorder">
+      <h1 style="text-align:center" v-if="favRecipe!=''">Favourite Recipes</h1>
+        <ul id="BriefDescription">
+        <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
+          <h2>{{recipe.name}}</h2>
+          <img v-bind:src="recipe.image" alt="Food image" />
+          <br />
+          <br />
+          <br />
+        </li>
+        </ul>
+        <h1 style="text-align:center" v-if="favRestaurant!=''">Favourite Restaurants</h1>
+        <ul id="BriefDescription">
+        <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
+          <h2>{{restaurant.name}}</h2>
+          <img v-bind:src="restaurant.image" alt="Restaurant image" />
+          <br />
+          <br />
+          <br />
 
-      <br />
-
-      <p class="resultsHeader">Recipes</p>
-      <ul class="resultsList">
-        <li
-          class="resultsItem"
-          onclick="location.href='./IngredientsSampleFAV.html'"
-        >Traditional Nasi Lemak</li>
-      </ul>
-      <div class="footerContainer">
-        <p class="footerText">Design by JKJR</p>
-      </div>
+        </li>
+        </ul>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import db from '../firebase.js';
+
+export default {
+    data(){
+        return{
+            favRecipe:"",
+            favRestaurant:"",
+            uid:"",
+            restaurants:[],
+            recipes:[]
+        };
+    },
+    methods: {
+      fetchInfo: function(){
+          this.uid = db.auth().currentUser.uid
+          db.firestore().collection('user').doc(this.uid).get().then(user =>{
+          this.favRestaurant = user.data().favRestaurant;
+          this.favRecipe = user.data().favRecipe;
+          this.fetchRecipes();
+          this.fetchRestaurants(this.uid);
+        });
+      },
+      fetchRecipes: function(){
+        db.firestore()
+        .collection("recipe")
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            
+            if (this.favRecipe.includes(doc.id)) {
+              this.recipes.push(doc.data())
+            }
+
+          });
+        });
+      },
+      fetchRestaurants: function(){
+        db.firestore()
+        .collection("restaurant")
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            if (this.favRestaurant.includes(doc.id)) {
+              this.restaurants.push(doc.data())
+            }
+          });
+        });
+      },
+    },
+    created: function(){
+      this.fetchInfo();
+    },
+}
 </script>
+
 
 <style>
 .favDiv {
@@ -77,11 +131,21 @@ export default {};
 
 .resultsItem {
   flex-grow: 1;
-  flex-basis: 600px;
+  flex-basis: 300px;
   text-align: center;
   padding: 10px;
   border: 1px solid #222;
   margin: 10px;
   position: relative;
+}
+
+#list {
+  flex-grow: 1;
+  flex-basis: 300px;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid #222;
+  margin: 10px;
+  list-style-type: none;
 }
 </style>
