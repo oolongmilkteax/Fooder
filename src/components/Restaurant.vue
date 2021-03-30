@@ -12,6 +12,44 @@
       <router-link to="/characteristic" class="routes">Characteristic</router-link>
       <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
+    <div id="block_container">
+
+    <div id="bloc1">
+      
+      <button class="sortFilterButton" v-on:click="submit = !submit">Sort By:</button><br>
+      
+      <select v-show="submit" v-model="selected" v-on:change="sort(selected)">
+        <option disabled value="">Select option:</option>
+        <option value="name">Name</option>
+        <option value="cuisine">Cuisine</option>
+        <option value="price">Price</option>
+      </select>
+    </div>  
+
+    <div id="bloc2">
+      
+      <button class="sortFilterButton" v-on:click="filter = !filter">Filter:</button><br>
+
+      <button class="filterOpt" v-show="filter" v-on:click="cuisine = !cuisine; price=false;">Cuisine</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Chinese')">Chinese</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Western')">Western</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Italian')">Italian</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Thai')">Thai</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Malaysian')">Malaysian</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Singaporean')">Singaporean</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Japanese')">Japanese</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Mediterranean')">Mediterranean</button><br>
+
+      <button class="filterOpt" v-show="filter" v-on:click="price = !price; cuisine=false;">Price</button>
+      
+      <input v-show="price && filter" v-on:change="test()" type="range" list="tickmarks" min="0" max="6" value="50" class="slider" id="myRange">
+      <span v-show="price && filter" style="margin-right:15px"><strong> <span id="demo"></span></strong></span>
+      <button class="miniButton" v-show="price && filter" v-on:click="filterPrice(priceValue)">Submit</button>
+      <br>
+      <br>
+    </div>
+
+    </div>
     <div class="borderDiv">
       <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
       <div class="RestaurantContainer">
@@ -83,12 +121,20 @@ export default {
   data() {
     return {
       restaurants: [],
-      favRestaurant: []
+      favRestaurant: [],
+      submit : false,
+      filter : false,
+      price: false,
+      cuisine:false,
+      priceValue:"",
+      selected: "",
     };
   },
+  
   components: {
     PulseLoader
   },
+  
   methods: {
     fetchItems: function() {
        db
@@ -139,7 +185,99 @@ export default {
         .then(() =>
         location.reload()
       )
-    }
+    },
+    sort: function(input) {
+      this.restaurants=[];
+      if (input == "price") {
+        db.collection("restaurant")
+        .get().then(snapshot => {
+          var lowest = [];
+          var two = [];
+          var three = [];
+          var four = [];
+          var five = [];
+          var six = [];
+          var highest = [];
+          snapshot.docs.forEach(doc => {
+            if (doc.data()["priceRange"] == "less than $20") {
+              lowest.push([doc.id,doc.data()]);
+            } else if (doc.data()["priceRange"] == "$20 to $50") {
+              two.push([doc.id,doc.data()]);
+            } else if (doc.data()["priceRange"] == "$50 to $100") {
+              three.push([doc.id,doc.data()]);
+            } else if (doc.data()["priceRange"] == "$100 to $150") {
+              four.push([doc.id,doc.data()]);
+            } else if (doc.data()["priceRange"] == "$150 to $200") {
+              five.push([doc.id,doc.data()]);
+            } else if (doc.data()["priceRange"] == "$200 to $300") {
+              six.push([doc.id,doc.data()]);
+            } else {
+              highest.push([doc.id,doc.data()]);
+            }
+        });
+          for (var i = 0; i < lowest.length; i++){
+            this.restaurants.push(lowest[i]);
+          }
+          for (i = 0; i < two.length; i++){
+            this.restaurants.push(two[i]);
+          }
+          for (i = 0; i < three.length; i++){
+            this.restaurants.push(three[i]);
+          }
+          for (i = 0; i < four.length; i++){
+            this.restaurants.push(four[i]);
+          }
+          for (i = 0; i < five.length; i++){
+            this.restaurants.push(five[i]);
+          }
+          for (i = 0; i < six.length; i++){
+            this.restaurants.push(six[i]);
+          }
+          for (i = 0; i < highest.length; i++){
+            this.restaurants.push(highest[i]);
+          }
+        });
+      } else {
+        db.collection("restaurant").orderBy(input)
+        .get().then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            this.restaurants.push([doc.id,doc.data()]);
+        });
+        });
+      }
+      this.submit=false;
+    },
+    filterCuisine: function() {
+      this.restaurants=[];
+      db.collection("restaurant").where("cuisine","==","Western")
+      .get().then(snapshot => {
+        snapshot.docs.forEach(doc => {
+          this.restaurants.push([doc.id,doc.data()]);
+      });
+      });
+      this.filter=false;
+      this.cuisine=false;
+    },
+
+    filterPrice: function(price) {
+      this.restaurants=[];
+      db.collection("restaurant").where("priceRange","==",price)
+      .get().then(snapshot => {
+        snapshot.docs.forEach(doc => {
+          this.restaurants.push([doc.id,doc.data()]);
+      });
+      });
+      this.filter=false;
+      this.price=false;
+    },
+
+    test: function() {
+      var slider = document.getElementById("myRange");
+      var output = document.getElementById("demo");
+      var values = ["less than $20","$20 to $50","$50 to $100","$100 to $150","$150 to $200","$200 to $300","above $300"];
+      output.innerHTML = values[slider.value];
+      this.priceValue = values[slider.value];
+    },
   },
   created() {
     this.fetchItems();
@@ -152,6 +290,14 @@ export default {
 </script>
 
 <style scoped>
+
+.borderDiv {
+  
+  position:relative;
+  bottom:55px;
+  
+}
+
 .RestaurantContainer {
   width: 100%;
   padding-right: 20px;
@@ -263,6 +409,61 @@ img {
 #unfav:hover {
   cursor: pointer;
 }
+
+.sortFilterButton {
+  background: #0088cc;
+  width: 100px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: Helvetica;
+  font-size: 18px;
+  font-weight: 100;
+  padding: 5px;
+  border: solid #0088cc 1px;
+  margin-bottom: 5px;
+}
+
+.miniButton {
+  background: turquoise;
+  border-radius: 8px;
+  
+}
+
+.filterOpt {
+  margin-right:50px;
+  background: teal;
+  color: #ffffff;
+  font-weight: 100;
+  border-radius: 8px;
+  border: solid teal 1px;
+  width: 80px
+}
+
+.filterOpt:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.filterOpt:focus{
+    background:olive;
+}
+
+#block_container
+{
+    height: 90px;
+    overflow: hidden;
+    position: relative;
+    z-index : 1;
+}
+
+#bloc1 {
+    width: 200px;
+    float:left; 
+}
+#bloc2 {
+    overflow: hidden; 
+}
+
 </style>
 
 
