@@ -143,7 +143,7 @@ export default {
   },
   created() {
     this.fetchItems();
-    this.favRestauantCheck();
+    this.favRestaurantCheck();
   },
   updated() {
     this.getFavourites();
