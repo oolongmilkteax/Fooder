@@ -168,6 +168,7 @@ export default {
       this.alert.address = false;
       this.alert.cuisine = false;
       this.alert.image = false;
+      this.alert.name = false;
       this.alert.openingHours = false;
       this.alert.priceRange = false;
       this.alert.websiteLink = false;
@@ -175,25 +176,32 @@ export default {
       if (this.restaurant.name === "") {
         this.alert.name=true;
         this.alert.submission=true;
-      } else if (this.restaurant.address === "") {
+      } 
+      if (this.restaurant.address === "") {
         this.alert.address=true;
         this.alert.submission=true;
-      } else if (this.restaurant.cuisine === "") {
+      } 
+      if (this.restaurant.cuisine === "") {
         this.alert.cuisine=true;
         this.alert.submission=true;
-      } else if (this.restaurant.image === "") {
+      } 
+      if (this.restaurant.image === "") {
         this.alert.image=true;
         this.alert.submission=true;
-      } else if (this.restaurant.openingHours === "") {
+      } 
+      if (this.restaurant.openingHours === "") {
         this.alert.openingHours=true;
         this.alert.submission=true;
-      } else if (this.restaurant.priceRange === "") {
+      } 
+      if (this.restaurant.priceRange === "") {
         this.alert.priceRange=true;
         this.alert.submission=true;
-      } else if (this.restaurant.websiteLink === "") {
+      } 
+      if (this.restaurant.websiteLink === "") {
         this.alert.websiteLink=true;
         this.alert.submission=true;
-      } else { 
+      } 
+      if ((this.restaurant.name && this.restaurant.address && this.restaurant.cuisine && this.restaurant.image && this.restaurant.openingHours && this.restaurant.priceRange && this.restaurant.websiteLink) != ""){ 
         db.collection('restaurant').add(this.restaurant)
           .then( (doc) => {
             this.id = doc.id;
