@@ -247,9 +247,9 @@ export default {
       }
       this.submit=false;
     },
-    filterCuisine: function() {
+    filterCuisine: function(cuisine) {
       this.restaurants=[];
-      db.collection("restaurant").where("cuisine","==","Western")
+      db.collection("restaurant").where("cuisine","==",cuisine)
       .get().then(snapshot => {
         snapshot.docs.forEach(doc => {
           this.restaurants.push([doc.id,doc.data()]);

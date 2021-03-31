@@ -255,9 +255,9 @@ export default {
       this.submit=false;
     },
 
-    filterCuisine: function() {
+    filterCuisine: function(cuisine) {
       this.recipes=[];
-      db.collection("recipe").where("cuisine","==","Chinese")
+      db.collection("recipe").where("cuisine","==",cuisine)
       .get().then(snapshot => {
         snapshot.docs.forEach(doc => {
           this.recipes.push([doc.id,doc.data()]);
