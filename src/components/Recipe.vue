@@ -326,25 +326,19 @@ export default {
       return this.favRecipe.includes(id);
     },
     unfav: function(id) {
+      var index = this.favRecipe.indexOf(id);
+      this.favRecipe.splice(index, 1);
       db.collection('user').doc(getUid()).update({
-        "favRecipe": firebase.firestore.FieldValue.arrayRemove(id)})
-        .then (() =>
-        location.reload()
-      )
+        "favRecipe": firebase.firestore.FieldValue.arrayRemove(id)});
     },
     fav: function(id) {
+      this.favRecipe.push(id);
       db.collection('user').doc(getUid()).update({
-        "favRecipe": firebase.firestore.FieldValue.arrayUnion(id)})
-        .then(() =>
-        location.reload()
-      )
+        "favRecipe": firebase.firestore.FieldValue.arrayUnion(id)});
     }
   },
   created() {
     this.fetchItems();
-    this.getFavourites();
-  },
-  updated() {
     this.getFavourites();
   }
 };

@@ -1516,6 +1516,13 @@
     "@types/connect" "*"
     "@types/node" "*"
 
+"@types/chart.js@^2.7.55":
+  "integrity" "sha512-hzS6phN/kx3jClk3iYqEHNnYIRSi4RZrIGJ8CDLjgatpHoftCezvC44uqB3o3OUm9ftU1m7sHG8+RLyPTlACrA=="
+  "resolved" "https://registry.npmjs.org/@types/chart.js/-/chart.js-2.9.31.tgz"
+  "version" "2.9.31"
+  dependencies:
+    "moment" "^2.10.2"
+
 "@types/connect-history-api-fallback@*":
   "integrity" "sha512-Kf8v0wljR5GSCOCF/VQWdV3ZhKOVA73drXtY3geMTQgHy9dgqQ0dLrf31M0hcuWkhFzK5sP0kkS3mJzcKVtZbw=="
   "resolved" "https://registry.npmjs.org/@types/connect-history-api-fallback/-/connect-history-api-fallback-1.3.4.tgz"
@@ -1967,9 +1974,7 @@
   dependencies:
     "@vue/cli-shared-utils" "^3.12.1"
     "babel-eslint" "^10.0.1"
-    "eslint" "^4.19.1"
     "eslint-loader" "^2.1.2"
-    "eslint-plugin-vue" "^4.7.1"
     "globby" "^9.2.0"
     "webpack" "^4.0.0"
     "yorkie" "^2.0.0"
@@ -2073,7 +2078,6 @@
     "thread-loader" "^2.1.3"
     "url-loader" "^2.2.0"
     "vue-loader" "^15.9.2"
-    "vue-loader-v16" "npm:vue-loader@^16.1.0"
     "vue-style-loader" "^4.1.2"
     "webpack" "^4.0.0"
     "webpack-bundle-analyzer" "^3.8.0"
@@ -2234,7 +2238,6 @@
     "merge-source-map" "^1.1.0"
     "postcss" "^7.0.14"
     "postcss-selector-parser" "^6.0.2"
-    "prettier" "^1.18.2"
     "source-map" "~0.6.1"
     "vue-template-es2015-compiler" "^1.9.0"
   optionalDependencies:
@@ -2600,14 +2603,7 @@
   dependencies:
     "color-convert" "^1.9.0"
 
-"ansi-styles@^4.0.0":
-  "integrity" "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg=="
-  "resolved" "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz"
-  "version" "4.3.0"
-  dependencies:
-    "color-convert" "^2.0.1"
-
-"ansi-styles@^4.1.0":
+"ansi-styles@^4.0.0", "ansi-styles@^4.1.0":
   "integrity" "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg=="
   "resolved" "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz"
   "version" "4.3.0"
@@ -3665,6 +3661,29 @@
   "resolved" "https://registry.npmjs.org/chardet/-/chardet-0.7.0.tgz"
   "version" "0.7.0"
 
+"chart.js@^2.9.4":
+  "integrity" "sha512-B07aAzxcrikjAPyV+01j7BmOpxtQETxTSlQ26BEYJ+3iUkbNKaOJ/nDbT6JjyqYxseM0ON12COHYdU2cTIjC7A=="
+  "resolved" "https://registry.npmjs.org/chart.js/-/chart.js-2.9.4.tgz"
+  "version" "2.9.4"
+  dependencies:
+    "chartjs-color" "^2.1.0"
+    "moment" "^2.10.2"
+
+"chartjs-color-string@^0.6.0":
+  "integrity" "sha512-TIB5OKn1hPJvO7JcteW4WY/63v6KwEdt6udfnDE9iCAZgy+V4SrbSxoIbTw/xkUIapjEI4ExGtD0+6D3KyFd7A=="
+  "resolved" "https://registry.npmjs.org/chartjs-color-string/-/chartjs-color-string-0.6.0.tgz"
+  "version" "0.6.0"
+  dependencies:
+    "color-name" "^1.0.0"
+
+"chartjs-color@^2.1.0":
+  "integrity" "sha512-haqOg1+Yebys/Ts/9bLo/BqUcONQOdr/hoEr2LLTRl6C5LXctUdHxsCYfvQVg5JIxITrfCNUDr4ntqmQk9+/0w=="
+  "resolved" "https://registry.npmjs.org/chartjs-color/-/chartjs-color-2.4.1.tgz"
+  "version" "2.4.1"
+  dependencies:
+    "chartjs-color-string" "^0.6.0"
+    "color-convert" "^1.9.3"
+
 "check-types@^8.0.3":
   "integrity" "sha512-YpeKZngUmG65rLudJ4taU7VLkOCTMhNl/u4ctNC56LQS/zJTyNH0Lrtwm1tfTsbLlwvlfsA2d1c8vCf/Kh2KwQ=="
   "resolved" "https://registry.npmjs.org/check-types/-/check-types-8.0.3.tgz"
@@ -3678,7 +3697,6 @@
     "anymatch" "^2.0.0"
     "async-each" "^1.0.1"
     "braces" "^2.3.2"
-    "fsevents" "^1.2.7"
     "glob-parent" "^3.1.0"
     "inherits" "^2.0.3"
     "is-binary-path" "^1.0.0"
@@ -3894,7 +3912,7 @@
     "map-visit" "^1.0.0"
     "object-visit" "^1.0.0"
 
-"color-convert@^1.9.0", "color-convert@^1.9.1":
+"color-convert@^1.9.0", "color-convert@^1.9.1", "color-convert@^1.9.3":
   "integrity" "sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg=="
   "resolved" "https://registry.npmjs.org/color-convert/-/color-convert-1.9.3.tgz"
   "version" "1.9.3"
@@ -5611,7 +5629,7 @@
   dependencies:
     "flat-cache" "^2.0.1"
 
-"file-loader@*", "file-loader@^4.2.0":
+"file-loader@^4.2.0":
   "integrity" "sha512-aKrYPYjF1yG3oX0kWRrqrSMfgftm7oJW5M+m4owoldH5C51C0RkIwB++JbRvEW3IU6/ZG5n8UvEcdgwOt2UOWA=="
   "resolved" "https://registry.npmjs.org/file-loader/-/file-loader-4.3.0.tgz"
   "version" "4.3.0"
@@ -5940,12 +5958,7 @@
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
 
-"fsevents@^1.2.7":
-  "integrity" "sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw=="
-  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-1.2.13.tgz"
-  "version" "1.2.13"
-
-"fsevents@~2.3.1":
+"fsevents@^1.2.7", "fsevents@~2.3.1":
   "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
   "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
   "version" "2.3.2"
@@ -8089,6 +8102,11 @@
   dependencies:
     "minimist" "^1.2.5"
 
+"moment@^2.10.2":
+  "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
+  "version" "2.29.1"
+
 "move-concurrently@^1.0.1":
   "integrity" "sha1-viwAX9oy4LKa8fBdfEszIUxwH5I="
   "resolved" "https://registry.npmjs.org/move-concurrently/-/move-concurrently-1.0.1.tgz"
@@ -9356,8 +9374,6 @@
   "integrity" "sha512-c29LVsqOaLbBHuIbsTxaKENh1N2EQBOHaWv7gkHN4dgRbxSREqDnDbtFJYdpPauS4YCplMSNCABQ6Eeor69bAA=="
   "resolved" "https://registry.npmjs.org/prismjs/-/prismjs-1.23.0.tgz"
   "version" "1.23.0"
-  dependencies:
-    "clipboard" "^2.0.0"
   optionalDependencies:
     "clipboard" "^2.0.0"
 
@@ -10705,6 +10721,15 @@
     "is-fullwidth-code-point" "^3.0.0"
     "strip-ansi" "^6.0.0"
 
+"string.prototype.padend@^3.1.2":
+  "integrity" "sha512-/AQFLdYvePENU3W5rgurfWSMU6n+Ww8n/3cUt7E+vPBB/D7YDG8x+qjoFs4M/alR2bW7Qg6xMjVwWUOvuQ0XpQ=="
+  "resolved" "https://registry.npmjs.org/string.prototype.padend/-/string.prototype.padend-3.1.2.tgz"
+  "version" "3.1.2"
+  dependencies:
+    "call-bind" "^1.0.2"
+    "define-properties" "^1.1.3"
+    "es-abstract" "^1.18.0-next.2"
+
 "string.prototype.padstart@^3.0.0":
   "integrity" "sha512-HDpngIP3pd0DeazrfqzuBrQZa+D2arKWquEHfGt5LzVjd+roLC3cjqVI0X8foaZz5rrrhcu8oJAQamW8on9dqw=="
   "resolved" "https://registry.npmjs.org/string.prototype.padstart/-/string.prototype.padstart-3.1.2.tgz"
@@ -11511,6 +11536,13 @@
   "resolved" "https://registry.npmjs.org/vm-browserify/-/vm-browserify-1.1.2.tgz"
   "version" "1.1.2"
 
+"vue-chartjs@^3.5.1":
+  "integrity" "sha512-foocQbJ7FtveICxb4EV5QuVpo6d8CmZFmAopBppDIGKY+esJV8IJgwmEW0RexQhxqXaL/E1xNURsgFFYyKzS/g=="
+  "resolved" "https://registry.npmjs.org/vue-chartjs/-/vue-chartjs-3.5.1.tgz"
+  "version" "3.5.1"
+  dependencies:
+    "@types/chart.js" "^2.7.55"
+
 "vue-codemod@^0.0.5":
   "integrity" "sha512-DE+24W1d3oanGqq7yna4ddOKXmVzjECgku2ddMcm7OS9Bp9QOblMHT88PzKiCc7npGiHf5+mTfrEW1JVIBbA2A=="
   "resolved" "https://registry.npmjs.org/vue-codemod/-/vue-codemod-0.0.5.tgz"
@@ -11602,7 +11634,7 @@
     "hash-sum" "^1.0.2"
     "loader-utils" "^1.0.2"
 
-"vue-template-compiler@^2.0.0", "vue-template-compiler@^2.6.10", "vue-template-compiler@^2.6.11":
+"vue-template-compiler@^2.6.10", "vue-template-compiler@^2.6.11":
   "integrity" "sha512-OzzZ52zS41YUbkCBfdXShQTe69j1gQDZ9HIX8miuC9C3rBCk9wIRjLiZZLrmX9V+Ftq/YEyv1JaVr5Y/hNtByg=="
   "resolved" "https://registry.npmjs.org/vue-template-compiler/-/vue-template-compiler-2.6.12.tgz"
   "version" "2.6.12"
@@ -11615,7 +11647,7 @@
   "resolved" "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2.0.0", "vue@^2.6.10", "vue@^2.6.11":
+"vue@^2.6.10", "vue@^2.6.11":
   "integrity" "sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-2.6.12.tgz"
   "version" "2.6.12"
@@ -11640,10 +11672,8 @@
   "resolved" "https://registry.npmjs.org/watchpack/-/watchpack-1.7.5.tgz"
   "version" "1.7.5"
   dependencies:
-    "chokidar" "^3.4.1"
     "graceful-fs" "^4.1.2"
     "neo-async" "^2.5.0"
-    "watchpack-chokidar2" "^2.0.1"
   optionalDependencies:
     "chokidar" "^3.4.1"
     "watchpack-chokidar2" "^2.0.1"
@@ -11762,7 +11792,7 @@
     "source-list-map" "^2.0.0"
     "source-map" "~0.6.1"
 
-"webpack@^4.0.0", "webpack@^4.0.0 || ^5.0.0", "webpack@^4.4.0":
+"webpack@^4.0.0":
   "integrity" "sha512-6jJuJjg8znb/xRItk7bkT0+Q7AHCYjjFnvKIWQPkNIOyRqoCGvkOs0ipeQzrqz4l5FtN5ZI/ukEHroeX/o1/5Q=="
   "resolved" "https://registry.npmjs.org/webpack/-/webpack-4.46.0.tgz"
   "version" "4.46.0"
