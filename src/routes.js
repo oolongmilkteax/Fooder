@@ -23,7 +23,7 @@ export default [
   { name: "SignUp", path:'/signup', component: SignUp},
   { name: "Recipe", path:'/recipe', component: Recipe, props: true},
   { name: "FullRecipe", path:'/fullrecipe', component: FullRecipe},
-  { name: "ProfilePage", path:'/profile', component: ProfilePage},
+  { name: "ProfilePage", path:'/profile', component: ProfilePage,props: true},
   { name: "Characteristic", path:'/characteristic', component: Characteristic, props: true},
   { name: "ProfileSearch", path: '/profileresults', component: ProfileSearch, props: true}
 ]

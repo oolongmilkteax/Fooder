@@ -13,7 +13,7 @@
       <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
     <div class="profileBorder">
-      <h1 style="text-align:center" v-if="contribRecipe!=''">Contributed Recipes</h1>
+      <h1 style="text-align:center" v-if="contriRecipes!=''">Contributed Recipes</h1>
         <ul id="BriefDescription">
         <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
           <h2>{{recipe.name}}</h2>
@@ -23,7 +23,7 @@
           <br />
         </li>
         </ul>
-        <h1 style="text-align:center" v-if="contribRestaurant!=''">Contributed Restaurants</h1>
+        <h1 style="text-align:center" v-if="contriRestaurants!=''">Contributed Restaurants</h1>
         <ul id="BriefDescription">
         <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
           <h2>{{restaurant.name}}</h2>
@@ -41,6 +41,7 @@
 import db from '../firebase.js';
 
 export default {
+    props: ['user'],
     data(){
         return{
             contriRestaurants:[],
@@ -52,6 +53,7 @@ export default {
     },
     methods: {
       fetchInfo: function(){
+        if(this.user == null){
           this.uid = db.auth().currentUser.uid
           db.firestore().collection('user').doc(this.uid).get().then(user =>{
           this.contriRecipes = user.data().contributeRecipe;
@@ -59,6 +61,17 @@ export default {
           this.fetchRecipes();
           this.fetchRestaurants(this.uid);
         });
+        }else{
+          this.uid = this.user[0];
+          this.name = this.user[1].name;
+          this.email = this.user[1].email;
+          this.contriRecipes = this.user[1].contributeRecipe;
+          this.contriRestaurants = this.user[1].contributeRestaurant;
+          console.log(this.contriRecipes);
+          console.log(this.contriRestaurants);
+          this.fetchRecipes();
+          this.fetchRestaurants(this.uid);
+        }
       },
       fetchRecipes: function(){
         db.firestore()

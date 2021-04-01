@@ -13,8 +13,11 @@
       <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
     <radar-chart :parsedData="parsedData"></radar-chart>
-    <h1>{{"Favourite Cuisine: " + this.cuisine}}</h1>
-    <h1>{{"Type of Eater: " + this.type}}</h1>
+    <div class="preferenceDiv">
+      <h3>{{"Favourite Cuisine: " + this.cuisine}}</h3>
+      <h3>{{"Type of Eater: " + this.type}}</h3>
+      <h2>Here are some recommendations we have for you!</h2>
+    </div>
   </div>
 </template>
 
@@ -34,9 +37,9 @@ export default {
   },
   methods: {
     typeFinder: function() {
-      if(this.preferences[1] > 20 && this.preferences[2]>15){
+      if(this.preferences[1] > 20 && this.preferences[2]>=15){
         this.type = "Adventurous Foodie";
-      }else if(this.preferences[0] > 20 && this.preferences[3]>15){
+      }else if(this.preferences[0] > 20 && this.preferences[3]>=15){
         this.type = "Home Cook";
       }else{
         this.type = "Not-So-Picky Eater";
@@ -54,5 +57,7 @@ export default {
 </script>
 
 <style>
-
+.preferenceDiv{
+    text-align: center;
+}
 </style>
