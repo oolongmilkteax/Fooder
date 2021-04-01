@@ -10,8 +10,61 @@
       <router-link to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
       <router-link to="/characteristic" class="routes">Characteristic</router-link>
+      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
+    <div id="block_container">
+
+    <div id="bloc1">
+      
+      <button class="sortFilterButton" v-on:click="submit = !submit">Sort By:</button><br>
+      
+      <select v-show="submit" v-model="selected" v-on:change="sort(selected)">
+        <option disabled value="">Select option:</option>
+        <option value="name">Name</option>
+        <option value="cuisine">Cuisine</option>
+        <option value="difficulty">Difficulty</option>
+        <option value="time">Time</option>
+        <option value="type">Type</option>
+      </select>
+
+    </div>  
+
+    <div id="bloc2">
+      
+      <button class="sortFilterButton" v-on:click="filter = !filter">Filter:</button><br>
+      
+      <button class="filterOpt" v-show="filter" v-on:click="difficulty = !difficulty; type=false; time=false; cuisine=false;">Difficulty</button>
+      <button class="miniButton" v-show="difficulty && filter" v-on:click="filterDifficulty('Easy')">Easy</button>
+      <button class="miniButton" v-show="difficulty && filter" v-on:click="filterDifficulty('Medium')">Medium</button>
+      <button class="miniButton" v-show="difficulty && filter" v-on:click="filterDifficulty('Hard')">Hard</button><br>
+
+      <button class="filterOpt" v-show="filter" v-on:click="type = !type; difficulty=false; time=false; cuisine=false;">Type</button>
+      <button class="miniButton" v-show="type && filter" v-on:click="filterType('Main')">Main</button>
+      <button class="miniButton" v-show="type && filter" v-on:click="filterType('Side')">Side</button><br>
+
+      <button class="filterOpt" v-show="filter" v-on:click="cuisine = !cuisine; difficulty=false; time=false; type=false;">Cuisine</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Chinese')">Chinese</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Western')">Western</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Italian')">Italian</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Thai')">Thai</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Malaysian')">Malaysian</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Singaporean')">Singaporean</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Japanese')">Japanese</button>
+      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Mediterranean')">Mediterranean</button><br>
+
+      <button class="filterOpt" v-show="filter" v-on:click="time = !time; difficulty=false; type=false; cuisine=false;">Time</button>
+    
+      <input v-show="time && filter" v-on:change="find()" type="range" list="tickmarks" min="0" max="4" value="50" class="slider" id="myRange">
+      <span v-show="time && filter" style="margin-right:15px"><strong>Value: <span id="demo"></span></strong></span>
+      <button class="miniButton" v-show="time && filter" v-on:click="filterTime(timeValue)">Submit</button>
+      <br>
+      <br>
+      
+    </div>
+
+    </div>
     <div class="borderDiv">
+      <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
       <div class="RecipeContainer">
         <div id="Recipe">
           <ul id="BriefDescription">
@@ -73,16 +126,30 @@
 <script>
 import firebase from '../firebase.js'
 var db = firebase.firestore()
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import {getUid} from '../userObj.js'
-
 export default {
-  props: ['searchedValue'],
+  props: ["searchedValue"],
   data() {
     return {
+      isLoading: true,
       recipes: [],
-      favRecipe: []
+      favRecipe: [],
+      submit : false,
+      filter : false,
+      difficulty : false,
+      type : false,
+      time: false,
+      cuisine: false,
+      selected: "",
+      timeValue: "",
     };
   },
+  
+  components: {
+    PulseLoader
+  },
+  
   methods: {
     fetchItems: function() {
       db.collection("recipe")
@@ -109,8 +176,141 @@ export default {
               }
             }
           });
+          this.isLoading = false;
         });
     },
+
+    sort: function(input){
+      this.recipes=[];
+      if (input == "difficulty") {
+        db.collection("recipe")
+        .get().then(snapshot => {
+          var easy = [];
+          var medium = [];
+          var hard = [];
+          snapshot.docs.forEach(doc => {
+            if (doc.data()["difficulty"] == "Easy") {
+              easy.push([doc.id,doc.data()]);
+            } else if (doc.data()["difficulty"] == "Medium") {
+              medium.push([doc.id,doc.data()]);
+            } else {
+              hard.push([doc.id,doc.data()]);
+            }
+        });
+          for (var i = 0; i < easy.length; i++){
+            this.recipes.push(easy[i]);
+          }
+          for (i = 0; i < medium.length; i++){
+            this.recipes.push(medium[i]);
+          }
+          for (i = 0; i < hard.length; i++){
+            this.recipes.push(hard[i]);
+          }
+        });
+      } else if (input == "time") {
+          db.collection("recipe")
+            .get().then(snapshot => {
+              var shortest = [];
+              var two = [];
+              var three = [];
+              var four = [];
+              var five = [];
+              snapshot.docs.forEach(doc => {
+                if (doc.data()["time"] == "less than 30mins") {
+                  shortest.push([doc.id,doc.data()]);
+                } else if (doc.data()["time"] == "30mins to 1h") {
+                  two.push([doc.id,doc.data()]);
+                } else if (doc.data()["time"] == "1h to 2h") {
+                  three.push([doc.id,doc.data()]);
+                } else if (doc.data()["time"] == "2h to 3h") {
+                  four.push([doc.id,doc.data()]);
+                } else if (doc.data()["time"] == "3h to 4h") {
+                  five.push([doc.id,doc.data()]);
+                }
+            });
+              for (var i = 0; i < shortest.length; i++){
+                this.recipes.push(shortest[i]);
+              }
+              for (i = 0; i < two.length; i++){
+                this.recipes.push(two[i]);
+              }
+              for (i = 0; i < three.length; i++){
+                this.recipes.push(three[i]);
+              }
+              for (i = 0; i < four.length; i++){
+                this.recipes.push(four[i]);
+              }
+              for (i = 0; i < five.length; i++){
+                this.recipes.push(five[i]);
+              }
+            });
+      } else {
+          db.collection("recipe").orderBy(input)
+          .get().then(snapshot => {
+            snapshot.docs.forEach(doc => {
+              this.recipes.push([doc.id,doc.data()]);
+          });
+          });
+        }
+      this.submit=false;
+    },
+
+    filterCuisine: function(cuisine) {
+      this.recipes=[];
+      db.collection("recipe").where("cuisine","==",cuisine)
+      .get().then(snapshot => {
+        snapshot.docs.forEach(doc => {
+          this.recipes.push([doc.id,doc.data()]);
+      });
+      });
+      this.filter=false;
+      this.cuisine=false;
+    },
+
+    filterType: function(type) {
+      this.recipes=[];
+      db.collection("recipe").where("type","==",type)
+      .get().then(snapshot => {
+        snapshot.docs.forEach(doc => {
+          this.recipes.push([doc.id,doc.data()]);
+      });
+      });
+      this.filter=false;
+      this.type=false;
+    },
+
+    filterDifficulty: function(difficulty) {
+      this.recipes=[];
+      db.collection("recipe").where("difficulty","==",difficulty)
+      .get().then(snapshot => {
+        snapshot.docs.forEach(doc => {
+          this.recipes.push([doc.id,doc.data()]);
+      });
+      });
+      this.filter=false;
+      this.difficulty=false;
+    },
+
+    filterTime: function(time) {
+      this.recipes=[];
+      db.collection("recipe").where("time","==",time)
+      .get().then(snapshot => {
+        snapshot.docs.forEach(doc => {
+          this.recipes.push([doc.id,doc.data()]);
+      });
+      });
+      this.filter=false;
+      this.time=false;
+    },
+
+    find: function() {
+      var slider = document.getElementById("myRange");
+      var output = document.getElementById("demo");
+      var values = ["less than 30mins", "30mins to 1h", "1h to 2h", "2h to 3h", "3h to 4h"];
+      output.innerHTML = values[slider.value];
+      this.timeValue = values[slider.value];
+    },
+
     go: function(ingredients, directions) {
       this.$router.push({
         name: "FullRecipe",
@@ -151,6 +351,12 @@ export default {
 </script>
 
 <style scoped>
+
+.borderDiv {
+  position:relative;
+  bottom:50px;
+}
+
 .RecipeContainer {
   width: 100%;
   padding-right: 20px;
@@ -220,6 +426,12 @@ h2,img {
   list-style-type: none;
 }
 
+#loading {
+  min-height: 30em;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
 #credits {
   float: right;
 }
@@ -260,4 +472,61 @@ h2,img {
 #unfav:hover {
   cursor: pointer;
 }
+
+.sortFilterButton {
+  background: #0088cc;
+  width: 100px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: Helvetica;
+  font-size: 18px;
+  font-weight: 100;
+  padding: 5px;
+  border: solid #0088cc 1px;
+  margin-bottom: 5px;
+}
+
+.miniButton {
+  background: turquoise;
+  border-radius: 8px;
+  
+}
+
+.filterOpt {
+  margin-right:50px;
+  background: teal;
+  color: #ffffff;
+  font-weight: 100;
+  border-radius: 8px;
+  border: solid teal 1px;
+  width: 80px
+}
+
+.filterOpt:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.filterOpt:focus{
+    background:olive;
+}
+
+#block_container {
+
+    height: 125px;
+    overflow: hidden;
+    position: relative;
+    z-index : 1;
+}
+
+#bloc1 {
+    width: 200px;
+    float:left; 
+}
+#bloc2 {
+    overflow: hidden; 
+}
 </style>
+
+
+
