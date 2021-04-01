@@ -126,8 +126,8 @@
 <script>
 import firebase from '../firebase.js'
 var db = firebase.firestore()
-import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import {getUid} from '../userObj.js'
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 export default {
   props: ["searchedValue"],
   data() {

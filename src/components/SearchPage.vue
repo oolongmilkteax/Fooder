@@ -12,6 +12,7 @@
       <router-link to="/characteristic" class="routes">Characteristic</router-link>
       <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
+    <b-button>Button</b-button>
     <div class="BorderDiv">
       <p class="searchHeader">Fooder</p>
         <div class="searchDiv">
@@ -32,6 +33,8 @@
 </template>
 
 <script>
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 export default {
   methods:{
     Restaurant: function() {
