@@ -6,16 +6,32 @@
     </ul>
     <div class="borderDiv">
       <h1 class="signinHeader">Sign In to Fooder</h1>
-      <input type="text" class="signinInput" v-model="email" placeholder="email" />
-      <input type="text" class="signinInput" v-model="password" placeholder="password" />
+      <input
+        type="text"
+        class="signinInput"
+        v-model="email"
+        placeholder="email"
+      />
+      <input
+        type="text"
+        class="signinInput"
+        v-model="password"
+        placeholder="password"
+      />
       <div class="button-centraliser">
         <button class="myButton" v-on:click="userLogin()">Sign In!</button>
-        <p v-show="this.showErrMsg" class="errMsg">Invalid email / password. Please try again.</p>
-        <p v-show="this.verifyEmail" class="errMsg">Please verify email before signing in.</p>
+        <p v-show="this.showErrMsg" class="errMsg">
+          Invalid email / password. Please try again.
+        </p>
+        <p v-show="this.verifyEmail" class="errMsg">
+          Please verify email before signing in.
+        </p>
       </div>
       <h3 class="member">Not a member yet?</h3>
       <div class="button-centraliser">
-        <button class="myButton" onclick="location.href='./signup'">Sign Up!</button>
+        <button class="myButton" onclick="location.href='./signup'">
+          Sign Up!
+        </button>
       </div>
       <div class="footerContainer">
         <p class="footerText">Design by JKJR</p>
@@ -33,7 +49,7 @@ export default {
       showErrMsg: false,
       verifyEmail: false,
       email: "",
-      password: ""
+      password: "",
     };
   },
   methods: {
@@ -45,7 +61,9 @@ export default {
           .auth()
           .signInWithEmailAndPassword(this.email, this.password)
           .then(() => {
-            location.href = "./preferencing";
+            this.$store.commit("setAuthentication", true);
+            this.$router.replace({ name: "Contribute" });
+            //location.href = "./preferencing";
             /*
             if (res.user.emailVerified) {
               location.href = "./preferencing";
@@ -58,7 +76,7 @@ export default {
             this.showErrMsg = true;
           });
       }
-    }
+    },
   },
   watch: {
     email: function() {
@@ -67,8 +85,8 @@ export default {
     },
     password: function() {
       this.showErrMsg = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
