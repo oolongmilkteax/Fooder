@@ -18,7 +18,8 @@
         >ProfileSearch</router-link
       >
     </ul>
-    <div class="profileBorder">
+    <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
+    <div v-show="!isLoading" class="profileBorder">
       <h1 style="text-align:center" v-if="contribRecipe != ''">
         Contributed Recipes
       </h1>
@@ -50,16 +51,21 @@
 <script>
 import db from "../firebase.js";
 import logout from "./logout.js";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   data() {
     return {
+      isLoading: true,
       contriRestaurants: [],
       contriRecipes: [],
       uid: "",
       restaurants: [],
       recipes: [],
     };
+  },
+  components: {
+    PulseLoader,
   },
   methods: {
     logout: logout,
@@ -74,6 +80,9 @@ export default {
           this.contriRestaurants = user.data().contributeRestaurant;
           this.fetchRecipes();
           this.fetchRestaurants(this.uid);
+        })
+        .then(() => {
+          this.isLoading = false;
         });
     },
     fetchRecipes: function() {
@@ -133,5 +142,12 @@ export default {
 img {
   width: 370px;
   height: 370px;
+}
+
+#loading {
+  min-height: 30em;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 </style>

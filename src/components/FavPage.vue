@@ -19,7 +19,7 @@
       >
     </ul>
     <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
-    <div class="profileBorder">
+    <div v-show="!isLoading" class="profileBorder">
       <h1 style="text-align:center" v-if="favRecipe != ''">
         Favourite Recipes
       </h1>
