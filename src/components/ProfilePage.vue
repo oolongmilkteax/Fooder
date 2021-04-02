@@ -20,7 +20,7 @@
     </ul>
     <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
     <div v-show="!isLoading" class="profileBorder">
-      <h1 style="text-align:center" v-if="contribRecipe != ''">
+      <h1 style="text-align:center" v-if="contriRecipes != ''">
         Contributed Recipes
       </h1>
       <ul id="BriefDescription">
@@ -32,7 +32,7 @@
           <br />
         </li>
       </ul>
-      <h1 style="text-align:center" v-if="contribRestaurant != ''">
+      <h1 style="text-align:center" v-if="contriRestaurants != ''">
         Contributed Restaurants
       </h1>
       <ul id="BriefDescription">

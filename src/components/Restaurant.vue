@@ -295,6 +295,7 @@ export default {
       return this.favRestaurant.includes(id);
     },
     unfav: function(id) {
+<<<<<<< HEAD
       db.collection("user")
         .doc(getUid())
         .update({
@@ -309,6 +310,17 @@ export default {
           favRestaurant: firebase.firestore.FieldValue.arrayUnion(id),
         })
         .then(() => location.reload());
+=======
+      var index = this.favRestaurant.indexOf(id);
+      this.favRestaurant.splice(index, 1);
+      db.collection('user').doc(getUid()).update({
+        "favRestaurant": firebase.firestore.FieldValue.arrayRemove(id)});
+    },
+    fav: function(id) {
+      this.favRestaurant.push(id)
+      db.collection('user').doc(getUid()).update({
+        "favRestaurant": firebase.firestore.FieldValue.arrayUnion(id)})
+>>>>>>> a900fb47380f397bd51175c81ca3b1946c599adb
     },
     sort: function(input) {
       this.restaurants = [];
@@ -420,7 +432,7 @@ export default {
   },
   created() {
     this.fetchItems();
-    this.favRestauantCheck();
+    this.favRestaurantCheck();
   },
   updated() {
     this.getFavourites();

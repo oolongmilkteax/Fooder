@@ -19,8 +19,16 @@
       >
     </ul>
     <radar-chart :parsedData="parsedData"></radar-chart>
+<<<<<<< HEAD
     <h1>{{ "Favourite Cuisine: " + this.cuisine }}</h1>
     <h1>{{ "Type of Eater: " + this.type }}</h1>
+=======
+    <div class="preferenceDiv">
+      <h3>{{"Favourite Cuisine: " + this.cuisine}}</h3>
+      <h3>{{"Type of Eater: " + this.type}}</h3>
+      <h2>Here are some recommendations we have for you!</h2>
+    </div>
+>>>>>>> a900fb47380f397bd51175c81ca3b1946c599adb
   </div>
 </template>
 
@@ -43,9 +51,15 @@ export default {
   methods: {
     logout: logout,
     typeFinder: function() {
+<<<<<<< HEAD
       if (this.preferences[1] > 20 && this.preferences[2] > 15) {
         this.type = "Adventurous Foodie";
       } else if (this.preferences[0] > 20 && this.preferences[3] > 15) {
+=======
+      if(this.preferences[1] > 20 && this.preferences[2]>=15){
+        this.type = "Adventurous Foodie";
+      }else if(this.preferences[0] > 20 && this.preferences[3]>=15){
+>>>>>>> a900fb47380f397bd51175c81ca3b1946c599adb
         this.type = "Home Cook";
       } else {
         this.type = "Not-So-Picky Eater";
@@ -62,4 +76,12 @@ export default {
 };
 </script>
 
+<<<<<<< HEAD
 <style></style>
+=======
+<style>
+.preferenceDiv{
+    text-align: center;
+}
+</style>
+>>>>>>> a900fb47380f397bd51175c81ca3b1946c599adb

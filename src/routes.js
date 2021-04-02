@@ -87,6 +87,7 @@ export default [
     name: "ProfilePage",
     path: "/profile",
     component: ProfilePage,
+    props: true,
     beforeEnter: beforeEnter,
   },
   {
