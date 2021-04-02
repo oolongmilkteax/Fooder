@@ -30,7 +30,7 @@
       <router-link to="/preferencing" class="routes">Preferencing</router-link>
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link to="/" class="routes">Logout</router-link>
+      <router-link @click.native="logout" to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
       <router-link to="/characteristic" class="routes">Characteristic</router-link>
       <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
@@ -147,10 +147,12 @@
 </template>
 
 <script>
+import logout from "./logout.js";
 import firebase from '../firebase.js'
-var db = firebase.firestore()
-import {getUid} from '../userObj.js'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+
+var db = firebase.firestore()
+
 export default {
   props: ["searchedValue"],
   data() {
@@ -174,6 +176,7 @@ export default {
   },
   
   methods: {
+    logout: logout,
     fetchItems: function() {
       db.collection("recipe")
         .get()
@@ -341,7 +344,7 @@ export default {
       });
     },
     getFavourites: function() {
-      db.collection('user').doc(getUid()).get().then((doc) => {
+      db.collection('user').doc(this.$store.state.uid).get().then((doc) => {
         this.favRecipe = doc.data().favRecipe;
       });
     },
@@ -351,12 +354,12 @@ export default {
     unfav: function(id) {
       var index = this.favRecipe.indexOf(id);
       this.favRecipe.splice(index, 1);
-      db.collection('user').doc(getUid()).update({
+      db.collection('user').doc(this.$store.state.uid).update({
         "favRecipe": firebase.firestore.FieldValue.arrayRemove(id)});
     },
     fav: function(id) {
       this.favRecipe.push(id);
-      db.collection('user').doc(getUid()).update({
+      db.collection('user').doc(this.$store.state.uid).update({
         "favRecipe": firebase.firestore.FieldValue.arrayUnion(id)});
     }
   },

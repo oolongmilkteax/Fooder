@@ -30,10 +30,16 @@
       <router-link to="/preferencing" class="routes">Preferencing</router-link>
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link to="/" class="routes">Logout</router-link>
+      <router-link @click.native="logout" to="/" class="routes"
+        >Logout</router-link
+      >
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes">Characteristic</router-link>
-      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
+      <router-link to="/characteristic" class="routes"
+        >Characteristic</router-link
+      >
+      <router-link to="/profileresults" class="routes"
+        >ProfileSearch</router-link
+      >
     </ul>
     <div class="borderDiv">
       <div class="IngredientContainer">
@@ -70,7 +76,9 @@
           <button
             id="beginCookingButton"
             onclick="location.href= './InstructionsSample.html';"
-          >Begin Cooking!</button>
+          >
+            Begin Cooking!
+          </button>
         </div>
         <div class="footerContainer">
           <p class="footerText">Design by JKJR</p>
@@ -81,7 +89,9 @@
 </template>
 
 <script>
-export default {};
+import logout from "./logout.js";
+
+export default { methods: { logout: logout } };
 </script>
 
 <style>

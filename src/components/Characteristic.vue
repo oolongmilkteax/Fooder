@@ -30,15 +30,21 @@
       <router-link to="/preferencing" class="routes">Preferencing</router-link>
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link to="/" class="routes">Logout</router-link>
+      <router-link @click.native="logout" to="/" class="routes"
+        >Logout</router-link
+      >
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes">Characteristic</router-link>
-      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
+      <router-link to="/characteristic" class="routes"
+        >Characteristic</router-link
+      >
+      <router-link to="/profileresults" class="routes"
+        >ProfileSearch</router-link
+      >
     </ul>
     <radar-chart :parsedData="parsedData"></radar-chart>
     <div class="preferenceDiv">
-      <h3>{{"Favourite Cuisine: " + this.cuisine}}</h3>
-      <h3>{{"Type of Eater: " + this.type}}</h3>
+      <h3>{{ "Favourite Cuisine: " + this.cuisine }}</h3>
+      <h3>{{ "Type of Eater: " + this.type }}</h3>
       <h2>Here are some recommendations we have for you!</h2>
     </div>
     <li class="characteristicslist" v-for="item in recommendedThings" v-bind:key="item.id">
@@ -65,7 +71,7 @@ export default {
   components: {
     RadarChart,
   },
-  props: ['preferences'],
+  props: ["preferences"],
   data() {
     return {
       parsedData:[],
@@ -75,8 +81,9 @@ export default {
     };
   },
   methods: {
+    logout: logout,
     typeFinder: function() {
-      if(this.preferences[1] > 20 && this.preferences[2]>=15){
+      if (this.preferences[1] > 20 && this.preferences[2] >= 15) {
         this.type = "Adventurous Foodie";
         db.collection("restaurant").orderBy('name').limit(3)
         .get()
@@ -129,20 +136,20 @@ export default {
       window.open(url);
     },
   },
-  created: function(){
-    if(this.preferences.length==5){
-      this.cuisine = this.preferences.pop()
+  created: function() {
+    if (this.preferences.length == 5) {
+      this.cuisine = this.preferences.pop();
       this.parsedData = this.preferences;
     }
     this.typeFinder();
     console.log(this.recommendedThings);
   },
-}
+};
 </script>
 
 <style>
-.preferenceDiv{
-    text-align: center;
+.preferenceDiv {
+  text-align: center;
 }
 
 .characteristicslist {

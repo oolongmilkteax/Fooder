@@ -30,25 +30,44 @@
       <router-link to="/preferencing" class="routes">Preferencing</router-link>
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link to="/" class="routes">Logout</router-link>
+      <router-link @click.native="logout" to="/" class="routes"
+        >Logout</router-link
+      >
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes">Characteristic</router-link>
-      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
+      <router-link to="/characteristic" class="routes"
+        >Characteristic</router-link
+      >
+      <router-link to="/profileresults" class="routes"
+        >ProfileSearch</router-link
+      >
     </ul>
     <div class="ContriDiv">
       <h1 class="myTitles">Contribute to Fooder!</h1>
-      <hr />
-        <label for="contributing">Contributing:</label>
-        <br />
-        <button type="button" id = "Restaurant" class="selectButton" v-on:click="Restaurant">Restaurant</button>
-        <button type="button" id = "Recipe" class="selectButton" v-on:click="Recipe">Recipe</button>
-        <br />
-        <div v-show="contributeType === 'restaurant'">
-          <restaurantform></restaurantform>
-        </div>
-        <div v-show="contributeType === 'recipe'">
-          <recipeform></recipeform>
-        </div>
+      <label for="contributing">Contributing:</label>
+      <br />
+      <button
+        type="button"
+        id="Restaurant"
+        class="selectButton"
+        v-on:click="Restaurant"
+      >
+        Restaurant
+      </button>
+      <button
+        type="button"
+        id="Recipe"
+        class="selectButton"
+        v-on:click="Recipe"
+      >
+        Recipe
+      </button>
+      <br />
+      <div v-show="contributeType === 'restaurant'">
+        <restaurantform></restaurantform>
+      </div>
+      <div v-show="contributeType === 'recipe'">
+        <recipeform></recipeform>
+      </div>
       <div class="footerContainer">
         <p class="footerText">Design by JKJR</p>
       </div>
@@ -57,13 +76,16 @@
 </template>
 
 <script>
+import logout from "./logout.js";
+
 export default {
   data() {
     return {
-      contributeType: "nothing", 
+      contributeType: "nothing",
     };
   },
   methods: {
+    logout: logout,
     Restaurant: function() {
       this.contributeType = "restaurant";
       document.getElementById("Restaurant").style.background = "#979797";
@@ -74,13 +96,15 @@ export default {
       document.getElementById("Restaurant").style.background = "#0088cc";
       document.getElementById("Recipe").style.background = "#979797";
     },
-  }
+    created() {
+      alert(this.$store.state.authenticated);
+    },
+  },
 };
 </script>
 
 <style>
-
-.ContriDiv{
+.ContriDiv {
   margin: 0% 5% 0% 5%;
 }
 .myTitles {

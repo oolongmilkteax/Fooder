@@ -30,93 +30,114 @@
       <router-link to="/preferencing" class="routes">Preferencing</router-link>
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link to="/" class="routes">Logout</router-link>
+      <router-link @click.native="logout" to="/" class="routes"
+        >Logout</router-link
+      >
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes">Characteristic</router-link>
-      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
+      <router-link to="/characteristic" class="routes"
+        >Characteristic</router-link
+      >
+      <router-link to="/profileresults" class="routes"
+        >ProfileSearch</router-link
+      >
     </ul>
-    <div class="profileBorder">
-      <h1 style="text-align:center" v-if="favRecipe!=''">Favourite Recipes</h1>
-        <ul id="BriefDescription">
+    <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
+    <div v-show="!isLoading" class="profileBorder">
+      <h1 style="text-align:center" v-if="favRecipe != ''">
+        Favourite Recipes
+      </h1>
+      <ul id="BriefDescription">
         <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
-          <h2>{{recipe.name}}</h2>
+          <h2>{{ recipe.name }}</h2>
           <img v-bind:src="recipe.image" alt="Food image" />
           <br />
           <br />
           <br />
         </li>
-        </ul>
-        <h1 style="text-align:center" v-if="favRestaurant!=''">Favourite Restaurants</h1>
-        <ul id="BriefDescription">
+      </ul>
+      <h1 style="text-align:center" v-if="favRestaurant != ''">
+        Favourite Restaurants
+      </h1>
+      <ul id="BriefDescription">
         <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
-          <h2>{{restaurant.name}}</h2>
+          <h2>{{ restaurant.name }}</h2>
           <img v-bind:src="restaurant.image" alt="Restaurant image" />
           <br />
           <br />
           <br />
-
         </li>
-        </ul>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-import db from '../firebase.js';
+import db from "../firebase.js";
+import logout from "./logout.js";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
-    data(){
-        return{
-            favRecipe:"",
-            favRestaurant:"",
-            uid:"",
-            restaurants:[],
-            recipes:[]
-        };
-    },
-    methods: {
-      fetchInfo: function(){
-          this.uid = db.auth().currentUser.uid
-          db.firestore().collection('user').doc(this.uid).get().then(user =>{
+  data() {
+    return {
+      isLoading: true,
+      favRecipe: "",
+      favRestaurant: "",
+      uid: "",
+      restaurants: [],
+      recipes: [],
+    };
+  },
+  components: {
+    PulseLoader,
+  },
+  methods: {
+    logout: logout,
+    fetchInfo: function() {
+      this.uid = this.$store.state.uid;
+      db.firestore()
+        .collection("user")
+        .doc(this.uid)
+        .get()
+        .then((user) => {
           this.favRestaurant = user.data().favRestaurant;
           this.favRecipe = user.data().favRecipe;
           this.fetchRecipes();
           this.fetchRestaurants(this.uid);
+        })
+        .then(() => {
+          this.isLoading = false;
         });
-      },
-      fetchRecipes: function(){
-        db.firestore()
+    },
+    fetchRecipes: function() {
+      db.firestore()
         .collection("recipe")
         .get()
-        .then(snapshot => {
-          snapshot.docs.forEach(doc => {
-            
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
             if (this.favRecipe.includes(doc.id)) {
-              this.recipes.push(doc.data())
+              this.recipes.push(doc.data());
             }
-
           });
         });
-      },
-      fetchRestaurants: function(){
-        db.firestore()
+    },
+    fetchRestaurants: function() {
+      db.firestore()
         .collection("restaurant")
         .get()
-        .then(snapshot => {
-          snapshot.docs.forEach(doc => {
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
             if (this.favRestaurant.includes(doc.id)) {
-              this.restaurants.push(doc.data())
+              this.restaurants.push(doc.data());
             }
           });
         });
-      },
     },
-    created: function(){
-      this.fetchInfo();
-    },
-}
+  },
+  created: function() {
+    this.fetchInfo();
+  },
+};
 </script>
-
 
 <style>
 .favDiv {
@@ -170,5 +191,12 @@ export default {
   border: 1px solid #222;
   margin: 10px;
   list-style-type: none;
+}
+
+#loading {
+  min-height: 30em;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 </style>
