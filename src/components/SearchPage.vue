@@ -65,13 +65,10 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import logout from "./logout.js";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
 
-=======
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
->>>>>>> a900fb47380f397bd51175c81ca3b1946c599adb
 export default {
   methods: {
     logout: logout,

@@ -11,14 +11,12 @@
         >Logout</router-link
       >
       <router-link to="/profile" class="routes">Profile</router-link>
-<<<<<<< HEAD
       <router-link to="/characteristic" class="routes"
         >Characteristic</router-link
       >
-=======
-      <router-link to="/characteristic" class="routes">Characteristic</router-link>
-      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
->>>>>>> a900fb47380f397bd51175c81ca3b1946c599adb
+      <router-link to="/profileresults" class="routes"
+        >ProfileSearch</router-link
+      >
     </ul>
     <div>
       <div class="myQuestions starter">

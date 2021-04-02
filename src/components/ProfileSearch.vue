@@ -20,74 +20,59 @@
     </ul>
     <div class="ProfileDiv">
       <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
-      <li id="profilelist" v-for="profile in profiles" v-bind:key="profile.email" v-on:click="gotoProfile(profile)">
-        <p>{{profile[1].name}}</p>
-        <p>{{profile[1].email}}</p>
+      <li
+        id="profilelist"
+        v-for="profile in profiles"
+        v-bind:key="profile.email"
+        v-on:click="gotoProfile(profile)"
+      >
+        <p>{{ profile[1].name }}</p>
+        <p>{{ profile[1].email }}</p>
       </li>
     </div>
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
+import firebase from "../firebase.js";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import logout from "./logout.js";
-export default {
-  data() {
-    return {
-      contributeType: "nothing",
-=======
-import firebase from '../firebase.js'
-import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-var db = firebase.firestore()
+var db = firebase.firestore();
+
 export default {
   data() {
     return {
       isLoading: true,
       profiles: [],
->>>>>>> a900fb47380f397bd51175c81ca3b1946c599adb
     };
   },
   components: {
-    PulseLoader
+    PulseLoader,
   },
   methods: {
-<<<<<<< HEAD
     logout: logout,
-    Restaurant: function() {
-      this.contributeType = "restaurant";
-    },
-    Recipe: function() {
-      this.contributeType = "recipe";
-    },
-  },
-};
-</script>
-
-<style></style>
-=======
-    getProfiles(){
-      this.uid = firebase.auth().currentUser.uid
+    getProfiles() {
+      this.uid = firebase.auth().currentUser.uid;
       db.collection("user")
         .get()
-        .then(snapshot => {
-          snapshot.docs.forEach(doc => {
-            if(doc.id != this.uid){
-              this.profiles.push([doc.id,doc.data()]);
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            if (doc.id != this.uid) {
+              this.profiles.push([doc.id, doc.data()]);
             }
           });
           this.isLoading = false;
         });
     },
-    gotoProfile: function(profile){
-      console.log(profile);
-      this.$router.push({ name: 'ProfilePage', params: {user:profile}})
-    }
+    gotoProfile: function(profile) {
+      this.$router.push({ name: "ProfilePage", params: { user: profile } });
+    },
   },
 
-  created: function(){
+  created: function() {
     this.getProfiles();
-  }
-}
+  },
+};
 </script>
 
 <style>
@@ -104,11 +89,10 @@ export default {
   cursor: pointer;
 }
 
-.ProfileDiv{
+.ProfileDiv {
   width: 50%;
   display: block;
   margin-left: auto;
-  margin-right: auto 
+  margin-right: auto;
 }
 </style>
->>>>>>> a900fb47380f397bd51175c81ca3b1946c599adb

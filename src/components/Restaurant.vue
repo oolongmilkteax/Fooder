@@ -211,7 +211,6 @@
 <script>
 import firebase from "../firebase.js";
 import logout from "./logout.js";
-import { getUid } from "../userObj.js";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 var db = firebase.firestore();
@@ -285,7 +284,7 @@ export default {
     },
     getFavourites: function() {
       db.collection("user")
-        .doc(getUid())
+        .doc(this.$store.state.uid)
         .get()
         .then((doc) => {
           this.favRestaurant = doc.data().favRestaurant;
@@ -295,32 +294,21 @@ export default {
       return this.favRestaurant.includes(id);
     },
     unfav: function(id) {
-<<<<<<< HEAD
-      db.collection("user")
-        .doc(getUid())
-        .update({
-          favRestaurant: firebase.firestore.FieldValue.arrayRemove(id),
-        })
-        .then(() => location.reload());
-    },
-    fav: function(id) {
-      db.collection("user")
-        .doc(getUid())
-        .update({
-          favRestaurant: firebase.firestore.FieldValue.arrayUnion(id),
-        })
-        .then(() => location.reload());
-=======
       var index = this.favRestaurant.indexOf(id);
       this.favRestaurant.splice(index, 1);
-      db.collection('user').doc(getUid()).update({
-        "favRestaurant": firebase.firestore.FieldValue.arrayRemove(id)});
+      db.collection("user")
+        .doc(this.$store.state.uid)
+        .update({
+          favRestaurant: firebase.firestore.FieldValue.arrayRemove(id),
+        });
     },
     fav: function(id) {
-      this.favRestaurant.push(id)
-      db.collection('user').doc(getUid()).update({
-        "favRestaurant": firebase.firestore.FieldValue.arrayUnion(id)})
->>>>>>> a900fb47380f397bd51175c81ca3b1946c599adb
+      this.favRestaurant.push(id);
+      db.collection("user")
+        .doc(this.$store.state.uid)
+        .update({
+          favRestaurant: firebase.firestore.FieldValue.arrayUnion(id),
+        });
     },
     sort: function(input) {
       this.restaurants = [];
