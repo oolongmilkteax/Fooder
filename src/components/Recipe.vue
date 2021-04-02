@@ -7,7 +7,7 @@
       <router-link to="/preferencing" class="routes">Preferencing</router-link>
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link to="/" class="routes">Logout</router-link>
+      <router-link @click.native="logout" to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
       <router-link to="/characteristic" class="routes">Characteristic</router-link>
       <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
@@ -124,10 +124,13 @@
 </template>
 
 <script>
+import logout from "./logout.js";
 import firebase from '../firebase.js'
-var db = firebase.firestore()
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import {getUid} from '../userObj.js'
+
+var db = firebase.firestore()
+
 export default {
   props: ["searchedValue"],
   data() {
@@ -151,6 +154,7 @@ export default {
   },
   
   methods: {
+    logout: logout,
     fetchItems: function() {
       db.collection("recipe")
         .get()

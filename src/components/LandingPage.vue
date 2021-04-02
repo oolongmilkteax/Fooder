@@ -62,6 +62,7 @@ export default {
           .signInWithEmailAndPassword(this.email, this.password)
           .then(() => {
             this.$store.commit("setAuthentication", true);
+            this.$store.commit("setUid", firebase.auth().currentUser.uid);
             this.$router.replace({ name: "Contribute" });
             //location.href = "./preferencing";
             /*

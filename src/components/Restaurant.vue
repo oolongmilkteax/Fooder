@@ -7,99 +7,196 @@
       <router-link to="/preferencing" class="routes">Preferencing</router-link>
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link to="/" class="routes">Logout</router-link>
+      <router-link @click.native="logout" to="/" class="routes"
+        >Logout</router-link
+      >
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes">Characteristic</router-link>
-      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
+      <router-link to="/characteristic" class="routes"
+        >Characteristic</router-link
+      >
+      <router-link to="/profileresults" class="routes"
+        >ProfileSearch</router-link
+      >
     </ul>
     <div id="block_container">
+      <div id="bloc1">
+        <button class="sortFilterButton" v-on:click="submit = !submit">
+          Sort By:</button
+        ><br />
 
-    <div id="bloc1">
-      
-      <button class="sortFilterButton" v-on:click="submit = !submit">Sort By:</button><br>
-      
-      <select v-show="submit" v-model="selected" v-on:change="sort(selected)">
-        <option disabled value="">Select option:</option>
-        <option value="name">Name</option>
-        <option value="cuisine">Cuisine</option>
-        <option value="price">Price</option>
-      </select>
-    </div>  
+        <select v-show="submit" v-model="selected" v-on:change="sort(selected)">
+          <option disabled value="">Select option:</option>
+          <option value="name">Name</option>
+          <option value="cuisine">Cuisine</option>
+          <option value="price">Price</option>
+        </select>
+      </div>
 
-    <div id="bloc2">
-      
-      <button class="sortFilterButton" v-on:click="filter = !filter">Filter:</button><br>
+      <div id="bloc2">
+        <button class="sortFilterButton" v-on:click="filter = !filter">
+          Filter:</button
+        ><br />
 
-      <button class="filterOpt" v-show="filter" v-on:click="cuisine = !cuisine; price=false;">Cuisine</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Chinese')">Chinese</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Western')">Western</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Italian')">Italian</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Thai')">Thai</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Malaysian')">Malaysian</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Singaporean')">Singaporean</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Japanese')">Japanese</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Mediterranean')">Mediterranean</button><br>
+        <button
+          class="filterOpt"
+          v-show="filter"
+          v-on:click="
+            cuisine = !cuisine;
+            price = false;
+          "
+        >
+          Cuisine
+        </button>
+        <button
+          class="miniButton"
+          v-show="cuisine && filter"
+          v-on:click="filterCuisine('Chinese')"
+        >
+          Chinese
+        </button>
+        <button
+          class="miniButton"
+          v-show="cuisine && filter"
+          v-on:click="filterCuisine('Western')"
+        >
+          Western
+        </button>
+        <button
+          class="miniButton"
+          v-show="cuisine && filter"
+          v-on:click="filterCuisine('Italian')"
+        >
+          Italian
+        </button>
+        <button
+          class="miniButton"
+          v-show="cuisine && filter"
+          v-on:click="filterCuisine('Thai')"
+        >
+          Thai
+        </button>
+        <button
+          class="miniButton"
+          v-show="cuisine && filter"
+          v-on:click="filterCuisine('Malaysian')"
+        >
+          Malaysian
+        </button>
+        <button
+          class="miniButton"
+          v-show="cuisine && filter"
+          v-on:click="filterCuisine('Singaporean')"
+        >
+          Singaporean
+        </button>
+        <button
+          class="miniButton"
+          v-show="cuisine && filter"
+          v-on:click="filterCuisine('Japanese')"
+        >
+          Japanese
+        </button>
+        <button
+          class="miniButton"
+          v-show="cuisine && filter"
+          v-on:click="filterCuisine('Mediterranean')"
+        >
+          Mediterranean</button
+        ><br />
 
-      <button class="filterOpt" v-show="filter" v-on:click="price = !price; cuisine=false;">Price</button>
-      
-      <input v-show="price && filter" v-on:change="test()" type="range" list="tickmarks" min="0" max="6" value="50" class="slider" id="myRange">
-      <span v-show="price && filter" style="margin-right:15px"><strong> <span id="demo"></span></strong></span>
-      <button class="miniButton" v-show="price && filter" v-on:click="filterPrice(priceValue)">Submit</button>
-      <br>
-      <br>
-    </div>
+        <button
+          class="filterOpt"
+          v-show="filter"
+          v-on:click="
+            price = !price;
+            cuisine = false;
+          "
+        >
+          Price
+        </button>
 
+        <input
+          v-show="price && filter"
+          v-on:change="test()"
+          type="range"
+          list="tickmarks"
+          min="0"
+          max="6"
+          value="50"
+          class="slider"
+          id="myRange"
+        />
+        <span v-show="price && filter" style="margin-right:15px"
+          ><strong> <span id="demo"></span></strong
+        ></span>
+        <button
+          class="miniButton"
+          v-show="price && filter"
+          v-on:click="filterPrice(priceValue)"
+        >
+          Submit
+        </button>
+        <br />
+        <br />
+      </div>
     </div>
     <div class="borderDiv">
       <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
       <div class="RestaurantContainer">
         <div id="Restaurant">
           <ul id="BriefDescription">
-            <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
-              <h2>{{restaurant[1].name}}</h2>
+            <li
+              id="list"
+              v-for="restaurant in restaurants"
+              v-bind:key="restaurant"
+            >
+              <h2>{{ restaurant[1].name }}</h2>
               <img v-bind:src="restaurant[1].image" alt="Restaurant image" />
               <br />
               <br />
               <br />
               <div id="Description">
-                <span>Cuisine: {{restaurant[1].cuisine}}</span>
+                <span>Cuisine: {{ restaurant[1].cuisine }}</span>
                 <br />
-                <span>Opening hours: {{restaurant[1].openingHours}}</span>
+                <span>Opening hours: {{ restaurant[1].openingHours }}</span>
                 <br />
-                <span>Price range: {{restaurant[1].priceRange}}</span>
+                <span>Price range: {{ restaurant[1].priceRange }}</span>
                 <br />
-                <span>Address: {{restaurant[1].address}}</span>
+                <span>Address: {{ restaurant[1].address }}</span>
                 <br />
                 <br />
                 <button
                   id="restaurantWebsite"
-                  v-on:click="go(restaurant[1].websiteLink);"
-                >Visit Restaurant's Website!
+                  v-on:click="go(restaurant[1].websiteLink)"
+                >
+                  Visit Restaurant's Website!
                 </button>
                 <button
-                  v-if = "favRestaurantCheck(restaurant[0])"
-                  v-on:click = "unfav(restaurant[0])" 
-                  id = "fav"
-                  title = "Unfavourite"
+                  v-if="favRestaurantCheck(restaurant[0])"
+                  v-on:click="unfav(restaurant[0])"
+                  id="fav"
+                  title="Unfavourite"
                 >
-                  <img 
-                    src ="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
-                  >
+                  <img
+                    src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
+                  />
                 </button>
-                <button 
-                  v-if= "!favRestaurantCheck(restaurant[0])" 
-                  v-on:click = "fav(restaurant[0])"
-                  id = "unfav"
-                  title = "Favourite"
+                <button
+                  v-if="!favRestaurantCheck(restaurant[0])"
+                  v-on:click="fav(restaurant[0])"
+                  id="unfav"
+                  title="Favourite"
                 >
-                  <img 
-                    src ="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
-                  >
+                  <img
+                    src="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
+                  />
                 </button>
               </div>
               <br />
               <br />
-              <span id="credits">Contributed by: {{restaurant[1].contributor}}</span>
+              <span id="credits"
+                >Contributed by: {{ restaurant[1].contributor }}</span
+              >
             </li>
           </ul>
         </div>
@@ -112,49 +209,71 @@
 </template>
 
 <script>
-import firebase from '../firebase.js'
-var db = firebase.firestore()
-import {getUid} from '../userObj.js'
-import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+import firebase from "../firebase.js";
+import logout from "./logout.js";
+import { getUid } from "../userObj.js";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+
+var db = firebase.firestore();
+
 export default {
-  props: ['searchedValue'],
+  props: ["searchedValue"],
   data() {
     return {
       restaurants: [],
       favRestaurant: [],
-      submit : false,
-      filter : false,
+      submit: false,
+      filter: false,
       price: false,
-      cuisine:false,
-      priceValue:"",
+      cuisine: false,
+      priceValue: "",
       selected: "",
     };
   },
-  
+
   components: {
-    PulseLoader
+    PulseLoader,
   },
-  
+
   methods: {
+    logout: logout,
     fetchItems: function() {
-       db
-        .collection("restaurant")
+      db.collection("restaurant")
         .get()
-        .then(snapshot => {
-          snapshot.docs.forEach(doc => {
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
             //if empty search return all
-            if(this.searchedValue == null){
-              this.restaurants.push([doc.id,doc.data()]);
-            }
-            else{
-              if(doc.data().name.toUpperCase().includes(this.searchedValue.toUpperCase())) {
-                this.restaurants.push([doc.id,doc.data()]);
-              }else if(doc.data().cuisine.toUpperCase().includes(this.searchedValue.toUpperCase())){
-                this.restaurants.push([doc.id,doc.data()]);
-              }else if(doc.data().contributor.toUpperCase().includes(this.searchedValue.toUpperCase())){
-                this.restaurants.push([doc.id,doc.data()]);
-              }else if(doc.data().address.toUpperCase().includes(this.searchedValue.toUpperCase())){
-                this.restaurants.push([doc.id,doc.data()]);
+            if (this.searchedValue == null) {
+              this.restaurants.push([doc.id, doc.data()]);
+            } else {
+              if (
+                doc
+                  .data()
+                  .name.toUpperCase()
+                  .includes(this.searchedValue.toUpperCase())
+              ) {
+                this.restaurants.push([doc.id, doc.data()]);
+              } else if (
+                doc
+                  .data()
+                  .cuisine.toUpperCase()
+                  .includes(this.searchedValue.toUpperCase())
+              ) {
+                this.restaurants.push([doc.id, doc.data()]);
+              } else if (
+                doc
+                  .data()
+                  .contributor.toUpperCase()
+                  .includes(this.searchedValue.toUpperCase())
+              ) {
+                this.restaurants.push([doc.id, doc.data()]);
+              } else if (
+                doc
+                  .data()
+                  .address.toUpperCase()
+                  .includes(this.searchedValue.toUpperCase())
+              ) {
+                this.restaurants.push([doc.id, doc.data()]);
               }
             }
           });
@@ -165,116 +284,136 @@ export default {
       window.open(url);
     },
     getFavourites: function() {
-      db.collection('user').doc(getUid()).get().then((doc) => {
-        this.favRestaurant = doc.data().favRestaurant;
-      });
+      db.collection("user")
+        .doc(getUid())
+        .get()
+        .then((doc) => {
+          this.favRestaurant = doc.data().favRestaurant;
+        });
     },
     favRestaurantCheck: function(id) {
       return this.favRestaurant.includes(id);
     },
     unfav: function(id) {
-      db.collection('user').doc(getUid()).update({
-        "favRestaurant": firebase.firestore.FieldValue.arrayRemove(id)})
-        .then (() =>
-        location.reload()
-      )
+      db.collection("user")
+        .doc(getUid())
+        .update({
+          favRestaurant: firebase.firestore.FieldValue.arrayRemove(id),
+        })
+        .then(() => location.reload());
     },
     fav: function(id) {
-      db.collection('user').doc(getUid()).update({
-        "favRestaurant": firebase.firestore.FieldValue.arrayUnion(id)})
-        .then(() =>
-        location.reload()
-      )
+      db.collection("user")
+        .doc(getUid())
+        .update({
+          favRestaurant: firebase.firestore.FieldValue.arrayUnion(id),
+        })
+        .then(() => location.reload());
     },
     sort: function(input) {
-      this.restaurants=[];
+      this.restaurants = [];
       if (input == "price") {
         db.collection("restaurant")
-        .get().then(snapshot => {
-          var lowest = [];
-          var two = [];
-          var three = [];
-          var four = [];
-          var five = [];
-          var six = [];
-          var highest = [];
-          snapshot.docs.forEach(doc => {
-            if (doc.data()["priceRange"] == "less than $20") {
-              lowest.push([doc.id,doc.data()]);
-            } else if (doc.data()["priceRange"] == "$20 to $50") {
-              two.push([doc.id,doc.data()]);
-            } else if (doc.data()["priceRange"] == "$50 to $100") {
-              three.push([doc.id,doc.data()]);
-            } else if (doc.data()["priceRange"] == "$100 to $150") {
-              four.push([doc.id,doc.data()]);
-            } else if (doc.data()["priceRange"] == "$150 to $200") {
-              five.push([doc.id,doc.data()]);
-            } else if (doc.data()["priceRange"] == "$200 to $300") {
-              six.push([doc.id,doc.data()]);
-            } else {
-              highest.push([doc.id,doc.data()]);
+          .get()
+          .then((snapshot) => {
+            var lowest = [];
+            var two = [];
+            var three = [];
+            var four = [];
+            var five = [];
+            var six = [];
+            var highest = [];
+            snapshot.docs.forEach((doc) => {
+              if (doc.data()["priceRange"] == "less than $20") {
+                lowest.push([doc.id, doc.data()]);
+              } else if (doc.data()["priceRange"] == "$20 to $50") {
+                two.push([doc.id, doc.data()]);
+              } else if (doc.data()["priceRange"] == "$50 to $100") {
+                three.push([doc.id, doc.data()]);
+              } else if (doc.data()["priceRange"] == "$100 to $150") {
+                four.push([doc.id, doc.data()]);
+              } else if (doc.data()["priceRange"] == "$150 to $200") {
+                five.push([doc.id, doc.data()]);
+              } else if (doc.data()["priceRange"] == "$200 to $300") {
+                six.push([doc.id, doc.data()]);
+              } else {
+                highest.push([doc.id, doc.data()]);
+              }
+            });
+            for (var i = 0; i < lowest.length; i++) {
+              this.restaurants.push(lowest[i]);
             }
-        });
-          for (var i = 0; i < lowest.length; i++){
-            this.restaurants.push(lowest[i]);
-          }
-          for (i = 0; i < two.length; i++){
-            this.restaurants.push(two[i]);
-          }
-          for (i = 0; i < three.length; i++){
-            this.restaurants.push(three[i]);
-          }
-          for (i = 0; i < four.length; i++){
-            this.restaurants.push(four[i]);
-          }
-          for (i = 0; i < five.length; i++){
-            this.restaurants.push(five[i]);
-          }
-          for (i = 0; i < six.length; i++){
-            this.restaurants.push(six[i]);
-          }
-          for (i = 0; i < highest.length; i++){
-            this.restaurants.push(highest[i]);
-          }
-        });
+            for (i = 0; i < two.length; i++) {
+              this.restaurants.push(two[i]);
+            }
+            for (i = 0; i < three.length; i++) {
+              this.restaurants.push(three[i]);
+            }
+            for (i = 0; i < four.length; i++) {
+              this.restaurants.push(four[i]);
+            }
+            for (i = 0; i < five.length; i++) {
+              this.restaurants.push(five[i]);
+            }
+            for (i = 0; i < six.length; i++) {
+              this.restaurants.push(six[i]);
+            }
+            for (i = 0; i < highest.length; i++) {
+              this.restaurants.push(highest[i]);
+            }
+          });
       } else {
-        db.collection("restaurant").orderBy(input)
-        .get().then(snapshot => {
-          snapshot.docs.forEach(doc => {
-            this.restaurants.push([doc.id,doc.data()]);
-        });
-        });
+        db.collection("restaurant")
+          .orderBy(input)
+          .get()
+          .then((snapshot) => {
+            snapshot.docs.forEach((doc) => {
+              this.restaurants.push([doc.id, doc.data()]);
+            });
+          });
       }
-      this.submit=false;
+      this.submit = false;
     },
     filterCuisine: function(cuisine) {
-      this.restaurants=[];
-      db.collection("restaurant").where("cuisine","==",cuisine)
-      .get().then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          this.restaurants.push([doc.id,doc.data()]);
-      });
-      });
-      this.filter=false;
-      this.cuisine=false;
+      this.restaurants = [];
+      db.collection("restaurant")
+        .where("cuisine", "==", cuisine)
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            this.restaurants.push([doc.id, doc.data()]);
+          });
+        });
+      this.filter = false;
+      this.cuisine = false;
     },
 
     filterPrice: function(price) {
-      this.restaurants=[];
-      db.collection("restaurant").where("priceRange","==",price)
-      .get().then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          this.restaurants.push([doc.id,doc.data()]);
-      });
-      });
-      this.filter=false;
-      this.price=false;
+      this.restaurants = [];
+      db.collection("restaurant")
+        .where("priceRange", "==", price)
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            this.restaurants.push([doc.id, doc.data()]);
+          });
+        });
+      this.filter = false;
+      this.price = false;
     },
 
     test: function() {
       var slider = document.getElementById("myRange");
       var output = document.getElementById("demo");
-      var values = ["less than $20","$20 to $50","$50 to $100","$100 to $150","$150 to $200","$200 to $300","above $300"];
+      var values = [
+        "less than $20",
+        "$20 to $50",
+        "$50 to $100",
+        "$100 to $150",
+        "$150 to $200",
+        "$200 to $300",
+        "above $300",
+      ];
       output.innerHTML = values[slider.value];
       this.priceValue = values[slider.value];
     },
@@ -285,15 +424,14 @@ export default {
   },
   updated() {
     this.getFavourites();
-  }
+  },
 };
 </script>
 
 <style scoped>
-
 .borderDiv {
-  position:relative;
-  bottom:30px;
+  position: relative;
+  bottom: 30px;
 }
 
 .RestaurantContainer {
@@ -372,7 +510,7 @@ img {
 }
 
 #fav img {
-  height: 35px;  
+  height: 35px;
   width: 35px;
 }
 
@@ -390,7 +528,7 @@ img {
 }
 
 #unfav img {
-  height: 30px;  
+  height: 30px;
   width: 33px;
 }
 
@@ -424,44 +562,39 @@ img {
 .miniButton {
   background: turquoise;
   border-radius: 8px;
-  
 }
 
 .filterOpt {
-  margin-right:50px;
+  margin-right: 50px;
   background: teal;
   color: #ffffff;
   font-weight: 100;
   border-radius: 8px;
   border: solid teal 1px;
-  width: 80px
+  width: 80px;
 }
 
 .filterOpt:hover {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
-.filterOpt:focus{
-    background:olive;
+.filterOpt:focus {
+  background: olive;
 }
 
-#block_container
-{
-    height: 90px;
-    overflow: hidden;
-    position: relative;
-    z-index : 1;
+#block_container {
+  height: 90px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 
 #bloc1 {
-    width: 200px;
-    float:left; 
+  width: 200px;
+  float: left;
 }
 #bloc2 {
-    overflow: hidden; 
+  overflow: hidden;
 }
-
 </style>
-
-
