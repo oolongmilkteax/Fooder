@@ -67,6 +67,7 @@
 import firebase from '../firebase.js'
 var db = firebase.firestore()
 import RadarChart from './RadarChart.js';
+import logout from "./logout.js";
 export default {
   components: {
     RadarChart,
