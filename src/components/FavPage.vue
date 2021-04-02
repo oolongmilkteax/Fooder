@@ -18,6 +18,7 @@
         >ProfileSearch</router-link
       >
     </ul>
+    <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
     <div class="profileBorder">
       <h1 style="text-align:center" v-if="favRecipe != ''">
         Favourite Recipes
@@ -50,16 +51,21 @@
 <script>
 import db from "../firebase.js";
 import logout from "./logout.js";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   data() {
     return {
+      isLoading: true,
       favRecipe: "",
       favRestaurant: "",
       uid: "",
       restaurants: [],
       recipes: [],
     };
+  },
+  components: {
+    PulseLoader,
   },
   methods: {
     logout: logout,
@@ -74,6 +80,9 @@ export default {
           this.favRecipe = user.data().favRecipe;
           this.fetchRecipes();
           this.fetchRestaurants(this.uid);
+        })
+        .then(() => {
+          this.isLoading = false;
         });
     },
     fetchRecipes: function() {
@@ -159,5 +168,12 @@ export default {
   border: 1px solid #222;
   margin: 10px;
   list-style-type: none;
+}
+
+#loading {
+  min-height: 30em;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 </style>

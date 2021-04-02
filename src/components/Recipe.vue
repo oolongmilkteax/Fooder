@@ -127,7 +127,6 @@
 import logout from "./logout.js";
 import firebase from '../firebase.js'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-import {getUid} from '../userObj.js'
 
 var db = firebase.firestore()
 
@@ -322,7 +321,7 @@ export default {
       });
     },
     getFavourites: function() {
-      db.collection('user').doc(getUid()).get().then((doc) => {
+      db.collection('user').doc(this.$store.state.uid).get().then((doc) => {
         this.favRecipe = doc.data().favRecipe;
       });
     },
@@ -330,14 +329,14 @@ export default {
       return this.favRecipe.includes(id);
     },
     unfav: function(id) {
-      db.collection('user').doc(getUid()).update({
+      db.collection('user').doc(this.$store.state.uid).update({
         "favRecipe": firebase.firestore.FieldValue.arrayRemove(id)})
         .then (() =>
         location.reload()
       )
     },
     fav: function(id) {
-      db.collection('user').doc(getUid()).update({
+      db.collection('user').doc(this.$store.state.uid).update({
         "favRecipe": firebase.firestore.FieldValue.arrayUnion(id)})
         .then(() =>
         location.reload()
