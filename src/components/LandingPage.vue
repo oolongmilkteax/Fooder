@@ -1,10 +1,19 @@
 <template>
   <div class="body">
-    <ul class="ul">
-      <router-link to="/" class="routes">Sign In</router-link>
-      <router-link to="/signup" class="routes">Sign Up</router-link>
-    </ul>
-    <div class="borderDiv">
+    <b-navbar toggleable="lg" type="dark" variant="dark">
+      <b-navbar-brand href="/">Fooder</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item href="/signup">Sign Up</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+    <div class="LandingDiv">
       <h1 class="signinHeader">Sign In to Fooder</h1>
       <input type="text" class="signinInput" v-model="email" placeholder="email" />
       <input type="text" class="signinInput" v-model="password" placeholder="password" />
@@ -73,6 +82,10 @@ export default {
 </script>
 
 <style>
+
+.LandingDiv{
+  padding: 3%;
+}
 .errMsg {
   color: red;
   margin: 0 0 0 0;
