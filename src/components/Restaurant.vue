@@ -196,18 +196,15 @@ export default {
       return this.favRestaurant.includes(id);
     },
     unfav: function(id) {
+      var index = this.favRestaurant.indexOf(id);
+      this.favRestaurant.splice(index, 1);
       db.collection('user').doc(getUid()).update({
-        "favRestaurant": firebase.firestore.FieldValue.arrayRemove(id)})
-        .then (() =>
-        location.reload()
-      )
+        "favRestaurant": firebase.firestore.FieldValue.arrayRemove(id)});
     },
     fav: function(id) {
+      this.favRestaurant.push(id)
       db.collection('user').doc(getUid()).update({
         "favRestaurant": firebase.firestore.FieldValue.arrayUnion(id)})
-        .then(() =>
-        location.reload()
-      )
     },
     sort: function(input) {
       this.restaurants=[];
