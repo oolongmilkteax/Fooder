@@ -149,17 +149,6 @@ export default {
       }
     },
     
-    showDifficulty: function() {
-      
-      if (document.getElementById("filDifficultyChoice").style.display === "block") {
-        document.getElementById("filDifficultyChoice").style.display = "none";
-      }
-       else {
-         document.getElementById("filDifficultyChoice").style.display = "block";
-       }
-       
-    },
-    
   },
   data() {
     return {
