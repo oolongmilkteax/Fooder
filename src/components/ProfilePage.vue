@@ -43,13 +43,16 @@
     </ul>
     <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
     <div v-show="!isLoading" class="profileBorder">
+      <p>{{"Name: " + name}}</p>
+      <p>{{"Username: "+ username}}</p>
+      <p>{{"Email: " + email}}</p>
       <h1 style="text-align:center" v-if="contriRecipes != ''">
         Contributed Recipes
       </h1>
       <ul id="BriefDescription">
         <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
           <h2>{{ recipe.name }}</h2>
-          <img v-bind:src="recipe.image" alt="Food image" />
+          <img v-bind:src="recipe.image" v-bind:id="recipe.name" v-on:click="searchRecipe(recipe.name)" alt="Food image" />
           <br />
           <br />
           <br />
@@ -61,7 +64,7 @@
       <ul id="BriefDescription">
         <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
           <h2>{{ restaurant.name }}</h2>
-          <img v-bind:src="restaurant.image" alt="Restaurant image" />
+          <img v-bind:src="restaurant.image" v-bind:id="restaurant.name" v-on:click="searchRestaurant(restaurant.name)" alt="Restaurant image" />
           <br />
           <br />
           <br />
@@ -85,6 +88,9 @@ export default {
       uid: "",
       restaurants: [],
       recipes: [],
+      name:"",
+      username:"",
+      email:"",
     };
   },
   components: {
@@ -99,6 +105,9 @@ export default {
         .doc(this.uid)
         .get()
         .then((user) => {
+          this.name = user.data().name;
+          this.username = user.data().username;
+          this.email = user.data().email;
           this.contriRecipes = user.data().contributeRecipe;
           this.contriRestaurants = user.data().contributeRestaurant;
           this.fetchRecipes();
@@ -131,6 +140,12 @@ export default {
             }
           });
         });
+    },
+    searchRecipe: function(recipe){
+      this.$router.push({ name: 'Recipe', params: {searchedValue: recipe}})
+    },
+    searchRestaurant: function(restaurant){
+      this.$router.push({ name: 'Restaurant', params: {searchedValue: restaurant}})
     },
   },
   created: function() {

@@ -41,128 +41,50 @@
         >ProfileSearch</router-link
       >
     </ul>
-    <div id="block_container">
-      <div id="bloc1">
-        <button class="sortFilterButton" v-on:click="submit = !submit">
-          Sort By:</button
-        ><br />
 
-        <select v-show="submit" v-model="selected" v-on:change="sort(selected)">
-          <option disabled value="">Select option:</option>
-          <option value="name">Name</option>
-          <option value="cuisine">Cuisine</option>
-          <option value="price">Price</option>
-        </select>
-      </div>
-
-      <div id="bloc2">
-        <button class="sortFilterButton" v-on:click="filter = !filter">
-          Filter:</button
-        ><br />
-
-        <button
-          class="filterOpt"
-          v-show="filter"
-          v-on:click="
-            cuisine = !cuisine;
-            price = false;
-          "
-        >
-          Cuisine
-        </button>
-        <button
-          class="miniButton"
-          v-show="cuisine && filter"
-          v-on:click="filterCuisine('Chinese')"
-        >
-          Chinese
-        </button>
-        <button
-          class="miniButton"
-          v-show="cuisine && filter"
-          v-on:click="filterCuisine('Western')"
-        >
-          Western
-        </button>
-        <button
-          class="miniButton"
-          v-show="cuisine && filter"
-          v-on:click="filterCuisine('Italian')"
-        >
-          Italian
-        </button>
-        <button
-          class="miniButton"
-          v-show="cuisine && filter"
-          v-on:click="filterCuisine('Thai')"
-        >
-          Thai
-        </button>
-        <button
-          class="miniButton"
-          v-show="cuisine && filter"
-          v-on:click="filterCuisine('Malaysian')"
-        >
-          Malaysian
-        </button>
-        <button
-          class="miniButton"
-          v-show="cuisine && filter"
-          v-on:click="filterCuisine('Singaporean')"
-        >
-          Singaporean
-        </button>
-        <button
-          class="miniButton"
-          v-show="cuisine && filter"
-          v-on:click="filterCuisine('Japanese')"
-        >
-          Japanese
-        </button>
-        <button
-          class="miniButton"
-          v-show="cuisine && filter"
-          v-on:click="filterCuisine('Mediterranean')"
-        >
-          Mediterranean</button
-        ><br />
-
-        <button
-          class="filterOpt"
-          v-show="filter"
-          v-on:click="
-            price = !price;
-            cuisine = false;
-          "
-        >
-          Price
-        </button>
-
-        <input
-          v-show="price && filter"
-          v-on:change="test()"
-          type="range"
-          list="tickmarks"
-          min="0"
-          max="6"
-          value="50"
-          class="slider"
-          id="myRange"
-        />
-        <span v-show="price && filter" style="margin-right:15px"
-          ><strong> <span id="demo"></span></strong
-        ></span>
-        <button
-          class="miniButton"
-          v-show="price && filter"
-          v-on:click="filterPrice(priceValue)"
-        >
-          Submit
-        </button>
-        <br />
-        <br />
-      </div>
+    <div id="sortContent" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" v-on:click="closeSort()">&times;</a>
+      <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
+      <a class="dropdown-btn" v-on:click="sort('cuisine')">Cuisine</a>
+      <a class="dropdown-btn" v-on:click="sort('price')">Price</a>
     </div>
+
+
+    <div id="sortFeature">
+      <span style="font-size:30px;cursor:pointer" v-on:click="openSort()">&#8693; Sort</span>
+    </div>
+    
+
+    <div id="filterContent" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" v-on:click="closeFilter()">&times;</a>
+      
+
+      <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;
+      </button>
+      <div class="dropdown-container" id="filCuisineChoice">
+      <div  v-for="cuisine in cuisines" v-bind:key="cuisine">
+        <a v-on:click="cuisineChoice=['cuisine', cuisine]">{{cuisine}}</a>
+      </div>
+      </div>
+
+      <button class="dropdown-btn" v-on:click="showPrice()" id="filPrice">Price &#9660;
+      </button>
+      
+      <div class="dropdown-container" id="filPriceChoice">
+        <input  v-on:change="test()" type="range" list="tickmarks" min="0" max="6" value="50" class="slider" id="myRange"><br>
+        <span><strong>Value: <span id="demo"></span></strong></span>
+
+      </div>
+
+      <a id="submit" style="font-size:30px;cursor:pointer;" v-on:click="filtering"><strong>Search</strong></a>
+    </div>
+
+
+    <div id="filterSort">
+      <span style="font-size:30px;cursor:pointer" v-on:click="openFilter()">&#9776; Filter</span>
+    </div>
+    <br>
+
     <div class="borderDiv">
       <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
       <div class="RestaurantContainer">
@@ -249,7 +171,10 @@ export default {
       price: false,
       cuisine: false,
       priceValue: "",
-      selected: "",
+      filters: [],
+      save: [],
+      cuisineChoice: [],
+      cuisines: [],
     };
   },
 
@@ -267,6 +192,10 @@ export default {
             //if empty search return all
             if (this.searchedValue == null) {
               this.restaurants.push([doc.id, doc.data()]);
+              this.save.push([doc.id,doc.data()]);
+              if (!this.cuisines.includes(doc.data()["cuisine"])) {
+                this.cuisines.push(doc.data()["cuisine"]);
+              }
             } else {
               if (
                 doc
@@ -397,32 +326,32 @@ export default {
       }
       this.submit = false;
     },
-    filterCuisine: function(cuisine) {
-      this.restaurants = [];
-      db.collection("restaurant")
-        .where("cuisine", "==", cuisine)
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            this.restaurants.push([doc.id, doc.data()]);
-          });
-        });
-      this.filter = false;
-      this.cuisine = false;
-    },
 
-    filterPrice: function(price) {
-      this.restaurants = [];
-      db.collection("restaurant")
-        .where("priceRange", "==", price)
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            this.restaurants.push([doc.id, doc.data()]);
-          });
-        });
-      this.filter = false;
-      this.price = false;
+    filtering: function() {
+      if(this.priceValue != "") {
+        this.filters.push(['priceRange',this.priceValue]);
+      }
+      if (this.cuisineChoice.length != 0) {
+        this.filters.push(this.cuisineChoice);        
+      }
+      this.restaurants = [...this.save];
+      for (var i = 0; i < this.restaurants.length; i++){
+        for (var j = 0; j < this.filters.length; j++){
+          if (this.restaurants[i][1][this.filters[j][0]] != this.filters[j][1])  {
+            this.restaurants.splice(i,1);
+            i--;
+            break;
+          }
+        }
+      }
+      this.filters.splice(0, this.filters.length);
+      this.priceValue = "";
+      this.cuisineChoice = [];
+      this.filter=false;
+      this.price=false;
+      this.cuisine=false;
+      document.getElementById("demo").innerHTML = "";
+      
     },
 
     test: function() {
@@ -439,6 +368,39 @@ export default {
       ];
       output.innerHTML = values[slider.value];
       this.priceValue = values[slider.value];
+    },
+    openSort: function() {
+      document.getElementById("sortContent").style.width = "220px";
+    },
+    closeSort: function() {
+      document.getElementById("sortContent").style.width = "0";
+    },
+    openFilter: function() {
+      document.getElementById("filterContent").style.width = "220px";
+    },
+    closeFilter: function() {
+      document.getElementById("filterContent").style.width = "0";
+    },
+    showCuisine: function() {
+      
+      if (document.getElementById("filCuisineChoice").style.display === "block") {
+        document.getElementById("filCuisineChoice").style.display = "none";
+      }
+       else {
+         document.getElementById("filCuisineChoice").style.display = "block";
+
+       }
+       
+    },
+    showPrice: function() {
+      
+      if (document.getElementById("filPriceChoice").style.display === "block") {
+        document.getElementById("filPriceChoice").style.display = "none";
+      }
+       else {
+         document.getElementById("filPriceChoice").style.display = "block";
+       }
+       
     },
   },
   created() {
@@ -620,4 +582,77 @@ img {
 #bloc2 {
   overflow: hidden;
 }
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: absolute;
+  z-index: 1;
+  top: 140px;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  /*padding-top: 60px;*/
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+#submit:hover  {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+.dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+.dropdown-btn:hover {
+  color: #f1f1f1;
+}
+
+.active {
+  background-color: #0088cc;
+  color: white;
+}
+
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
+}
+
 </style>

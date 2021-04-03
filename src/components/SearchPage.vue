@@ -41,6 +41,81 @@
         >ProfileSearch</router-link
       >
     </ul>
+
+    <div id="sortContent" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" v-on:click="closeSort()">&times;</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Clients</a>
+      <a href="#">Contact</a>
+    </div>
+
+    
+    <div id="sortFeature">
+      <span style="font-size:30px;cursor:pointer" v-on:click="openSort()">&#9776; Sort</span>
+    </div>
+
+    
+
+    <div id="filterContent" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" v-on:click="closeFilter()">&times;</a>
+      <button class="dropdown-btn" v-on:click="showDifficulty()" id="filDifficulty">Difficulty
+        <i class="fa fa-caret-down"></i>
+      </button>
+      
+      <div class="dropdown-container" id="filDifficultyChoice">
+        <a id="easyChoice" v-on:click="difficultyChoice=['difficulty','Easy']" >Easy</a>
+        <a id="mediumChoice" v-on:click="difficultyChoice=['difficulty','Medium']">Medium</a>
+        <a id="hardChoice" v-on:click="difficultyChoice=['difficulty','Hard']">Hard</a>
+
+      </div>
+
+      <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-container" id="filCuisineChoice">
+      <div  v-for="cuisine in cuisines" v-bind:key="cuisine">
+        <a v-on:click="cuisineChoice=['cuisine', cuisine]">{{cuisine}}</a>
+      </div>
+      </div>
+
+      <button class="dropdown-btn" v-on:click="showTime()" id="filTime">Time
+        <i class="fa fa-caret-down"></i>
+      </button>
+      
+      <div class="dropdown-container" id="filTimeChoice">
+        <input v-on:change="find()" type="range" list="tickmarks" min="0" max="4" value="50" class="slider" id="myRange"><br>
+        <span><strong>Value: <span id="demo"></span></strong></span>
+
+      </div>
+
+      <button class="dropdown-btn" v-on:click="showType()" id="filType">Type
+        <i class="fa fa-caret-down"></i>
+      </button>
+      
+      <div class="dropdown-container" id="filTypeChoice">
+        <a  v-on:click="typeChoice=['type','Main']" >Main</a>
+        <a  v-on:click="typeChoice=['type','Side']">Side</a>
+    
+
+      </div>
+
+      <a id="submit" style="font-size:30px;cursor:pointer;"><strong>Search</strong></a>
+      
+    </div>
+
+    <div id="filterSort">
+      <span style="font-size:30px;cursor:pointer" v-on:click="openFilter()">&#9776; Filter</span>
+    </div>
+    
+    
+    <!--
+    <p>{{difficultyChoice}}</p>
+    <p>{{timeValue}}</p>
+    <p>{{cuisineChoice}}</p>
+    <p>{{typeChoice}}
+    -->
+
     <div class="BorderDiv">
       <p class="searchHeader">Fooder</p>
       <div class="searchDiv">
@@ -147,6 +222,68 @@ export default {
         this.searchProfile();
       }
     },
+    openSort: function() {
+      document.getElementById("sortContent").style.width = "220px";
+      //document.getElementById("sortFeature").style.marginLeft = "250px";
+    },
+    closeSort: function() {
+      document.getElementById("sortContent").style.width = "0";
+      //document.getElementById("sortFeature").style.marginLeft= "0";
+    },
+    openFilter: function() {
+      document.getElementById("filterContent").style.width = "220px";
+      document.getElementById("filterFeature").style.marginLeft = "250px";
+    },
+    closeFilter: function() {
+      document.getElementById("filterContent").style.width = "0";
+      document.getElementById("filterFeature").style.marginLeft= "0";
+    },
+    showDifficulty: function() {
+      
+      if (document.getElementById("filDifficultyChoice").style.display === "block") {
+        document.getElementById("filDifficultyChoice").style.display = "none";
+      }
+       else {
+         document.getElementById("filDifficultyChoice").style.display = "block";
+       }
+       
+    },
+    showCuisine: function() {
+      
+      if (document.getElementById("filCuisineChoice").style.display === "block") {
+        document.getElementById("filCuisineChoice").style.display = "none";
+      }
+       else {
+         document.getElementById("filCuisineChoice").style.display = "block";
+       }
+    },
+    showTime: function() {
+      
+      if (document.getElementById("filTimeChoice").style.display === "block") {
+        document.getElementById("filTimeChoice").style.display = "none";
+      }
+       else {
+         document.getElementById("filTimeChoice").style.display = "block";
+       }
+       
+    },
+    showType: function() {
+      
+      if (document.getElementById("filTypeChoice").style.display === "block") {
+        document.getElementById("filTypeChoice").style.display = "none";
+      }
+       else {
+         document.getElementById("filTypeChoice").style.display = "block";
+       }
+       
+    },
+    find: function() {
+      var slider = document.getElementById("myRange");
+      var output = document.getElementById("demo");
+      var values = ["less than 30mins", "30mins to 1h", "1h to 2h", "2h to 3h", "3h to 4h"];
+      output.innerHTML = values[slider.value];
+      this.timeValue = values[slider.value];
+    },
   },
   data() {
     return {
@@ -154,6 +291,11 @@ export default {
       recipe: true,
       restaurant: false,
       profile: false,
+      cuisines:['Chinese','Western','Italian','French','Japanese','German','Spanish','Singaporean','Malaysian','Indian','Fusion','Thai',],
+      difficultyChoice:[],
+      timeValue: "",
+      cuisineChoice:[],
+      typeChoice: [],
     };
   },
 };
@@ -235,5 +377,89 @@ export default {
   font-size: 32px;
   font-family: Helvetica;
   padding: 20px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: absolute;
+  z-index: 1;
+  top: 140px;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  /*padding-top: 60px;
+  top: 140px*/
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+#submit:hover  {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+.dropdown-btn:hover {
+  color: #f1f1f1;
+}
+
+.active {
+  background-color: #0088cc;
+  color: white;
+}
+
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
 }
 </style>
