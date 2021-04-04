@@ -69,49 +69,49 @@
         <div id="Recipe">
           <ul id="BriefDescription">
             <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
-              <h2>{{recipe.name}}</h2>
-              <img v-bind:src="recipe[1].image" alt="Food image" />
-              <br />
-              <br />
-              <br />
-              <div id="Description">
-                <span>Cuisine: {{recipe[1].cuisine}}</span>
-                <br />
-                <span>Type: {{recipe[1].type}}</span>
-                <br />                
-                <span>Difficulty: {{recipe[1].difficulty}}</span>
-                <br />
-                <span>Number of servings: {{recipe[1].servings}}</span>
-                <br />
-                <span>Total preparation time: {{recipe[1].time}}</span>
+              <div class="card" style="width: 23rem;">
+                <img class="img" v-bind:src="recipe[1].image" alt="Recipe Image" height="20px">
+                <div class="card-body">
+                  <h5 class="name">{{recipe[1].name}}</h5>
+                  <div id="Description">
+                    <span>Cuisine: {{recipe[1].cuisine}}</span>
+                    <br />
+                    <span>Type: {{recipe[1].type}}</span>
+                    <br />                
+                    <span>Difficulty: {{recipe[1].difficulty}}</span>
+                    <br />
+                    <span>Number of servings: {{recipe[1].servings}}</span>
+                    <br />
+                    <span>Total preparation time: {{recipe[1].time}}</span>
+                  </div>
+                  <div id = "buttons">
+                    <button
+                      id="beginCookingButton"
+                      v-on:click="go(recipe[1].ingredients, recipe[1].directions);"
+                    >Begin Cooking!
+                    </button>
+                    <button 
+                      v-if = "favRecipeCheck(recipe[0])" 
+                      v-on:click = "unfav(recipe[0])"
+                      id = "fav"
+                    >
+                      <img 
+                        src ="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
+                      >
+                      </button>
+                    <button 
+                      v-if= "!favRecipeCheck(recipe[0])" 
+                      v-on:click = "fav(recipe[0])"
+                      id = "unfav"
+                    >
+                      <img 
+                        src ="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
+                      >
+                    </button>
+                  </div>
+                  <span id ="credits">Contributed by: {{recipe[1].contributor}}</span>
+                </div>
               </div>
-              <div id = "buttons">
-              <button
-                id="beginCookingButton"
-                v-on:click="go(recipe[1].ingredients, recipe[1].directions);"
-              >Begin Cooking!</button>
-              <button 
-                v-if = "favRecipeCheck(recipe[0])" 
-                v-on:click = "unfav(recipe[0])"
-                id = "fav"
-              >
-                <img 
-                  src ="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
-                >
-              </button>
-              <button 
-                v-if= "!favRecipeCheck(recipe[0])" 
-                v-on:click = "fav(recipe[0])"
-                id = "unfav">
-                <img 
-                  src ="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
-                >
-              </button>
-              </div>
-              <br />
-              <br />
-              <br />
-              <span id ="credits">Contributed by: {{recipe[1].contributor}}</span>
             </li>
           </ul>
         </div>
@@ -345,6 +345,15 @@ export default {
 </script>
 
 <style scoped>
+#Description {
+  line-height: 20px;
+}
+
+.img {
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
+}
 
 .borderDiv {
   position:relative;
@@ -353,26 +362,23 @@ export default {
 
 .RecipeContainer {
   width: 100%;
-  padding-right: 20px;
 }
 
-#BriefDescription {
-  display: flex;
-  flex-wrap: wrap;
-  list-style-type: none;
-  line-height: 5px;
+#list {
+  border: none;
 }
 
 #beginCookingButton {
   background: #0088cc;
-  width: 150px;
+  width: 190px;
   border-radius: 8px;
   color: #ffffff;
   font-family: Helvetica;
   font-size: 18px;
   font-weight: 100;
-  padding: 5px;
+  padding: 20px;
   border: solid #0088cc 1px;
+  transform: translate(0px, -20px)
 }
 
 #beginCookingButton:hover {
@@ -384,41 +390,6 @@ export default {
   text-decoration: none;
   cursor: pointer;
 }
-#Description {
-  line-height: 20px;
-  text-align: center;
-}
-
-#list {
-  flex-grow: 1;
-  flex-basis: 300px;
-  text-align: center;
-  padding: 5px;
-  border: 1px solid #222;
-  margin: 10px;
-  width: 300px;
-  max-width: 300px;
-  height: 350px;
-  max-height: 350px;
-}
-img {
-  width: 100px;
-  height: 100px;
-}
-
-h2,img {
-  padding-right: 20px;
-  text-align: center;
-  justify-content: center;
-}
-
-#FullRecipe {
-  padding: 10px;
-}
-
-#Directions {
-  list-style-type: none;
-}
 
 #loading {
   min-height: 30em;
@@ -426,6 +397,7 @@ h2,img {
   display: flex;
   justify-content: center;
 }
+
 #credits {
   float: right;
 }
@@ -441,7 +413,8 @@ h2,img {
   height: 43px;
   text-align: center;
   border-radius: 8px;
-  transform: translate(0px, 10px);
+  background: white;
+  transform: translate(0px, -20px)
 }
 
 #fav:hover {
@@ -460,7 +433,8 @@ h2,img {
   text-align: center;
   border-radius: 8px;
   padding-top: 5px;
-  transform: translate(0px, 9px);
+  background: white;
+  transform: translate(0px, -20px)
 }
 
 #unfav:hover {
