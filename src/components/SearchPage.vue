@@ -41,6 +41,7 @@
         >ProfileSearch</router-link
       >
     </ul>
+
     <div class="BorderDiv">
       <p class="searchHeader">Fooder</p>
       <div class="searchDiv">
@@ -147,6 +148,7 @@ export default {
         this.searchProfile();
       }
     },
+    
   },
   data() {
     return {
@@ -236,4 +238,6 @@ export default {
   font-family: Helvetica;
   padding: 20px;
 }
+
+
 </style>

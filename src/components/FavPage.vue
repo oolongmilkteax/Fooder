@@ -49,7 +49,7 @@
       <ul id="BriefDescription">
         <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
           <h2>{{ recipe.name }}</h2>
-          <img v-bind:src="recipe.image" alt="Food image" />
+          <img v-bind:src="recipe.image" v-bind:id="recipe.name" v-on:click="searchRecipe(recipe.name)" alt="Food image" />
           <br />
           <br />
           <br />
@@ -61,7 +61,7 @@
       <ul id="BriefDescription">
         <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
           <h2>{{ restaurant.name }}</h2>
-          <img v-bind:src="restaurant.image" alt="Restaurant image" />
+          <img v-bind:src="restaurant.image" v-bind:id="restaurant.name" v-on:click="searchRestaurant(restaurant.name)" alt="Restaurant image" />
           <br />
           <br />
           <br />
@@ -131,6 +131,12 @@ export default {
             }
           });
         });
+    },
+    searchRecipe: function(recipe){
+      this.$router.push({ name: 'Recipe', params: {searchedValue: recipe}})
+    },
+    searchRestaurant: function(restaurant){
+      this.$router.push({ name: 'Restaurant', params: {searchedValue: restaurant}})
     },
   },
   created: function() {
