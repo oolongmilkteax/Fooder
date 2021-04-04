@@ -7,6 +7,7 @@ const store = new Vuex.Store({
   state: {
     authenticated: false,
     uid: null,
+    firstLogin: true,
   },
   mutations: {
     setAuthentication(state, status) {
@@ -14,6 +15,9 @@ const store = new Vuex.Store({
     },
     setUid(state, uid) {
       state.uid = uid;
+    },
+    setFirstLogin(state, uid) {
+      state.firstLogin = uid;
     },
   },
   plugins: [createPersistedState()],
