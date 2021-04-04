@@ -1,5 +1,28 @@
 <template>
   <div class="body">
+    <b-navbar toggleable="lg" type="dark" variant="dark">
+      <b-navbar-brand href="/searchpage">Fooder</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item href="/searchpage">Search</b-nav-item>
+          <b-nav-item href="/contribute">Contribute</b-nav-item>
+          <b-nav-item href="/favpage">favourites</b-nav-item>
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              User
+            </template>
+            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <ul class="ul">
       <router-link to="/contribute" class="routes">Contribute</router-link>
       <router-link to="/favpage" class="routes">favpage</router-link>
@@ -7,62 +30,75 @@
       <router-link to="/preferencing" class="routes">Preferencing</router-link>
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link to="/" class="routes">Logout</router-link>
+      <router-link @click.native="logout" to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
       <router-link to="/characteristic" class="routes">Characteristic</router-link>
       <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
-    <div id="block_container">
 
-    <div id="bloc1">
-      
-      <button class="sortFilterButton" v-on:click="submit = !submit">Sort By:</button><br>
-      
-      <select v-show="submit" v-model="selected" v-on:change="sort(selected)">
-        <option disabled value="">Select option:</option>
-        <option value="name">Name</option>
-        <option value="cuisine">Cuisine</option>
-        <option value="difficulty">Difficulty</option>
-        <option value="time">Time</option>
-        <option value="type">Type</option>
-      </select>
-
-    </div>  
-
-    <div id="bloc2">
-      
-      <button class="sortFilterButton" v-on:click="filter = !filter">Filter:</button><br>
-      
-      <button class="filterOpt" v-show="filter" v-on:click="difficulty = !difficulty; type=false; time=false; cuisine=false;">Difficulty</button>
-      <button class="miniButton" v-show="difficulty && filter" v-on:click="filterDifficulty('Easy')">Easy</button>
-      <button class="miniButton" v-show="difficulty && filter" v-on:click="filterDifficulty('Medium')">Medium</button>
-      <button class="miniButton" v-show="difficulty && filter" v-on:click="filterDifficulty('Hard')">Hard</button><br>
-
-      <button class="filterOpt" v-show="filter" v-on:click="type = !type; difficulty=false; time=false; cuisine=false;">Type</button>
-      <button class="miniButton" v-show="type && filter" v-on:click="filterType('Main')">Main</button>
-      <button class="miniButton" v-show="type && filter" v-on:click="filterType('Side')">Side</button><br>
-
-      <button class="filterOpt" v-show="filter" v-on:click="cuisine = !cuisine; difficulty=false; time=false; type=false;">Cuisine</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Chinese')">Chinese</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Western')">Western</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Italian')">Italian</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Thai')">Thai</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Malaysian')">Malaysian</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Singaporean')">Singaporean</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Japanese')">Japanese</button>
-      <button class="miniButton" v-show="cuisine && filter" v-on:click="filterCuisine('Mediterranean')">Mediterranean</button><br>
-
-      <button class="filterOpt" v-show="filter" v-on:click="time = !time; difficulty=false; type=false; cuisine=false;">Time</button>
     
-      <input v-show="time && filter" v-on:change="find()" type="range" list="tickmarks" min="0" max="4" value="50" class="slider" id="myRange">
-      <span v-show="time && filter" style="margin-right:15px"><strong>Value: <span id="demo"></span></strong></span>
-      <button class="miniButton" v-show="time && filter" v-on:click="filterTime(timeValue)">Submit</button>
-      <br>
-      <br>
-      
+    <div id="sortContent" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" v-on:click="closeSort()">&times;</a>
+      <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
+      <a class="dropdown-btn" v-on:click="sort('cuisine')">Cuisine</a>
+      <a class="dropdown-btn" v-on:click="sort('difficulty')">Difficulty</a>
+      <a class="dropdown-btn" v-on:click="sort('time')">Time</a>
+      <a class="dropdown-btn" v-on:click="sort('type')">Type</a>
     </div>
 
+
+    <div id="sortFeature">
+      <span style="font-size:30px;cursor:pointer" v-on:click="openSort()">&#8693; Sort</span>
     </div>
+    
+
+    
+    <div id="filterContent" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" v-on:click="closeFilter()">&times;</a>
+      <button class="dropdown-btn" v-on:click="showDifficulty()" id="filDifficulty">Difficulty &#9660; 
+      </button>
+      <div class="dropdown-container" id="filDifficultyChoice">
+        <a v-on:click="difficultyChoice=['difficulty','Easy']">Easy</a>
+        <a v-on:click="difficultyChoice=['difficulty','Medium']">Medium</a>
+        <a v-on:click="difficultyChoice=['difficulty','Hard']">Hard</a>
+      </div>
+
+      <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;
+      </button>
+      <div class="dropdown-container" id="filCuisineChoice">
+      <div  v-for="cuisine in cuisines" v-bind:key="cuisine">
+        <a v-on:click="cuisineChoice=['cuisine', cuisine]">{{cuisine}}</a>
+      </div>
+      </div>
+
+      <button class="dropdown-btn" v-on:click="showTime()" id="filTime">Time &#9660;
+      </button>
+      
+      <div class="dropdown-container" id="filTimeChoice">
+        <input v-on:change="find()" type="range" list="tickmarks" min="0" max="4" value="50" class="slider" id="myRange"><br>
+        <span><strong>Value: <span id="demo"></span></strong></span>
+        
+
+      </div>
+
+      <button class="dropdown-btn" v-on:click="showType()" id="filType">Type &#9660;
+      </button>
+      
+      <div class="dropdown-container" id="filTypeChoice">
+        <a  v-on:click="typeChoice=['type','Main']" >Main</a>
+        <a  v-on:click="typeChoice=['type','Side']">Side</a>
+    
+
+      </div>
+
+      <a id="submit" style="font-size:30px;cursor:pointer;" v-on:click="filtering"><strong>Search</strong></a>
+    </div>
+
+    <div id="filterSort">
+      <span style="font-size:30px;cursor:pointer" v-on:click="openFilter()">&#9776; Filter</span>
+    </div>
+    <br>
+    
     <div class="borderDiv">
       <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
       <div class="RecipeContainer">
@@ -124,10 +160,12 @@
 </template>
 
 <script>
+import logout from "./logout.js";
 import firebase from '../firebase.js'
-var db = firebase.firestore()
-import {getUid} from '../userObj.js'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+
+var db = firebase.firestore()
+
 export default {
   props: ["searchedValue"],
   data() {
@@ -141,8 +179,13 @@ export default {
       type : false,
       time: false,
       cuisine: false,
-      selected: "",
       timeValue: "",
+      filters: [],
+      save: [],
+      difficultyChoice: [],
+      cuisineChoice: [],
+      typeChoice: [],
+      cuisines: [],
     };
   },
   
@@ -151,6 +194,7 @@ export default {
   },
   
   methods: {
+    logout: logout,
     fetchItems: function() {
       db.collection("recipe")
         .get()
@@ -159,6 +203,10 @@ export default {
             //if empty search return all
             if(this.searchedValue == null){
               this.recipes.push([doc.id,doc.data()]);
+              this.save.push([doc.id,doc.data()]);
+              if (!this.cuisines.includes(doc.data()["cuisine"])) {
+                this.cuisines.push(doc.data()["cuisine"]);
+              }
             }
             else{
 
@@ -255,52 +303,44 @@ export default {
       this.submit=false;
     },
 
-    filterCuisine: function(cuisine) {
-      this.recipes=[];
-      db.collection("recipe").where("cuisine","==",cuisine)
-      .get().then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          this.recipes.push([doc.id,doc.data()]);
-      });
-      });
-      this.filter=false;
-      this.cuisine=false;
-    },
+    filtering: function() {
 
-    filterType: function(type) {
-      this.recipes=[];
-      db.collection("recipe").where("type","==",type)
-      .get().then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          this.recipes.push([doc.id,doc.data()]);
-      });
-      });
-      this.filter=false;
-      this.type=false;
-    },
-
-    filterDifficulty: function(difficulty) {
-      this.recipes=[];
-      db.collection("recipe").where("difficulty","==",difficulty)
-      .get().then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          this.recipes.push([doc.id,doc.data()]);
-      });
-      });
-      this.filter=false;
-      this.difficulty=false;
-    },
-
-    filterTime: function(time) {
-      this.recipes=[];
-      db.collection("recipe").where("time","==",time)
-      .get().then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          this.recipes.push([doc.id,doc.data()]);
-      });
-      });
+      if(this.timeValue != "") {
+        this.filters.push(['time',this.timeValue]);
+      }
+      if (this.difficultyChoice.length != 0) {
+        this.filters.push(this.difficultyChoice);
+      }
+      if (this.typeChoice.length != 0) {
+        this.filters.push(this.typeChoice);
+      }
+      if (this.cuisineChoice.length != 0) {
+        this.filters.push(this.cuisineChoice);
+      }
+      
+      this.recipes = [...this.save];
+      for (var i = 0; i < this.recipes.length; i++){
+        for (var j = 0; j < this.filters.length; j++){
+          if (this.recipes[i][1][this.filters[j][0]] != this.filters[j][1])  {
+            this.recipes.splice(i,1);
+            i--;
+            break;
+          }
+        }
+      }
+ 
+      this.filters.splice(0, this.filters.length);
+      this.timeValue = "";
+      this.difficultyChoice = [];
+      this.cuisineChoice = [];
+      this.typeChoice = [];
       this.filter=false;
       this.time=false;
+      this.cuisine=false;
+      this.difficulty=false;
+      this.type=false;
+      document.getElementById("demo").innerHTML = "";
+    
     },
 
     find: function() {
@@ -318,7 +358,7 @@ export default {
       });
     },
     getFavourites: function() {
-      db.collection('user').doc(getUid()).get().then((doc) => {
+      db.collection('user').doc(this.$store.state.uid).get().then((doc) => {
         this.favRecipe = doc.data().favRecipe;
       });
     },
@@ -328,14 +368,68 @@ export default {
     unfav: function(id) {
       var index = this.favRecipe.indexOf(id);
       this.favRecipe.splice(index, 1);
-      db.collection('user').doc(getUid()).update({
+      db.collection('user').doc(this.$store.state.uid).update({
         "favRecipe": firebase.firestore.FieldValue.arrayRemove(id)});
     },
     fav: function(id) {
       this.favRecipe.push(id);
-      db.collection('user').doc(getUid()).update({
+      db.collection('user').doc(this.$store.state.uid).update({
         "favRecipe": firebase.firestore.FieldValue.arrayUnion(id)});
-    }
+    },
+
+    openSort: function() {
+      document.getElementById("sortContent").style.width = "220px";
+    },
+    closeSort: function() {
+      document.getElementById("sortContent").style.width = "0";
+    },
+    openFilter: function() {
+      document.getElementById("filterContent").style.width = "220px";
+    },
+    closeFilter: function() {
+      document.getElementById("filterContent").style.width = "0";
+    },
+
+    showDifficulty: function() {
+      
+      if (document.getElementById("filDifficultyChoice").style.display === "block") {
+        document.getElementById("filDifficultyChoice").style.display = "none";
+      }
+       else {
+         document.getElementById("filDifficultyChoice").style.display = "block";
+       }
+    },
+    showCuisine: function() {
+      
+      if (document.getElementById("filCuisineChoice").style.display === "block") {
+        document.getElementById("filCuisineChoice").style.display = "none";
+      }
+       else {
+         document.getElementById("filCuisineChoice").style.display = "block";
+       }
+       
+    },
+    showTime: function() {
+      
+      if (document.getElementById("filTimeChoice").style.display === "block") {
+        document.getElementById("filTimeChoice").style.display = "none";
+      }
+       else {
+         document.getElementById("filTimeChoice").style.display = "block";
+       }
+
+       
+    },
+    showType: function() {
+      
+      if (document.getElementById("filTypeChoice").style.display === "block") {
+        document.getElementById("filTypeChoice").style.display = "none";
+      }
+       else {
+         document.getElementById("filTypeChoice").style.display = "block";
+       }
+       
+    },
   },
   created() {
     this.fetchItems();
@@ -441,59 +535,80 @@ export default {
   cursor: pointer;
 }
 
-.sortFilterButton {
-  background: #0088cc;
-  width: 100px;
-  border-radius: 8px;
-  color: #ffffff;
-  font-family: Helvetica;
-  font-size: 18px;
-  font-weight: 100;
-  padding: 5px;
-  border: solid #0088cc 1px;
-  margin-bottom: 5px;
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: absolute;
+  z-index: 1;
+  top: 140px;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  /*padding-top: 60px;*/
 }
 
-.miniButton {
-  background: turquoise;
-  border-radius: 8px;
-  
+.sidenav a {
+  padding: 8px 8px 8px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
 }
 
-.filterOpt {
-  margin-right:50px;
-  background: teal;
-  color: #ffffff;
-  font-weight: 100;
-  border-radius: 8px;
-  border: solid teal 1px;
-  width: 80px
+.sidenav a:hover {
+  color: #f1f1f1;
 }
 
-.filterOpt:hover {
-  background-color: #4CAF50;
+#submit:hover  {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+
+.dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+.dropdown-btn:hover {
+  color: #f1f1f1;
+}
+
+.active {
+  background-color: #0088cc;
   color: white;
 }
 
-.filterOpt:focus{
-    background:olive;
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
 }
 
-#block_container {
-
-    height: 125px;
-    overflow: hidden;
-    position: relative;
-    z-index : 1;
-}
-
-#bloc1 {
-    width: 200px;
-    float:left; 
-}
-#bloc2 {
-    overflow: hidden; 
-}
 </style>
 
 
