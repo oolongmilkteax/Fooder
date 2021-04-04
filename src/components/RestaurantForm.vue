@@ -1,154 +1,165 @@
 <template>
-    <form>
-        <label for="name">Name of Restaurant: </label>
-        <span>{{restaurant.name}}</span>
-        <br>
-        <span class = "alert" 
-        v-show="alert.name"
-        >Please enter name of restaurant.
-        </span>
-        <br>
+  <form>
+    <label for="name">Name of Restaurant: </label>
+    <span>{{ restaurant.name }}</span>
+    <br />
+    <span class="alert" v-show="alert.name"
+      >Please enter name of restaurant.
+    </span>
+    <br />
 
-        <input class="contriInput"
-        type="text"
-        id="name"
-        name="name"
-        v-model="restaurant.name"/>
-        <br>
-        
-        <label for="address">Address: </label>
-        <span>{{restaurant.address}}</span>
-        <br>
-        <span class = "alert" 
-        v-show="alert.address"
-        >Please enter address of restaurant.
-        </span>
-        <br>
+    <input
+      class="contriInput"
+      type="text"
+      id="name"
+      name="name"
+      v-model="restaurant.name"
+    />
+    <br />
 
-        <input class="contriInput"
-        type="text"
-        id="address"
-        name="address"
-        v-model="restaurant.address"/>
-        <br>
+    <label for="address">Address: </label>
+    <span>{{ restaurant.address }}</span>
+    <br />
+    <span class="alert" v-show="alert.address"
+      >Please enter address of restaurant.
+    </span>
+    <br />
 
-        <label for="cuisine">Cuisine: </label>
-        <span>{{restaurant.cuisine}}</span>
-        <br>
-        <span class = "alert" 
-        v-show="alert.cuisine"
-        >Please enter cuisine type.
-        </span>
-        <br>
+    <input
+      class="contriInput"
+      type="text"
+      id="address"
+      name="address"
+      v-model="restaurant.address"
+    />
+    <br />
 
-        <input class="contriInput"
-        type="text"
-        id="cuisine"
-        name="cuisine"
-        v-model="restaurant.cuisine"/>
-        <br>
+    <label for="cuisine">Cuisine: </label>
+    <span>{{ restaurant.cuisine }}</span>
+    <br />
+    <span class="alert" v-show="alert.cuisine"
+      >Please enter cuisine type.
+    </span>
+    <br />
 
-        <label for="image">ImageURL (for display purposes): </label>
-        <span>{{restaurant.image}}</span>
-        <br>
-        <span class = "alert" 
-        v-show="alert.image"
-        >Please enter image URL of restaurant.
-        </span>
-        <br>
+    <input
+      class="contriInput"
+      type="text"
+      id="cuisine"
+      name="cuisine"
+      v-model="restaurant.cuisine"
+    />
+    <br />
 
-        <input class="contriInput"
-        type="text"
-        id="image"
-        name="image"
-        placeholder="Please provide a valid link"
-        v-model="restaurant.image"/>
-        <br>
+    <label for="image">ImageURL (for display purposes): </label>
+    <span>{{ restaurant.image }}</span>
+    <br />
+    <span class="alert" v-show="alert.image"
+      >Please enter image URL of restaurant.
+    </span>
+    <br />
 
-        <label for="openingHours">Opening hours: </label>
-        <span>{{restaurant.openingHours}}</span>
-        <br>
-        <span class = "alert" 
-        v-show="alert.openingHours"
-        >Please enter opening hours of restaurant.
-        </span>
-        <br>
+    <input
+      class="contriInput"
+      type="text"
+      id="image"
+      name="image"
+      placeholder="Please provide a valid link"
+      v-model="restaurant.image"
+    />
+    <br />
 
-        <input class="contriInput"
-        type="text"
-        id="openingHours"
-        name="openingHours"
-        v-model="restaurant.openingHours" 
-        placeholder="eg: 11:30am–2:30pm, 5:30pm–10:30pm"/>
-        <br>
+    <label for="openingHours">Opening hours: </label>
+    <span>{{ restaurant.openingHours }}</span>
+    <br />
+    <span class="alert" v-show="alert.openingHours"
+      >Please enter opening hours of restaurant.
+    </span>
+    <br />
 
-        <label for="priceRange">Price range: </label>
-        <span>{{restaurant.priceRange}}</span>
-        <br>
-        <span class = "alert" 
-        v-show="alert.priceRange"
-        >Please select a price range of restaurant.
-        </span>
-        <br>
+    <input
+      class="contriInput"
+      type="text"
+      id="openingHours"
+      name="openingHours"
+      v-model="restaurant.openingHours"
+      placeholder="eg: 11:30am–2:30pm, 5:30pm–10:30pm"
+    />
+    <br />
 
-        <select class="contriInput"
-        type="text"
-        id="priceRange"
-        name="priceRange"
-        v-model="restaurant.priceRange">
-            <option value="less than $20">less than $20</option>
-            <option value="$20 to $50">$20 to $50</option>
-            <option value="$50 to $100">$50 to $100</option>
-            <option value="$100 to $150">$100 to $150</option>
-            <option value="$150 to $200">$150 to $200</option>
-            <option value="$200 to $300">$200 to $300</option>
-            <option value="above $300">above $300</option>
-        </select>
-        <br>
+    <label for="priceRange">Price range: </label>
+    <span>{{ restaurant.priceRange }}</span>
+    <br />
+    <span class="alert" v-show="alert.priceRange"
+      >Please select a price range of restaurant.
+    </span>
+    <br />
 
-        <label for="websiteLink">Website: </label>
-        <span>{{restaurant.websiteLink}}</span>
-        <br>
-        <span class = "alert" 
-        v-show="alert.websiteLink"
-        >Please enter website link of restaurant.
-        </span>
-        <br>
+    <select
+      class="contriInput"
+      type="text"
+      id="priceRange"
+      name="priceRange"
+      v-model="restaurant.priceRange"
+    >
+      <option value="less than $20">less than $20</option>
+      <option value="$20 to $50">$20 to $50</option>
+      <option value="$50 to $100">$50 to $100</option>
+      <option value="$100 to $150">$100 to $150</option>
+      <option value="$150 to $200">$150 to $200</option>
+      <option value="$200 to $300">$200 to $300</option>
+      <option value="above $300">above $300</option>
+    </select>
+    <br />
 
-        <input class="contriInput"
-        type="text"
-        id="websiteLink"
-        name="websiteLink"
-        v-model="restaurant.websiteLink"/>
-        <br>
+    <label for="websiteLink">Website: </label>
+    <span>{{ restaurant.websiteLink }}</span>
+    <br />
+    <span class="alert" v-show="alert.websiteLink"
+      >Please enter website link of restaurant.
+    </span>
+    <br />
 
-        <span class = "alert" 
-        v-show="alert.submission"
-        >Please make sure to fill in every field before submitting!
-        </span>
-        <br>
+    <input
+      class="contriInput"
+      type="text"
+      id="websiteLink"
+      name="websiteLink"
+      v-model="restaurant.websiteLink"
+    />
+    <br />
 
-        <button type="button" id="submitContributionButton" v-on:click="submitRestaurant">Submit!</button>
-    </form>
+    <span class="alert" v-show="alert.submission"
+      >Please make sure to fill in every field before submitting!
+    </span>
+    <br />
+
+    <button
+      type="button"
+      id="submitContributionButton"
+      v-on:click="submitRestaurant"
+    >
+      Submit!
+    </button>
+  </form>
 </template>
 
 <script>
-import firebase from '../firebase.js'
-var db = firebase.firestore()
-import {getUid} from '../userObj.js'
+import firebase from "../firebase.js";
+var db = firebase.firestore();
 
 export default {
   data() {
     return {
       restaurant: {
-          address: "", 
-          cuisine: "",
-          image: "",
-          name: "",
-          openingHours: "",
-          priceRange: "",
-          websiteLink: "",
-          contributor: ""
+        address: "",
+        cuisine: "",
+        image: "",
+        name: "",
+        openingHours: "",
+        priceRange: "",
+        websiteLink: "",
+        contributor: "",
       },
       alert: {
         address: false,
@@ -158,9 +169,9 @@ export default {
         openingHours: false,
         priceRange: false,
         websiteLink: false,
-        submission: false
+        submission: false,
       },
-      id: ""
+      id: "",
     };
   },
   methods: {
@@ -174,57 +185,71 @@ export default {
       this.alert.websiteLink = false;
       this.alert.submission = false;
       if (this.restaurant.name === "") {
-        this.alert.name=true;
-        this.alert.submission=true;
-      } 
+        this.alert.name = true;
+        this.alert.submission = true;
+      }
       if (this.restaurant.address === "") {
-        this.alert.address=true;
-        this.alert.submission=true;
-      } 
+        this.alert.address = true;
+        this.alert.submission = true;
+      }
       if (this.restaurant.cuisine === "") {
-        this.alert.cuisine=true;
-        this.alert.submission=true;
-      } 
+        this.alert.cuisine = true;
+        this.alert.submission = true;
+      }
       if (this.restaurant.image === "") {
-        this.alert.image=true;
-        this.alert.submission=true;
-      } 
+        this.alert.image = true;
+        this.alert.submission = true;
+      }
       if (this.restaurant.openingHours === "") {
-        this.alert.openingHours=true;
-        this.alert.submission=true;
-      } 
+        this.alert.openingHours = true;
+        this.alert.submission = true;
+      }
       if (this.restaurant.priceRange === "") {
-        this.alert.priceRange=true;
-        this.alert.submission=true;
-      } 
+        this.alert.priceRange = true;
+        this.alert.submission = true;
+      }
       if (this.restaurant.websiteLink === "") {
-        this.alert.websiteLink=true;
-        this.alert.submission=true;
-      } 
-      if ((this.restaurant.name && this.restaurant.address && this.restaurant.cuisine && this.restaurant.image && this.restaurant.openingHours && this.restaurant.priceRange && this.restaurant.websiteLink) != ""){ 
-        db.collection('restaurant').add(this.restaurant)
-          .then( (doc) => {
+        this.alert.websiteLink = true;
+        this.alert.submission = true;
+      }
+      if (
+        (this.restaurant.name &&
+          this.restaurant.address &&
+          this.restaurant.cuisine &&
+          this.restaurant.image &&
+          this.restaurant.openingHours &&
+          this.restaurant.priceRange &&
+          this.restaurant.websiteLink) != ""
+      ) {
+        db.collection("restaurant")
+          .add(this.restaurant)
+          .then((doc) => {
             this.id = doc.id;
-            db.collection('user').doc(getUid()).update({
-             "contributeRestaurant": firebase.firestore.FieldValue.arrayUnion(this.id)
-            })
+            db.collection("user")
+              .doc(this.$store.state.uid)
+              .update({
+                contributeRestaurant: firebase.firestore.FieldValue.arrayUnion(
+                  this.id
+                ),
+              });
             location.reload();
-          })
+          });
       }
     },
     getContributor: function() {
-      db.collection('user').doc(getUid()).get().then((doc) => {
-        this.restaurant.contributor = doc.data().name;
-      })
-    }
-
+      db.collection("user")
+        .doc(this.$store.state.uid)
+        .get()
+        .then((doc) => {
+          this.restaurant.contributor = doc.data().name;
+        });
+    },
   },
   created() {
     this.getContributor();
-  }
-}
+  },
+};
 </script>
-
 
 <style>
 .myTitles {

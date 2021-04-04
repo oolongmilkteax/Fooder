@@ -1,10 +1,19 @@
 <template>
   <div class="body">
+    <b-navbar toggleable="lg" type="dark" variant="dark">
+      <b-navbar-brand href="/">Fooder</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item href="/signup">Sign Up</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <div class="borderDiv">
-      <ul class="ul">
-        <router-link to="/" class="routes">Sign In</router-link>
-        <router-link to="/signup" class="routes">Sign Up</router-link>
-      </ul>
       <p class="signupHeader">Welcome to Fooder!</p>
       <input type="text" class="signupInput" v-model="displayName" placeholder="Full Name" />
       <p class="errorMsg" v-show="this.emptyNameErr">Pease enter your full name.</p>

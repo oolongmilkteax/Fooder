@@ -1,5 +1,28 @@
 <template>
   <div class="body">
+    <b-navbar toggleable="lg" type="dark" variant="dark">
+      <b-navbar-brand href="/searchpage">Fooder</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item href="/searchpage">Search</b-nav-item>
+          <b-nav-item href="/contribute">Contribute</b-nav-item>
+          <b-nav-item href="/favpage">favourites</b-nav-item>
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              User
+            </template>
+            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <ul class="ul">
       <router-link to="/contribute" class="routes">Contribute</router-link>
       <router-link to="/favpage" class="routes">favpage</router-link>
@@ -7,10 +30,16 @@
       <router-link to="/preferencing" class="routes">Preferencing</router-link>
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link to="/" class="routes">Logout</router-link>
+      <router-link @click.native="logout" to="/" class="routes"
+        >Logout</router-link
+      >
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes">Characteristic</router-link>
-      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
+      <router-link to="/characteristic" class="routes"
+        >Characteristic</router-link
+      >
+      <router-link to="/profileresults" class="routes"
+        >ProfileSearch</router-link
+      >
     </ul>
     <div class="borderDiv">
       <div class="IngredientContainer">
@@ -47,7 +76,9 @@
           <button
             id="beginCookingButton"
             onclick="location.href= './InstructionsSample.html';"
-          >Begin Cooking!</button>
+          >
+            Begin Cooking!
+          </button>
         </div>
         <div class="footerContainer">
           <p class="footerText">Design by JKJR</p>
@@ -58,7 +89,9 @@
 </template>
 
 <script>
-export default {};
+import logout from "./logout.js";
+
+export default { methods: { logout: logout } };
 </script>
 
 <style>
