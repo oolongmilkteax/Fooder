@@ -10,6 +10,8 @@ import FullRecipe from "./components/FullRecipe.vue";
 import ProfilePage from "./components/ProfilePage";
 import Characteristic from "./components/Characteristic";
 import ProfileSearch from "./components/ProfileSearch";
+import DashBoard from "./components/DashBoard.vue";
+
 
 import store from "./store";
 
@@ -32,6 +34,11 @@ const beforeEnterPreferencing = function(to, from, next) {
 };
 
 export default [
+  {
+    name: "DashBoard",
+    path: "/dashboard",
+    component: DashBoard,
+  },
   {
     name: "Contribute",
     path: "/contribute",
