@@ -72,7 +72,7 @@ export default {
           .then(() => {
             this.$store.commit("setAuthentication", true);
             this.$store.commit("setUid", firebase.auth().currentUser.uid);
-            this.$router.replace({ name: "Contribute" });
+            this.$router.replace({ name: "SearchPage" });
             //location.href = "./preferencing";
             /*
             if (res.user.emailVerified) {

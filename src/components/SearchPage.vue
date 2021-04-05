@@ -17,8 +17,8 @@
             <template #button-content>
               User
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item href="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item v-on:click="logout()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -54,6 +54,7 @@
         >
           Restaurant
         </button>
+  
         <button
           type="button"
           id="Recipe"

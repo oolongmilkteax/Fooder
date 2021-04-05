@@ -1,6 +1,5 @@
 import Contribute from "./components/Contribute.vue";
 import FavPage from "./components/FavPage.vue";
-import Ingredients from "./components/Ingredients.vue";
 import LandingPage from "./components/LandingPage.vue";
 import Preferencing from "./components/Preferencing.vue";
 import Restaurant from "./components/Restaurant.vue";
@@ -33,12 +32,6 @@ export default [
     name: "FavPage",
     path: "/favpage",
     component: FavPage,
-    beforeEnter: beforeEnter,
-  },
-  {
-    name: "Ingredients",
-    path: "/ingredients",
-    component: Ingredients,
     beforeEnter: beforeEnter,
   },
   {
