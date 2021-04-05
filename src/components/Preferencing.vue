@@ -1,5 +1,25 @@
 <template>
   <div class="body">
+    <b-navbar toggleable="lg" type="dark" variant="dark">
+      <b-navbar-brand href="/searchpage">Fooder</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item href="/searchpage">Search</b-nav-item>
+          <b-nav-item href="/contribute">Contribute</b-nav-item>
+          <b-nav-item href="/favpage">favourites</b-nav-item>
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>User</template>
+            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <ul class="ul">
       <router-link to="/contribute" class="routes">Contribute</router-link>
       <router-link to="/favpage" class="routes">favpage</router-link>
@@ -7,16 +27,10 @@
       <router-link to="/preferencing" class="routes">Preferencing</router-link>
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link @click.native="logout" to="/" class="routes"
-        >Logout</router-link
-      >
+      <router-link @click.native="logout" to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes"
-        >Characteristic</router-link
-      >
-      <router-link to="/profileresults" class="routes"
-        >ProfileSearch</router-link
-      >
+      <router-link to="/characteristic" class="routes">Characteristic</router-link>
+      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
     <div>
       <div class="myQuestions starter">
@@ -27,18 +41,14 @@
             name="question1"
             id="Cooking"
             v-on:click="makeSelection('Cooking', 0)"
-          >
-            Cooking
-          </button>
+          >Cooking</button>
           <br />
           <button
             class="myButton"
             name="question1"
             id="Eating out"
             v-on:click="makeSelection('Eating out', 0)"
-          >
-            Eating out
-          </button>
+          >Eating out</button>
         </div>
       </div>
       <div class="myQuestions">
@@ -49,27 +59,11 @@
             name="question2"
             v-on:click="makeSelection('$$$', 1)"
             id="$$$"
-          >
-            $$$
-          </button>
+          >$$$</button>
           <br />
-          <button
-            class="myButton"
-            name="question2"
-            v-on:click="makeSelection('$$', 1)"
-            id="$$"
-          >
-            $$
-          </button>
+          <button class="myButton" name="question2" v-on:click="makeSelection('$$', 1)" id="$$">$$</button>
           <br />
-          <button
-            class="myButton"
-            name="question2"
-            v-on:click="makeSelection('$', 1)"
-            id="$"
-          >
-            $
-          </button>
+          <button class="myButton" name="question2" v-on:click="makeSelection('$', 1)" id="$">$</button>
         </div>
       </div>
       <div class="myQuestions">
@@ -80,45 +74,35 @@
             name="question3"
             v-on:click="makeSelection('Chinese Food', 2)"
             id="Chinese Food"
-          >
-            Chinese Food
-          </button>
+          >Chinese Food</button>
           <br />
           <button
             class="myButton"
             name="question3"
             v-on:click="makeSelection('Italian Food', 2)"
             id="Italian Food"
-          >
-            Indian Food
-          </button>
+          >Indian Food</button>
           <br />
           <button
             class="myButton"
             name="question3"
             v-on:click="makeSelection('Singaporean Food', 2)"
             id="Singaporean Food"
-          >
-            Western Food
-          </button>
+          >Western Food</button>
           <br />
           <button
             class="myButton"
             name="question3"
             v-on:click="makeSelection('Thai Food', 2)"
             id="Thai Food"
-          >
-            Thai Food
-          </button>
+          >Thai Food</button>
           <br />
           <button
             class="myButton"
             name="question3"
             v-on:click="makeSelection('Western Food', 2)"
             id="Western Food"
-          >
-            Viet Food
-          </button>
+          >Viet Food</button>
         </div>
       </div>
       <div class="myQuestions">
@@ -129,27 +113,21 @@
             name="question4"
             v-on:click="makeSelection('Expert', 3)"
             id="Expert"
-          >
-            Expert
-          </button>
+          >Expert</button>
           <br />
           <button
             class="myButton"
             name="question4"
             v-on:click="makeSelection('Intermediate', 3)"
             id="Intermediate"
-          >
-            Intermediate
-          </button>
+          >Intermediate</button>
           <br />
           <button
             class="myButton"
             name="question4"
             v-on:click="makeSelection('Beginner', 3)"
             id="Beginner"
-          >
-            Beginner
-          </button>
+          >Beginner</button>
         </div>
       </div>
       <div class="myQuestions">
@@ -160,35 +138,27 @@
             name="question5"
             v-on:click="makeSelection('2km', 4)"
             id="2km"
-          >
-            2km
-          </button>
+          >2km</button>
           <br />
           <button
             class="myButton"
             name="question5"
             v-on:click="makeSelection('5km', 4)"
             id="5km"
-          >
-            5km
-          </button>
+          >5km</button>
           <br />
           <button
             class="myButton"
             name="question5"
             v-on:click="makeSelection('10km', 4)"
             id="10km"
-          >
-            10km
-          </button>
+          >10km</button>
         </div>
       </div>
       <div class="myQuestions">
         <h1>Complete the questionaire by clicking the submit button!</h1>
         <div class="button-centraliser">
-          <button class="myButton" v-on:click="submitQuestionaire()">
-            Submit
-          </button>
+          <button class="myButton" v-on:click="submitQuestionaire()">Submit</button>
         </div>
       </div>
     </div>
@@ -206,6 +176,7 @@
 </template>
 
 <script>
+import firebase from "../firebase.js";
 import logout from "./logout.js";
 export default {
   name: "Preferencing",
@@ -216,7 +187,7 @@ export default {
       numberOfQuestions: 5,
       slideIndex: 1,
       outputValue: 0,
-      preferences: [],
+      preferences: []
     };
   },
   methods: {
@@ -382,14 +353,20 @@ export default {
         this.preferenceCalculator();
         this.$router.push({
           name: "Characteristic",
-          params: { preferences: this.preferences },
+          params: { preferences: this.preferences }
         });
       }
-    },
+      this.$store.commit("setFirstLogin", false);
+      firebase
+        .firestore()
+        .collection("user")
+        .doc(this.$store.state.uid)
+        .update({ firstLogin: false });
+    }
   },
   created: function() {
     this.showSlides(this.slideIndex);
-  },
+  }
 };
 </script>
 

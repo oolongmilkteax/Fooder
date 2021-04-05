@@ -21,6 +21,16 @@ const beforeEnter = function(to, from, next) {
   }
 };
 
+const beforeEnterPreferencing = function(to, from, next) {
+  if (store.state.authenticated == false) {
+    next("/");
+  } else if (store.state.firstLogin == false) {
+    next({ name: "SearchPage" });
+  } else {
+    next();
+  }
+};
+
 export default [
   {
     name: "Contribute",
@@ -43,7 +53,7 @@ export default [
     name: "Preferencing",
     path: "/preferencing",
     component: Preferencing,
-    beforeEnter: beforeEnter,
+    beforeEnter: beforeEnterPreferencing,
   },
   {
     name: "Restaurant",
