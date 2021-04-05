@@ -1,28 +1,5 @@
 <template>
   <div class="body">
-    <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand href="/searchpage">Fooder</b-navbar-brand>
-
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-      <b-collapse id="nav-collapse" is-nav>
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item href="/searchpage">Search</b-nav-item>
-          <b-nav-item href="/contribute">Contribute</b-nav-item>
-          <b-nav-item href="/favpage">favourites</b-nav-item>
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template #button-content>
-              User
-            </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
     <ul class="ul">
       <router-link to="/contribute" class="routes">Contribute</router-link>
       <router-link to="/favpage" class="routes">favpage</router-link>
@@ -41,20 +18,20 @@
         >ProfileSearch</router-link
       >
     </ul>
-    <radar-chart :parsedData="parsedData"></radar-chart>
+    <div v-if="isLoaded">
+      <radar-chart :parsedData="parsedData"></radar-chart>
+    </div>
     <div class="preferenceDiv">
       <h3>{{ "Favourite Cuisine: " + this.cuisine }}</h3>
       <h3>{{ "Type of Eater: " + this.type }}</h3>
       <h2>Here are some recommendations we have for you!</h2>
     </div>
     <li class="characteristicslist" v-for="item in recommendedThings" v-bind:key="item.id">
-      <div class="individualRecommendation">
-        <div class="pointDiv">
-          {{item.name}}
-          <img v-bind:src="item.image" alt="Food image" />
-          <button class="myButton" v-on:click="go(item)">Go!</button>
-        </div>
-      </div>
+      <div class="pointDiv">
+        {{item.name}} 
+        <img v-bind:src="item.image" alt="Food image" />
+        <button class="myButton smaller" v-on:click="go(item)">Go!</button>
+      </div> 
     </li>
     <b-button href="/searchpage" class = "gotoSearchPage">Find your own Recipes and Restaurants!</b-button>
     <div class="footerContainer">
@@ -72,13 +49,14 @@ export default {
   components: {
     RadarChart,
   },
-  props: ["preferences"],
   data() {
     return {
       parsedData:[],
       cuisine:"",
       type:"",
       recommendedThings: [],
+      preferences:[],
+      isLoaded:false,
     };
   },
   methods: {
@@ -138,12 +116,18 @@ export default {
     },
   },
   created: function() {
-    if (this.preferences.length == 5) {
-      this.cuisine = this.preferences.pop();
-      this.parsedData = this.preferences;
-    }
-    this.typeFinder();
-    console.log(this.recommendedThings);
+    db.collection("user")
+        .doc(this.$store.state.uid)
+        .get()
+        .then((doc) => {
+          this.preferences = doc.data().preferences;
+          if (this.preferences.length == 5) {
+            this.cuisine = this.preferences.pop();
+            this.parsedData = this.preferences;
+          }
+          this.isLoaded = true;
+          this.typeFinder();
+    }); 
   },
 };
 </script>
@@ -156,7 +140,6 @@ export default {
 .characteristicslist {
   text-align: center;
   padding: 5px;
-  border: 1px solid #222;
   margin: 10px;
   list-style-type: none;
 }
@@ -172,6 +155,10 @@ export default {
     margin-left: auto;
     margin-right: auto;
     width: 20%;
+}
+
+.smaller{
+  width: 25%;
 }
 
 </style>

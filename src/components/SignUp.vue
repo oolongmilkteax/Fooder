@@ -6,10 +6,9 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item href="/signup">Sign Up</b-nav-item>
+          <b-nav-item href="/">Sign in</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -80,7 +79,8 @@ export default {
               .collection("user")
               .doc(getUid())
               .update({
-                name: this.titleCase(this.displayName)
+                name: this.titleCase(this.displayName),
+                firstLogin: true
               });
             alert(
               "Registered successfully. Please verify email before signing in."

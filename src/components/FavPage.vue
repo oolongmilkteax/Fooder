@@ -17,8 +17,8 @@
             <template #button-content>
               User
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item href="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item v-on:click="logout()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -93,20 +93,20 @@ export default {
   methods: {
     logout: logout,
     fetchInfo: function() {
-      this.uid = this.$store.state.uid;
-      db.firestore()
-        .collection("user")
-        .doc(this.uid)
-        .get()
-        .then((user) => {
-          this.favRestaurant = user.data().favRestaurant;
-          this.favRecipe = user.data().favRecipe;
-          this.fetchRecipes();
-          this.fetchRestaurants(this.uid);
-        })
-        .then(() => {
-          this.isLoading = false;
-        });
+      // this.uid = this.$store.state.uid;
+      // db.firestore()
+      //   .collection("user")
+      //   .doc(this.uid)
+      //   .get()
+      //   .then((user) => {
+      //     this.favRestaurant = user.data().favRestaurant;
+      //     this.favRecipe = user.data().favRecipe;
+      //     this.fetchRecipes();
+      //     this.fetchRestaurants(this.uid);
+      //   })
+      //   .then(() => {
+      //     this.isLoading = false;
+      //   });
     },
     fetchRecipes: function() {
       db.firestore()

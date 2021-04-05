@@ -1,6 +1,5 @@
 import Contribute from "./components/Contribute.vue";
 import FavPage from "./components/FavPage.vue";
-import Ingredients from "./components/Ingredients.vue";
 import LandingPage from "./components/LandingPage.vue";
 import Preferencing from "./components/Preferencing.vue";
 import Restaurant from "./components/Restaurant.vue";
@@ -11,6 +10,8 @@ import FullRecipe from "./components/FullRecipe.vue";
 import ProfilePage from "./components/ProfilePage";
 import Characteristic from "./components/Characteristic";
 import ProfileSearch from "./components/ProfileSearch";
+import DashBoard from "./components/DashBoard.vue";
+
 
 import store from "./store";
 
@@ -22,7 +23,22 @@ const beforeEnter = function(to, from, next) {
   }
 };
 
+const beforeEnterPreferencing = function(to, from, next) {
+  if (store.state.authenticated == false) {
+    next("/");
+  } else if (store.state.firstLogin == false) {
+    next({ name: "SearchPage" });
+  } else {
+    next();
+  }
+};
+
 export default [
+  {
+    name: "DashBoard",
+    path: "/dashboard",
+    component: DashBoard,
+  },
   {
     name: "Contribute",
     path: "/contribute",
@@ -36,12 +52,6 @@ export default [
     beforeEnter: beforeEnter,
   },
   {
-    name: "Ingredients",
-    path: "/ingredients",
-    component: Ingredients,
-    beforeEnter: beforeEnter,
-  },
-  {
     name: "LandingPage",
     path: "/",
     component: LandingPage,
@@ -50,7 +60,7 @@ export default [
     name: "Preferencing",
     path: "/preferencing",
     component: Preferencing,
-    beforeEnter: beforeEnter,
+    beforeEnter: beforeEnterPreferencing,
   },
   {
     name: "Restaurant",
