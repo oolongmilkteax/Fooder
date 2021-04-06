@@ -8,7 +8,7 @@ export default {
         datacollection: {
             labels: ["less than $20", "$20 to $50", "$50 to $100", "$100 to $150", "$150 to $200","$200 to $300","above $300"],
             datasets: [{
-                label: "Price Range of the Restaurants your favourite and Contribute",
+                label: "Price Range of the Restaurants your favourite",
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(255, 159, 64, 0.2)',
@@ -24,7 +24,7 @@ export default {
         options: {
             title: {
               display: true,
-              text: 'Price Range of the Restaurants your favourite and Contribute'
+              text: 'Price Range of the Restaurants your favourite'
             },
             responsive: true,
             maintainAspectRatio: false
