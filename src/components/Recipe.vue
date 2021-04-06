@@ -98,6 +98,7 @@
       <span style="font-size:30px;cursor:pointer" v-on:click="openFilter()">&#9776; Filter</span>
     </div>
     <br>
+    <br>
     
     <div class="borderDiv">
       <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
@@ -145,6 +146,11 @@
                       >
                     </button>
                   </div>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
                   <span id ="credits">Contributed by: {{recipe[1].contributor}}</span>
                 </div>
               </div>
@@ -472,7 +478,7 @@ export default {
   font-weight: 100;
   padding: 20px;
   border: solid #0088cc 1px;
-  transform: translate(0px, -20px)
+  transform: translate(0px, 10px)
 }
 
 #beginCookingButton:hover {
@@ -504,11 +510,10 @@ export default {
 #fav {
   border: none;
   width: 50px;
-  height: 43px;
   text-align: center;
   border-radius: 8px;
   background: white;
-  transform: translate(0px, -20px)
+  transform: translate(0px, 10px)
 }
 
 #fav:hover {
@@ -523,12 +528,11 @@ export default {
 #unfav {
   border: none;
   width: 50px;
-  height: 43px;
   text-align: center;
   border-radius: 8px;
   padding-top: 5px;
   background: white;
-  transform: translate(0px, -20px)
+  transform: translate(0px, 10px)
 }
 
 #unfav:hover {
