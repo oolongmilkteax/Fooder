@@ -43,15 +43,22 @@
     </ul>
     <div class="ProfileDiv">
       <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
-      <li
+      <b-card-group deck>
+        <li
         id="profilelist"
+        class="col-md-4"
         v-for="profile in profiles"
         v-bind:key="profile.email"
         v-on:click="gotoProfile(profile)"
-      >
-        <p>{{ profile[1].name }}</p>
-        <p>{{ profile[1].email }}</p>
-      </li>
+        >  
+        <b-card :title="profile[1].name" bg-variant="secondary" text-variant="white" class="mb-4 mx-auto" style="max-width: 24rem;">
+          <b-card-text>
+            {{ profile[1].email }}
+          </b-card-text>
+
+       </b-card>
+       </li>
+      </b-card-group>
     </div>
   </div>
 </template>
@@ -63,6 +70,7 @@ import logout from "./logout.js";
 var db = firebase.firestore();
 
 export default {
+  props: ["searchedValue"],
   data() {
     return {
       isLoading: true,
@@ -80,15 +88,23 @@ export default {
         .get()
         .then((snapshot) => {
           snapshot.docs.forEach((doc) => {
-            if (doc.id != this.uid) {
-              this.profiles.push([doc.id, doc.data()]);
+            if(this.searchedValue == null){
+              if (doc.id != this.uid) {
+                this.profiles.push([doc.id, doc.data()]);
+              }
+            } else {
+              if(doc.data().name.toUpperCase().includes(this.searchedValue.toUpperCase())) {
+                this.profiles.push([doc.id,doc.data()]);
+              }else if(doc.data().email.toUpperCase().includes(this.searchedValue.toUpperCase())){
+                this.profiles.push([doc.id,doc.data()]);
+              }
             }
           });
           this.isLoading = false;
         });
     },
     gotoProfile: function(profile) {
-      this.$router.push({ name: "ProfilePage", params: { user: profile } });
+      this.$router.push({ name: "ProfilePage", params: { userProfile: profile } });
     },
   },
 
@@ -100,22 +116,25 @@ export default {
 
 <style>
 #profilelist {
+  /*
   width: 100%;
   text-align: left;
   border: 1px solid rgb(110, 110, 110);
   margin: 10px;
+  */
   list-style-type: none;
-  padding: 0px 0px 0px 10%;
+  padding: 0px 0px 0px 0px;
 }
 
 #profilelist:hover {
   cursor: pointer;
 }
-
+/*
 .ProfileDiv {
   width: 50%;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
+*/
 </style>

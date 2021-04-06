@@ -3,7 +3,7 @@
       <div class="borderDiv">
             <div class="FullRecipeContainer">
                 <br><br>
-                <a href='/recipe'>Back</a>
+                <a href='javascript:history.go(-1)'>Back</a>
                 <div id="FullRecipe">
                     <h2>Ingredients</h2>
                     <ul v-for="ingredient in recipeIngredients" v-bind:key="ingredient">
