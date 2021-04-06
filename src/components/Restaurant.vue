@@ -480,7 +480,6 @@ img {
 #fav {
   border: none;
   width: 50px;
-  height: 43px;
   text-align: center;
   border-radius: 8px;
   background: white;
@@ -499,7 +498,6 @@ img {
 #unfav {
   border: none;
   width: 50px;
-  height: 43px;
   text-align: center;
   border-radius: 8px;
   padding-top: 5px;
