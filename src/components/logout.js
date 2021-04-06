@@ -4,7 +4,6 @@ const logout = function() {
   this.$store.commit("setFirstLogin", true);
   this.$router.push({
     name: "LandingPage",
-  
   });
 };
 
