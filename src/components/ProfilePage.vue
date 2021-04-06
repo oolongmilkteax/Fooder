@@ -123,6 +123,7 @@ export default {
   methods: {
     logout: logout,
     fetchInfo: function() {
+      this.uid = db.auth().currentUser.uid;
       if(this.userProfile == null){
         db.firestore()
           .collection("user")
