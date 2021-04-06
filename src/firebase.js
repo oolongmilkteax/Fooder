@@ -11,6 +11,7 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+firebase.firestore().enablePersistence();
 
 //var database = firebase.firestore();
 
