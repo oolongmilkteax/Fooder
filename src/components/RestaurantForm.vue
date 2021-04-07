@@ -1,7 +1,7 @@
 <template>
   <form>
     <label for="name">Name of Restaurant: </label>
-    <span>{{ restaurant.name }}</span>
+    <span>&nbsp;{{ restaurant.name }}</span>
     <br />
     <span class="alert" v-show="alert.name"
       >Please enter name of restaurant.
@@ -18,7 +18,7 @@
     <br />
 
     <label for="address">Address: </label>
-    <span>{{ restaurant.address }}</span>
+    <span>&nbsp;{{ restaurant.address }}</span>
     <br />
     <span class="alert" v-show="alert.address"
       >Please enter address of restaurant.
@@ -35,7 +35,7 @@
     <br />
 
     <label for="cuisine">Cuisine: </label>
-    <span>{{ restaurant.cuisine }}</span>
+    <span>&nbsp;{{ restaurant.cuisine }}</span>
     <br />
     <span class="alert" v-show="alert.cuisine"
       >Please enter cuisine type.
@@ -70,7 +70,7 @@
     <br />
 
     <label for="openingHours">Opening hours: </label>
-    <span>{{ restaurant.openingHours }}</span>
+    <span>&nbsp;{{ restaurant.openingHours }}</span>
     <br />
     <span class="alert" v-show="alert.openingHours"
       >Please enter opening hours of restaurant.
@@ -88,7 +88,7 @@
     <br />
 
     <label for="priceRange">Price range: </label>
-    <span>{{ restaurant.priceRange }}</span>
+    <span>&nbsp;{{ restaurant.priceRange }}</span>
     <br />
     <span class="alert" v-show="alert.priceRange"
       >Please select a price range of restaurant.
@@ -113,7 +113,7 @@
     <br />
 
     <label for="websiteLink">Website: </label>
-    <span>{{ restaurant.websiteLink }}</span>
+    <span>&nbsp;{{ restaurant.websiteLink }}</span>
     <br />
     <span class="alert" v-show="alert.websiteLink"
       >Please enter website link of restaurant.

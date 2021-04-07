@@ -36,33 +36,40 @@
     <div v-show="!isLoading" class="profileBorder">
       <h1 style="text-align:center" v-if="favRecipe != ''">Favourite Recipes</h1>
       <ul id="BriefDescription">
-        <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
-          <h2>{{ recipe.name }}</h2>
-          <img
-            v-bind:src="recipe.image"
-            v-bind:id="recipe.name"
-            v-on:click="searchRecipe(recipe.name)"
-            alt="Food image"
-          />
+        <b-card-group deck class="mx-auto">
+          <li
+          id="profilelist"
+          class="ml-3 mx-auto"
+          v-for="recipe in recipes"
+          v-bind:key="recipe.name"
+          >  
+          <b-card :title="recipe.name" v-bind:img-src="recipe.image" v-on:click="go(recipe.ingredients, recipe.directions);" class="mb-4 mx-auto" style="width: 23rem;">
+            <b-card-text>
+              
+            </b-card-text>
+
+          </b-card>
+          </li>
+        </b-card-group>
           <br />
-          <br />
-          <br />
-        </li>
       </ul>
       <h1 style="text-align:center" v-if="favRestaurant != ''">Favourite Restaurants</h1>
       <ul id="BriefDescription">
-        <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
-          <h2>{{ restaurant.name }}</h2>
-          <img
-            v-bind:src="restaurant.image"
-            v-bind:id="restaurant.name"
-            v-on:click="searchRestaurant(restaurant.name)"
-            alt="Restaurant image"
-          />
-          <br />
-          <br />
-          <br />
-        </li>
+        <b-card-group deck class="mx-auto">
+          <li
+          id="profilelist"
+          class="col-md-6"
+          v-for="restaurant in restaurants"
+          v-bind:key="restaurant.name"
+          >  
+          <b-card :title="restaurant.name" v-bind:img-src="restaurant.image" v-on:click="searchRestaurant(restaurant.name)" class="mb-4 mx-auto" style="width: 32rem;">
+            <b-card-text>
+              
+            </b-card-text>
+
+          </b-card>
+          </li>
+        </b-card-group>
       </ul>
     </div>
   </div>
@@ -153,7 +160,13 @@ export default {
         name: "Restaurant",
         params: { searchedValue: restaurant }
       });
-    }
+    },
+    go: function(ingredients, directions) {
+      this.$router.push({
+        name: "FullRecipe",
+        params: { i: ingredients, d: directions }
+      });
+    },
   },
   created: function() {
     this.fetchInfo();
