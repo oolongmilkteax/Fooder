@@ -29,10 +29,20 @@
             <radar-chart :parsedData="parsedData"></radar-chart>
             <favChart :data="chart1"></favChart>
             <div class = "pieDiv">
-                <DifficultyChart :data="difficultyCounts" class = "pie"></DifficultyChart>
-                <PRChart :data="priceCounts" class = "pie"></PRChart>
+                
+                  <DifficultyChart :data="difficultyCounts"  v-if="tooLittleDataA == false" class = "pie"></DifficultyChart>
+         
+               
+                  <PRChart :data="priceCounts"  v-if="tooLittleDataB == false" class = "pie"></PRChart>
+              
             </div>
-            <button class="myButton" v-if="refresh" v-on:click="refreshPage()">Click to generate more information!</button>
+              <h3 class="cuisine" v-if="tooLittleDataA">Please favourite more recipes to generate more insight.</h3>
+              <h3 class="cuisine" v-if="tooLittleDataB">Please favourite more restaurants to generate more insight.</h3>
+              
+            
+            <div class="button-centraliser">
+              <button class="myButton centralise"  v-on:click="refreshPage()">Click to update dashboard!</button>
+            </div>
             <h3 class="cuisine">{{ "Favourite Cuisine: " + this.cuisine }}</h3>
         </div>
     </div>
@@ -71,14 +81,18 @@ export default {
             priceCount:[0,0,0,0,0,0,0],
             difficultyCount:[0,0,0],
             priceCounts:[],
-            refresh: false,
             difficultyCounts:[],
+            tooLittleDataA: false,
+            tooLittleDataB: false,
+            
 
         }
     },
     methods:{
       logout: logout,
       convertID: function(){
+        console.log(this.difficulty)
+        console.log(this.price)
         for(var ii = 0; ii < this.difficulty.length;ii++){
           db.collection('recipe').doc(this.difficulty[ii]).get().then((doc) =>{
             var diff = doc.data().difficulty;
@@ -93,6 +107,10 @@ export default {
               "chartDiff": this.difficultyCount});
           });
         }
+        if(this.difficulty.length == 0){
+          this.tooLittleDataA = true;
+        }
+   
         for(var jj = 0; jj < this.price.length;jj++){
           db.collection('restaurant').doc(this.price[jj]).get().then((doc) =>{
             var px = doc.data().priceRange;
@@ -111,12 +129,18 @@ export default {
             }else{
               this.priceCount[6] += 1;
             }
-            console.log(px);
             db.collection('user').doc(this.$store.state.uid).update({
             "chartPX": this.priceCount});
           });
         }
-        
+        if(this.price.length == 0){
+          this.tooLittleDataB = true;
+        }
+        console.log(this.tooLittleDataA)
+        console.log(this.tooLittleDataB)
+
+                  
+
       },
       refreshPage: function(){
         location.reload();
@@ -136,16 +160,16 @@ export default {
           this.chart1[1] = doc.data().favRecipe.length
           this.chart1[2] = doc.data().contributeRestaurant.length
           this.chart1[3] = doc.data().favRestaurant.length
-          this.price = doc.data().favRestaurant;
           this.difficulty = doc.data().favRecipe;
+          this.price = doc.data().favRestaurant;
+
+          
           this.convertID();   
           this.priceCounts = doc.data().chartPX;
           this.difficultyCounts = doc.data().chartDiff;
-          if(this.priceCounts == null){
-            this.refresh = true;
-          }
           this.isLoaded = true;
           this.isLoading = false;
+
         }); 
     },
 }
@@ -166,4 +190,6 @@ export default {
 .pie{
   width:50%;
 }
+
+
 </style>
