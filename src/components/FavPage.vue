@@ -15,6 +15,7 @@
             <!-- Using 'button-content' slot -->
             <template #button-content>User</template>
             <b-dropdown-item href="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item href="/dashboard">Dashboard</b-dropdown-item>
             <b-dropdown-item v-on:click="logout()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
