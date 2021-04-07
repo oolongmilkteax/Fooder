@@ -14,8 +14,8 @@
     </b-navbar>
     <div class="LandingDiv">
       <h1 class="signinHeader">Sign In to Fooder</h1>
-      <input type="text" class="signinInput" v-model="email" placeholder="email" />
-      <input type="text" class="signinInput" v-model="password" placeholder="password" />
+      <input type="text" class="signinInput" v-model="email" placeholder="Email" />
+      <input type="password" class="signinInput" v-model="password" placeholder="Password" />
       <div class="button-centraliser">
         <button class="myButton" v-on:click="userLogin()">Sign In!</button>
         <p v-show="this.showErrMsg" class="errMsg">Invalid email / password. Please try again.</p>
