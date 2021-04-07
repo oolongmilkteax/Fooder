@@ -43,32 +43,55 @@
     </ul>
     <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
     <div v-show="!isLoading" class="profileBorder">
-      <p>{{"Name: " + name}}</p>
-      <p>{{"Username: "+ username}}</p>
-      <p>{{"Email: " + email}}</p>
+      <b-card :title="name" bg-variant="secondary" text-variant="white" class="mb-4 " style="max-width: 24rem; right:0px">
+        <b-card-text>
+          {{ email }}
+        </b-card-text>
+      </b-card>
+      <br>
+
       <h1 style="text-align:center" v-if="contriRecipes != ''">
         Contributed Recipes
       </h1>
       <ul id="BriefDescription">
-        <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
-          <h2>{{ recipe.name }}</h2>
-          <img v-bind:src="recipe.image" v-bind:id="recipe.name" v-on:click="searchRecipe(recipe.name)" alt="Food image" />
-          <br />
-          <br />
-          <br />
-        </li>
+        <b-card-group deck class="mx-auto">
+          <li
+          id="profilelist"
+          class="ml-3 mx-auto"
+          v-for="recipe in recipes"
+          v-bind:key="recipe.name"
+          >  
+          <b-card :title="recipe.name" v-bind:img-src="recipe.image" v-on:click="go(recipe.ingredients, recipe.directions);" class="mb-4 mx-auto" style="width: 23rem;">
+            <b-card-text>
+              
+            </b-card-text>
+
+          </b-card>
+          </li>
+        </b-card-group>
+        
       </ul>
+      <br>
+      <br>
       <h1 style="text-align:center" v-if="contriRestaurants != ''">
         Contributed Restaurants
       </h1>
       <ul id="BriefDescription">
-        <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
-          <h2>{{ restaurant.name }}</h2>
-          <img v-bind:src="restaurant.image" v-bind:id="restaurant.name" v-on:click="searchRestaurant(restaurant.name)" alt="Restaurant image" />
-          <br />
-          <br />
-          <br />
-        </li>
+        <b-card-group deck class="mx-auto">
+          <li
+          id="profilelist"
+          class="ml-3 mx-auto"
+          v-for="restaurant in restaurants"
+          v-bind:key="restaurant.name"
+          >  
+          <b-card :title="restaurant.name" v-bind:img-src="restaurant.image" v-on:click="searchRestaurant(restaurant.name)" class="mb-4 mx-auto" style="width: 23rem;">
+            <b-card-text>
+              
+            </b-card-text>
+
+          </b-card>
+          </li>
+        </b-card-group>
       </ul>
     </div>
   </div>
@@ -80,6 +103,7 @@ import logout from "./logout.js";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
+  props: ["userProfile"],
   data() {
     return {
       isLoading: true,
@@ -99,23 +123,41 @@ export default {
   methods: {
     logout: logout,
     fetchInfo: function() {
-      this.uid = this.$store.state.uid;
-      db.firestore()
+      this.uid = db.auth().currentUser.uid;
+      if(this.userProfile == null){
+        db.firestore()
+          .collection("user")
+          .doc(this.uid)
+          .get()
+          .then((user) => {
+              this.name = user.data().name;
+              this.email = user.data().email;
+              this.contriRecipes = user.data().contributeRecipe;
+              this.contriRestaurants = user.data().contributeRestaurant;
+              this.fetchRecipes();
+              this.fetchRestaurants(this.uid);
+          })
+          .then(() => {
+            this.isLoading = false;
+          });
+      } else {
+        db.firestore()
         .collection("user")
-        .doc(this.uid)
+        .doc(this.userProfile[0])
         .get()
         .then((user) => {
-          this.name = user.data().name;
-          this.username = user.data().username;
-          this.email = user.data().email;
-          this.contriRecipes = user.data().contributeRecipe;
-          this.contriRestaurants = user.data().contributeRestaurant;
-          this.fetchRecipes();
-          this.fetchRestaurants(this.uid);
+            this.name = user.data().name;
+            this.username = user.data().username;
+            this.email = user.data().email;
+            this.contriRecipes = user.data().contributeRecipe;
+            this.contriRestaurants = user.data().contributeRestaurant;
+            this.fetchRecipes();
+            this.fetchRestaurants(this.uid);
         })
         .then(() => {
           this.isLoading = false;
         });
+      }
     },
     fetchRecipes: function() {
       db.firestore()
@@ -146,6 +188,12 @@ export default {
     },
     searchRestaurant: function(restaurant){
       this.$router.push({ name: 'Restaurant', params: {searchedValue: restaurant}})
+    },
+    go: function(ingredients, directions) {
+      this.$router.push({
+        name: "FullRecipe",
+        params: { i: ingredients, d: directions }
+      });
     },
   },
   created: function() {

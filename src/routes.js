@@ -12,7 +12,6 @@ import Characteristic from "./components/Characteristic";
 import ProfileSearch from "./components/ProfileSearch";
 import DashBoard from "./components/DashBoard.vue";
 
-
 import store from "./store";
 
 const beforeEnter = function(to, from, next) {
@@ -23,7 +22,7 @@ const beforeEnter = function(to, from, next) {
   }
 };
 
-const beforeEnterPreferencing = function(to, from, next) {
+const beforeEnter_2 = function(to, from, next) {
   if (store.state.authenticated == false) {
     next("/");
   } else if (store.state.firstLogin == false) {
@@ -60,7 +59,7 @@ export default [
     name: "Preferencing",
     path: "/preferencing",
     component: Preferencing,
-    beforeEnter: beforeEnterPreferencing,
+    beforeEnter: beforeEnter_2,
   },
   {
     name: "Restaurant",
@@ -105,7 +104,7 @@ export default [
     path: "/characteristic",
     component: Characteristic,
     props: true,
-    beforeEnter: beforeEnter,
+    beforeEnter: beforeEnter_2,
   },
   {
     name: "ProfileSearch",

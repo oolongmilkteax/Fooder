@@ -1,7 +1,7 @@
 <template>
   <form>
     <label for="recipeName">Name of Recipe: </label>
-    <span>{{ recipe.name }}</span>
+    <span>&nbsp;{{ recipe.name }}</span>
     <br />
     <span class="alert" v-show="alert.name">Please enter name of recipe. </span>
     <br />
@@ -16,7 +16,7 @@
     <br />
 
     <label for="cuisine">Cuisine: </label>
-    <span>{{ recipe.cuisine }}</span>
+    <span>&nbsp;{{ recipe.cuisine }}</span>
     <br />
     <span class="alert" v-show="alert.cuisine"
       >Please enter cuisine of recipe.
@@ -33,7 +33,7 @@
     <br />
 
     <label for="difficulty">Difficulty: </label>
-    <span>{{ recipe.difficulty }}</span>
+    <span>&nbsp;{{ recipe.difficulty }}</span>
     <br />
     <span class="alert" v-show="alert.difficulty"
       >Please select difficulty of recipe.
@@ -70,7 +70,7 @@
     <br />
 
     <label for="serving">No. of servings: </label>
-    <span>{{ recipe.servings }}</span>
+    <span>&nbsp;{{ recipe.servings }}</span>
     <br />
     <span class="alert" v-show="alert.servings"
       >Please select serving size of recipe.
@@ -98,7 +98,7 @@
     <br />
 
     <label for="time">Duration to make: </label>
-    <span>{{ recipe.time }}</span>
+    <span>&nbsp;{{ recipe.time }}</span>
     <br />
     <span class="alert" v-show="alert.time"
       >Please select duration to make recipe.
@@ -122,7 +122,7 @@
     <br />
 
     <label for="type">Type: </label>
-    <span>{{ recipe.type }}</span>
+    <span>&nbsp;{{ recipe.type }}</span>
     <br />
     <span class="alert" v-show="alert.type">Please select recipe type. </span>
     <br />
