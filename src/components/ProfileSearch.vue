@@ -84,7 +84,8 @@ export default {
   methods: {
     logout: logout,
     getProfiles() {
-      this.uid = firebase.auth().currentUser.uid;
+      //this.uid = firebase.auth().currentUser.uid;
+      this.uid = this.$store.state.uid;
       db.collection("user")
         .get()
         .then((snapshot) => {
