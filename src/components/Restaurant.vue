@@ -417,6 +417,13 @@ export default {
   line-height: 23px;
 }
 
+#BriefDescription {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  line-height: 5px;
+}
+
 .img {
   width: 100%;
   height: 15rem;
