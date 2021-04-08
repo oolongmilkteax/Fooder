@@ -6,7 +6,6 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item href="/searchpage">Search</b-nav-item>
@@ -14,9 +13,7 @@
           <b-nav-item href="/favpage">favourites</b-nav-item>
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
-            <template #button-content>
-              User
-            </template>
+            <template #button-content>User</template>
             <b-dropdown-item href="/profile">Profile</b-dropdown-item>
             <b-dropdown-item href="/dashboard">Dashboard</b-dropdown-item>
             <b-dropdown-item v-on:click="logout()">Sign Out</b-dropdown-item>
@@ -31,16 +28,10 @@
       <router-link to="/preferencing" class="routes">Preferencing</router-link>
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link @click.native="logout" to="/" class="routes"
-        >Logout</router-link
-      >
+      <router-link @click.native="logout" to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes"
-        >Characteristic</router-link
-      >
-      <router-link to="/profileresults" class="routes"
-        >ProfileSearch</router-link
-      >
+      <router-link to="/characteristic" class="routes">Characteristic</router-link>
+      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
 
     <div class="BorderDiv">
@@ -52,32 +43,16 @@
           id="Restaurant"
           class="searchButton"
           v-on:click="Restaurant"
-        >
-          Restaurant
-        </button>
-  
-        <button
-          type="button"
-          id="Recipe"
-          class="searchButton"
-          v-on:click="Recipe"
-        >
-          Recipe
-        </button>
-        <button
-          type="button"
-          id="Profile"
-          class="searchButton"
-          v-on:click="Profile"
-        >
-          Profile
-        </button>
+        >Restaurant</button>
+
+        <button type="button" id="Recipe" class="searchButton" v-on:click="Recipe">Recipe</button>
+        <button type="button" id="Profile" class="searchButton" v-on:click="Profile">Profile</button>
       </div>
       <input
         type="text"
         class="searchInput"
         v-model="searchValue"
-        placeholder="Search for Restaurants or Recipes!"
+        placeholder="Search for Restaurants, Recipes, or Profiles!"
       />
       <div class="button-centraliser">
         <button class="myButton" v-on:click="search()">Search</button>
@@ -124,19 +99,19 @@ export default {
     searchRecipe: function() {
       this.$router.push({
         name: "Recipe",
-        params: { searchedValue: this.searchValue },
+        params: { searchedValue: this.searchValue }
       });
     },
     searchRestaurant: function() {
       this.$router.push({
         name: "Restaurant",
-        params: { searchedValue: this.searchValue },
+        params: { searchedValue: this.searchValue }
       });
     },
     searchProfile: function() {
       this.$router.push({
         name: "ProfileSearch",
-        params: { searchedValue: this.searchValue },
+        params: { searchedValue: this.searchValue }
       });
     },
     search: function() {
@@ -149,17 +124,16 @@ export default {
       if (this.profile) {
         this.searchProfile();
       }
-    },
-    
+    }
   },
   data() {
     return {
       searchValue: "",
       recipe: true,
       restaurant: false,
-      profile: false,
+      profile: false
     };
-  },
+  }
 };
 </script>
 
@@ -240,6 +214,4 @@ export default {
   font-family: Helvetica;
   padding: 20px;
 }
-
-
 </style>
