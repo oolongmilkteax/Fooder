@@ -319,11 +319,13 @@ export default {
         compliedList[3] += Budget[i];
       }
       this.preferences = compliedList;
-      firebase.firestore().collection("user")
+      firebase
+        .firestore()
+        .collection("user")
         .doc(this.$store.state.uid)
         .update({
-          preferences: this.preferences,
-      });
+          preferences: this.preferences
+        });
     },
     submitQuestionaire: function() {
       var checker = true;
@@ -337,10 +339,10 @@ export default {
       } else {
         this.preferenceCalculator();
         this.$router.push({
-          name: "Characteristic",
+          name: "Characteristic"
         });
       }
-      this.$store.commit("setFirstLogin", false);
+      //this.$store.commit("setFirstLogin", false);
       firebase
         .firestore()
         .collection("user")

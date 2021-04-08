@@ -6,7 +6,6 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item href="/searchpage">Search</b-nav-item>
@@ -14,10 +13,9 @@
           <b-nav-item href="/favpage">favourites</b-nav-item>
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
-            <template #button-content>
-              User
-            </template>
+            <template #button-content>User</template>
             <b-dropdown-item href="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item href="/dashboard">Dashboard</b-dropdown-item>
             <b-dropdown-item v-on:click="logout()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -30,42 +28,49 @@
       <router-link to="/preferencing" class="routes">Preferencing</router-link>
       <router-link to="/restaurant" class="routes">Restaurant</router-link>
       <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link @click.native="logout" to="/" class="routes"
-        >Logout</router-link
-      >
+      <router-link @click.native="logout" to="/" class="routes">Logout</router-link>
       <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes"
-        >Characteristic</router-link
-      >
-      <router-link to="/profileresults" class="routes"
-        >ProfileSearch</router-link
-      >
+      <router-link to="/characteristic" class="routes">Characteristic</router-link>
+      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
     </ul>
     <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
     <div v-show="!isLoading" class="profileBorder">
-      <h1 style="text-align:center" v-if="favRecipe != ''">
-        Favourite Recipes
-      </h1>
+      <h1 style="text-align:center" v-if="favRecipe != ''">Favourite Recipes</h1>
       <ul id="BriefDescription">
-        <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
-          <h2>{{ recipe.name }}</h2>
-          <img v-bind:src="recipe.image" v-bind:id="recipe.name" v-on:click="searchRecipe(recipe.name)" alt="Food image" />
+        <b-card-group deck class="mx-auto">
+          <li
+          id="profilelist"
+          class="ml-3 mx-auto"
+          v-for="recipe in recipes"
+          v-bind:key="recipe.name"
+          >  
+          <b-card :title="recipe.name" v-bind:img-src="recipe.image" v-on:click="go(recipe.ingredients, recipe.directions);" class="mb-4 mx-auto" style="width: 23rem;">
+            <b-card-text>
+              
+            </b-card-text>
+
+          </b-card>
+          </li>
+        </b-card-group>
           <br />
-          <br />
-          <br />
-        </li>
       </ul>
-      <h1 style="text-align:center" v-if="favRestaurant != ''">
-        Favourite Restaurants
-      </h1>
+      <h1 style="text-align:center" v-if="favRestaurant != ''">Favourite Restaurants</h1>
       <ul id="BriefDescription">
-        <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
-          <h2>{{ restaurant.name }}</h2>
-          <img v-bind:src="restaurant.image" v-bind:id="restaurant.name" v-on:click="searchRestaurant(restaurant.name)" alt="Restaurant image" />
-          <br />
-          <br />
-          <br />
-        </li>
+        <b-card-group deck class="mx-auto">
+          <li
+          id="profilelist"
+          class="col-md-6"
+          v-for="restaurant in restaurants"
+          v-bind:key="restaurant.name"
+          >  
+          <b-card :title="restaurant.name" v-bind:img-src="restaurant.image" v-on:click="searchRestaurant(restaurant.name)" class="mb-4 mx-auto" style="width: 32rem;">
+            <b-card-text>
+              
+            </b-card-text>
+
+          </b-card>
+          </li>
+        </b-card-group>
       </ul>
     </div>
   </div>
@@ -84,64 +89,89 @@ export default {
       favRestaurant: "",
       uid: "",
       restaurants: [],
-      recipes: [],
+      recipes: []
     };
   },
   components: {
-    PulseLoader,
+    PulseLoader
   },
   methods: {
     logout: logout,
     fetchInfo: function() {
-      // this.uid = this.$store.state.uid;
-      // db.firestore()
-      //   .collection("user")
-      //   .doc(this.uid)
-      //   .get()
-      //   .then((user) => {
-      //     this.favRestaurant = user.data().favRestaurant;
-      //     this.favRecipe = user.data().favRecipe;
-      //     this.fetchRecipes();
-      //     this.fetchRestaurants(this.uid);
-      //   })
-      //   .then(() => {
-      //     this.isLoading = false;
-      //   });
+      this.uid = this.$store.state.uid;
+      db.firestore()
+        .collection("user")
+        .doc(this.uid)
+        .get({ source: "cache" })
+        .then(user => {
+          /*
+          var source = user.metadata.fromCache ? "local cache" : "server";
+          console.log("Data user came from " + source);
+          */
+          this.favRestaurant = user.data().favRestaurant;
+          this.favRecipe = user.data().favRecipe;
+          this.fetchRecipes();
+          this.fetchRestaurants(this.uid);
+        })
+        .then(() => {
+          this.isLoading = false;
+        });
     },
     fetchRecipes: function() {
       db.firestore()
         .collection("recipe")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
+        .get({ source: "cache" })
+        .then(querySnapshot => {
+          querySnapshot.docs.forEach(doc => {
             if (this.favRecipe.includes(doc.id)) {
               this.recipes.push(doc.data());
             }
           });
+          /*
+          var source = querySnapshot.metadata.fromCache
+            ? "local cache"
+            : "server";
+          console.log("Data recipe came from " + source);
+          */
         });
     },
+
     fetchRestaurants: function() {
       db.firestore()
         .collection("restaurant")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
+        .get({ source: "cache" })
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
             if (this.favRestaurant.includes(doc.id)) {
               this.restaurants.push(doc.data());
             }
           });
+          /*
+          var source = snapshot.metadata.fromCache ? "local cache" : "server";
+          console.log("Data retaurant came from " + source);
+          */
         });
     },
-    searchRecipe: function(recipe){
-      this.$router.push({ name: 'Recipe', params: {searchedValue: recipe}})
+
+    searchRecipe: function(recipe) {
+      this.$router.push({ name: "Recipe", params: { searchedValue: recipe } });
     },
-    searchRestaurant: function(restaurant){
-      this.$router.push({ name: 'Restaurant', params: {searchedValue: restaurant}})
+    searchRestaurant: function(restaurant) {
+      this.$router.push({
+        name: "Restaurant",
+        params: { searchedValue: restaurant }
+      });
+    },
+    go: function(ingredients, directions) {
+      this.$router.push({
+        name: "FullRecipe",
+        params: { i: ingredients, d: directions }
+      });
     },
   },
   created: function() {
     this.fetchInfo();
-  },
+  }
 };
 </script>
 

@@ -20,7 +20,7 @@ export default {
         options: {
             title: {
               display: true,
-              text: 'Difficulty of the recipes you have favourited and contributed'
+              text: 'Difficulty of the recipes you have favourited'
             },
             responsive: true,
             maintainAspectRatio: false
