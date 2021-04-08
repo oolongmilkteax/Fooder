@@ -133,6 +133,9 @@
                 </div>
                 <br>
                 <br>
+                <br>
+                <br>
+                <br>
                 <span id="credits">Contributed by: {{restaurant[1].contributor}}</span>
                 <br>
                 <br>
@@ -471,6 +474,8 @@ img {
 #credits {
   text-align: right;
   padding-right: 20px;
+  font-style: italic;
+  color: #8a8a8a;
 }
 
 #fav img {

@@ -152,6 +152,9 @@
                   <br>
                   <br>
                   <br>
+                  <br>
+                  <br>
+                  <br>
                   <span id ="credits">Contributed by: {{recipe[1].contributor}}</span>
                 </div>
               </div>
@@ -501,6 +504,8 @@ export default {
 
 #credits {
   float: right;
+  font-style: italic;
+  color: #8a8a8a;
 }
 
 #fav img {
