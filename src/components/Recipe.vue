@@ -108,7 +108,7 @@
           <ul id="BriefDescription">
             <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
               <div class="card" style="width: 23rem;">
-                <img class="img" v-bind:src="recipe[1].image" alt="Recipe Image" height="20px">
+                <img class="img" v-bind:src="recipe[1].image" onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'" height="20px">
                 <div class="card-body">
                   <h5 class="name">{{recipe[1].name}}</h5>
                   <div id="Description">
@@ -440,6 +440,11 @@ export default {
        }
        
     },
+    imgError: function(image) {
+      console.log(image)
+      image.onerror = "";
+      image.src = "https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png"
+    }
   },
   created() {
     this.fetchItems();
@@ -516,8 +521,8 @@ export default {
 }
 
 #fav img {
-  height: 35px;  
-  width: 35px;
+  height: 36px;  
+  width: 36px;
 }
 
 #fav {
@@ -535,7 +540,7 @@ export default {
 
 #unfav img {
   height: 30px;  
-  width: 33px;
+  width: 34px;
 }
 
 #unfav {
@@ -545,7 +550,7 @@ export default {
   border-radius: 8px;
   padding-top: 5px;
   background: white;
-  transform: translate(0px, 10px)
+  transform: translate(0px, 10px);
 }
 
 #unfav:hover {
