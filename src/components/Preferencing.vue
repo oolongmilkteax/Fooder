@@ -347,7 +347,8 @@ export default {
         .firestore()
         .collection("user")
         .doc(this.$store.state.uid)
-        .update({ firstLogin: false });
+        .update({ donePreferencing: true });
+      this.$store.commit("setPreferencing", true);
     }
   },
   created: function() {
