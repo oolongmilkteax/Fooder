@@ -77,7 +77,6 @@ export default {
   background: #0088cc;
   width: 20%;
   border-radius: 8px;
-  border-radius: 8px;
   color: #ffffff;
   font-family: Helvetica;
   font-size: 28px;

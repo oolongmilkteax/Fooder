@@ -43,7 +43,7 @@
           <ul id="BriefDescription">
             <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
               <div class="card" style="width: 25rem;">
-                <img class="img" v-bind:src="restaurant[1].image" alt="Restaurant Image" height="20px">
+                <img class="img" v-bind:src="restaurant[1].image" onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'" height="20px">
                 <div class="card-body">
                   <h5 class="name">{{restaurant[1].name}}</h5>
                   <div id="Description">
@@ -54,6 +54,7 @@
                     <span>Price range: {{restaurant[1].priceRange}}</span>
                     <br />
                     <span>Address: {{restaurant[1].address}}</span>
+                    <br>
                     <button
                       id="restaurantWebsite"
                       v-on:click="go(restaurant[1].websiteLink);"
@@ -81,6 +82,9 @@
                     </button>
                   </div>
                 </div>
+                <br>
+                <br>
+                <br>
                 <br>
                 <br>
                 <span id="credits">Contributed by: {{restaurant[1].contributor}}</span>
@@ -372,6 +376,13 @@ export default {
   line-height: 23px;
 }
 
+#BriefDescription {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  line-height: 5px;
+}
+
 .img {
   width: 100%;
   height: 15rem;
@@ -429,11 +440,13 @@ img {
 #credits {
   text-align: right;
   padding-right: 20px;
+  font-style: italic;
+  color: #8a8a8a;
 }
 
 #fav img {
-  height: 35px;
-  width: 35px;
+  height: 36px;
+  width: 36px;
 }
 
 #fav {
@@ -451,7 +464,7 @@ img {
 
 #unfav img {
   height: 30px;
-  width: 33px;
+  width: 34px;
 }
 
 #unfav {
