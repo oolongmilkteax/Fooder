@@ -25,15 +25,14 @@
       <div class="button-centraliser">
         <button class="myButton" onclick="location.href='./signup'">Sign Up!</button>
       </div>
-      <div class="footerContainer">
-        <p class="footerText">Design by JKJR</p>
-      </div>
     </div>
+    <Cfooter class="bottomFooter"></Cfooter>
   </div>
 </template>
 
 <script>
 import firebase from "../firebase.js";
+
 
 export default {
   data() {
@@ -102,6 +101,10 @@ export default {
 </script>
 
 <style>
+.bottomFooter{
+  position: absolute;
+  bottom:0;
+}
 .LandingDiv {
   padding: 3%;
 }

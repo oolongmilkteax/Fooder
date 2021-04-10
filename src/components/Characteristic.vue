@@ -1,24 +1,14 @@
 <template>
   <div class="body">
-    <ul class="ul">
-      <router-link to="/contribute" class="routes">Contribute</router-link>
-      <router-link to="/favpage" class="routes">favpage</router-link>
-      <router-link to="/recipe" class="routes">Recipe</router-link>
-      <router-link to="/preferencing" class="routes">Preferencing</router-link>
-      <router-link to="/restaurant" class="routes">Restaurant</router-link>
-      <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link @click.native="logout" to="/" class="routes">Logout</router-link>
-      <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes">Characteristic</router-link>
-      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
-    </ul>
     <div v-if="isLoaded">
       <radar-chart :parsedData="parsedData"></radar-chart>
     </div>
     <div class="preferenceDiv">
       <h3>{{ "Favourite Cuisine: " + this.cuisine }}</h3>
       <h3>{{ "Type of Eater: " + this.type }}</h3>
-      <h2>Here are some recommendations we have for you!</h2>
+      <h2 v-if= "type == 'Home Cook'" >Here are some recipes we have for you!</h2>
+      <h2 v-if= "type == 'Adventurous Foodie'" >Here are some restaurants we have for you!</h2>
+      <h2 v-if= "type == 'Not-So-Picky Eater'" >Here are some recipes and restaurants we have for you!</h2>
     </div>
     <li class="characteristicslist" v-for="item in recommendedThings" v-bind:key="item.id">
       <div class="pointDiv">
@@ -50,7 +40,7 @@ export default {
       type: "",
       recommendedThings: [],
       preferences: [],
-      isLoaded: false
+      isLoaded: false,
     };
   },
   methods: {

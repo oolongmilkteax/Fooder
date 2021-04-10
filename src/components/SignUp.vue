@@ -26,9 +26,7 @@
         <button class="signupButton" v-on:click="registerUser()">C R E A T E</button>
       </div>
     </div>
-    <div class="footerContainer">
-      <p class="footerText">Design by JKJR</p>
-    </div>
+    <Cfooter class="bottomFooter"></Cfooter>
   </div>
 </template>
 
@@ -121,6 +119,10 @@ export default {
 </script>
 
 <style>
+.bottomFooter{
+  position: absolute;
+  bottom:0;
+}
 .errorMsg {
   text-align: left;
   margin-left: 30%;

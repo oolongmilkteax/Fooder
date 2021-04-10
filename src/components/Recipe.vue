@@ -1,74 +1,31 @@
 <template>
   <div class="body">
-    <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand href="/searchpage">Fooder</b-navbar-brand>
-
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-      <b-collapse id="nav-collapse" is-nav>
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item href="/searchpage">Search</b-nav-item>
-          <b-nav-item href="/contribute">Contribute</b-nav-item>
-          <b-nav-item href="/favpage">favourites</b-nav-item>
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template #button-content>
-              User
-            </template>
-            <b-dropdown-item href="/profile">Profile</b-dropdown-item>
-            <b-dropdown-item href="/dashboard">Dashboard</b-dropdown-item>
-            <b-dropdown-item v-on:click="logout()">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-    <ul class="ul">
-      <router-link to="/contribute" class="routes">Contribute</router-link>
-      <router-link to="/favpage" class="routes">favpage</router-link>
-      <router-link to="/recipe" class="routes">Recipe</router-link>
-      <router-link to="/preferencing" class="routes">Preferencing</router-link>
-      <router-link to="/restaurant" class="routes">Restaurant</router-link>
-      <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link @click.native="logout" to="/" class="routes">Logout</router-link>
-      <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes">Characteristic</router-link>
-      <router-link to="/profileresults" class="routes">ProfileSearch</router-link>
-    </ul>
-
-    
-    <div id="sortContent" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" v-on:click="closeSort()">&times;</a>
-      <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
-      <a class="dropdown-btn" v-on:click="sort('cuisine')">Cuisine</a>
-      <a class="dropdown-btn" v-on:click="sort('difficulty')">Difficulty</a>
-      <a class="dropdown-btn" v-on:click="sort('time')">Time</a>
-      <a class="dropdown-btn" v-on:click="sort('type')">Type</a>
-    </div>
-
-
-    <div id="sortFeature">
-      <span style="font-size:30px;cursor:pointer" v-on:click="openSort()">&#8693; Sort</span>
-    </div>
-    
-
-    
-    <div id="filterContent" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" v-on:click="closeFilter()">&times;</a>
+    <Cheader></Cheader>
+    <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
+    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow>
+      <template #default="{ hide }">
+        <h1>Sort</h1>
+        <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
+        <a class="dropdown-btn" v-on:click="sort('cuisine')">Cuisine</a>
+        <a class="dropdown-btn" v-on:click="sort('difficulty')">Difficulty</a>
+        <a class="dropdown-btn" v-on:click="sort('time')">Time</a>
+        <a class="dropdown-btn" v-on:click="sort('type')">Type</a>
+        <h1>Filter</h1>
       <button class="dropdown-btn" v-on:click="showDifficulty()" id="filDifficulty">Difficulty &#9660; 
       </button>
       <div class="dropdown-container" id="filDifficultyChoice">
-        <a v-on:click="difficultyChoice=['difficulty','Easy']">Easy</a>
-        <a v-on:click="difficultyChoice=['difficulty','Medium']">Medium</a>
-        <a v-on:click="difficultyChoice=['difficulty','Hard']">Hard</a>
+        <a class="choiceMade" style="cursor:pointer" v-on:click="difficultyChoice=['difficulty','Easy']">Easy</a>
+        <br>
+        <a class="choiceMade" style="cursor:pointer" v-on:click="difficultyChoice=['difficulty','Medium']">Medium</a>
+        <br>
+        <a class="choiceMade" style="cursor:pointer" v-on:click="difficultyChoice=['difficulty','Hard']">Hard</a>
       </div>
 
       <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;
       </button>
       <div class="dropdown-container" id="filCuisineChoice">
       <div  v-for="cuisine in cuisines" v-bind:key="cuisine">
-        <a v-on:click="cuisineChoice=['cuisine', cuisine]">{{cuisine}}</a>
+        <a class="choiceMade" style="cursor:pointer" v-on:click="cuisineChoice=['cuisine', cuisine]">{{cuisine}}</a>
       </div>
       </div>
 
@@ -86,18 +43,18 @@
       </button>
       
       <div class="dropdown-container" id="filTypeChoice">
-        <a  v-on:click="typeChoice=['type','Main']" >Main</a>
-        <a  v-on:click="typeChoice=['type','Side']">Side</a>
+        <a  class="choiceMade" style="cursor:pointer" v-on:click="typeChoice=['type','Main']" >Main</a>
+        <br>
+        <a  class="choiceMade" style="cursor:pointer" v-on:click="typeChoice=['type','Side']">Side</a>
     
 
       </div>
 
-      <a id="submit" style="font-size:30px;cursor:pointer;" v-on:click="filtering"><strong>Search</strong></a>
-    </div>
+      <b-button id="submit" v-on:click="filtering" class="ApplyButton">Apply Filter</b-button>
+       <b-button class="closeSidebtn" block @click="hide">Close Sidebar</b-button>
+      </template>
+    </b-sidebar>
 
-    <div id="filterSort">
-      <span style="font-size:30px;cursor:pointer" v-on:click="openFilter()">&#9776; Filter</span>
-    </div>
     <br>
     <br>
     
@@ -159,10 +116,9 @@
           </ul>
         </div>
       </div>
-      <div class="footerContainer">
-        <p class="footerText">Design by JKJR</p>
-      </div>
+      
     </div>
+    <Cfooter></Cfooter>
   </div>
 </template>
 
@@ -585,6 +541,11 @@ export default {
 }
 
 
+.closeSidebtn{
+  width: 93%;
+  margin-left: 10px;
+}
+
 .dropdown-btn {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
@@ -600,8 +561,20 @@ export default {
 }
 
 .dropdown-btn:hover {
-  color: #f1f1f1;
+  color: #2d4fac;
 }
+.choiceMade:hover{
+  color: #2d4fac;
+}
+.ApplyButton{
+  margin: 10px;
+}
+
+.FnSbtn{
+  margin:60px;
+  padding:10px 50px 10px 50px;
+}
+
 
 .active {
   background-color: #0088cc;
@@ -610,7 +583,6 @@ export default {
 
 .dropdown-container {
   display: none;
-  background-color: #262626;
   padding-left: 8px;
 }
 
