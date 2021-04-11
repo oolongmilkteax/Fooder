@@ -18,20 +18,17 @@
       <ul id="BriefDescription">
         <b-card-group deck class="mx-auto">
           <li
-            id="profilelist"
-            class="ml-3 mx-auto"
-            v-for="recipe in recipes"
-            v-bind:key="recipe.name"
-          >
-            <b-card
-              :title="recipe.name"
-              v-bind:img-src="recipe.image"
-              v-on:click="go(recipe.ingredients, recipe.directions);"
-              class="mb-4 mx-auto"
-              style="width: 23rem;"
-            >
-              <b-card-text></b-card-text>
-            </b-card>
+          id="profilelist"
+          class="col-md-4"
+          v-for="recipe in recipes"
+          v-bind:key="recipe.name"
+          >  
+          <b-card :title="recipe.name" v-bind:img-src="recipe.image" v-on:click="go(recipe.ingredients, recipe.directions);" class="mb-4 mx-auto" style="width: 23rem;">
+            <b-card-text>
+              
+            </b-card-text>
+
+          </b-card>
           </li>
         </b-card-group>
       </ul>
@@ -41,20 +38,17 @@
       <ul id="BriefDescription">
         <b-card-group deck class="mx-auto">
           <li
-            id="profilelist"
-            class="ml-3 mx-auto"
-            v-for="restaurant in restaurants"
-            v-bind:key="restaurant.name"
-          >
-            <b-card
-              :title="restaurant.name"
-              v-bind:img-src="restaurant.image"
-              v-on:click="open(restaurant.websiteLink);"
-              class="mb-4 mx-auto"
-              style="width: 23rem;"
-            >
-              <b-card-text></b-card-text>
-            </b-card>
+          id="profilelist"
+          class="col-md-4"
+          v-for="restaurant in restaurants"
+          v-bind:key="restaurant.name"
+          >  
+          <b-card :title="restaurant.name" v-bind:img-src="restaurant.image" v-on:click="open(restaurant.websiteLink);" class="mb-4 mx-auto" style="width: 23rem;">
+            <b-card-text>
+              
+            </b-card-text>
+
+          </b-card>
           </li>
         </b-card-group>
       </ul>
@@ -91,7 +85,6 @@ export default {
   methods: {
     logout: logout,
     fetchInfo: function() {
-      //this.uid = db.auth().currentUser.uid;
       this.uid = this.$store.state.uid;
       if (this.userProfile == null) {
         db.firestore()
