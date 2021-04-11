@@ -1,55 +1,24 @@
 <template>
   <div class="body">
-    <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand href="/searchpage">Fooder</b-navbar-brand>
-
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-      <b-collapse id="nav-collapse" is-nav>
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item href="/searchpage">Search</b-nav-item>
-          <b-nav-item href="/contribute">Contribute</b-nav-item>
-          <b-nav-item href="/favpage">favourites</b-nav-item>
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template #button-content>
-              User
-            </template>
-            <b-dropdown-item href="/profile">Profile</b-dropdown-item>
-            <b-dropdown-item href="/dashboard">Dashboard</b-dropdown-item>
-            <b-dropdown-item v-on:click="logout()">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-    <ul class="ul">
-      <router-link to="/contribute" class="routes">Contribute</router-link>
-      <router-link to="/favpage" class="routes">favpage</router-link>
-      <router-link to="/recipe" class="routes">Recipe</router-link>
-      <router-link to="/preferencing" class="routes">Preferencing</router-link>
-      <router-link to="/restaurant" class="routes">Restaurant</router-link>
-      <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link @click.native="logout" to="/" class="routes"
-        >Logout</router-link
-      >
-      <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes"
-        >Characteristic</router-link
-      >
-      <router-link to="/profileresults" class="routes"
-        >ProfileSearch</router-link
-      >
-    </ul>
+  <Cheader></Cheader>
     <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
     <div v-show="!isLoading" class="profileBorder">
-      <b-card :title="name" bg-variant="secondary" text-variant="white" class="mb-4 " style="max-width: 24rem; right:0px">
+      <b-card :title="name" bg-variant="secondary" text-variant="white" class="mb-4 ">
         <b-card-text>
           {{ email }}
         </b-card-text>
       </b-card>
       <br>
+
+      <div id="emptyContri" v-if="contriRecipes == '' && contriRestaurants == ''">
+        <span>You have made 0 contributions so far</span>
+        <br>
+        <button 
+          id="contributeButton"
+          v-on:click="contribute"
+        >Start contributing!
+        </button>
+      </div>
 
       <h1 style="text-align:center" v-if="contriRecipes != ''">
         Contributed Recipes
@@ -85,7 +54,7 @@
           v-for="restaurant in restaurants"
           v-bind:key="restaurant.name"
           >  
-          <b-card :title="restaurant.name" v-bind:img-src="restaurant.image" v-on:click="searchRestaurant(restaurant.name)" class="mb-4 mx-auto" style="width: 23rem;">
+          <b-card :title="restaurant.name" v-bind:img-src="restaurant.image" v-on:click="open(restaurant.websiteLink);" class="mb-4 mx-auto" style="width: 23rem;">
             <b-card-text>
               
             </b-card-text>
@@ -93,9 +62,13 @@
           </b-card>
           </li>
         </b-card-group>
+        
       </ul>
     </div>
+    <Cfooter v-if="contributed"></Cfooter>
+    <Cfooter v-if="contributed == false" class="bottomFooter"></Cfooter>
   </div>
+  
 </template>
 
 <script>
@@ -116,6 +89,7 @@ export default {
       name:"",
       username:"",
       email:"",
+      contributed:true,
     };
   },
   components: {
@@ -141,6 +115,13 @@ export default {
           })
           .then(() => {
             this.isLoading = false;
+            if(this.contriRecipes.length == 0){
+              this.contributed = false;
+            }
+            if(this.contriRestaurants.length == 0){
+              this.contributed = false;
+            }
+            alert(this.contributed);
           });
       } else {
         db.firestore()
@@ -158,6 +139,12 @@ export default {
         })
         .then(() => {
           this.isLoading = false;
+          if(this.contriRecipes.length == 0){
+              this.contributed = false;
+            }
+            if(this.contriRestaurants.length == 0){
+              this.contributed = false;
+            }
         });
       }
     },
@@ -197,6 +184,12 @@ export default {
         params: { i: ingredients, d: directions }
       });
     },
+    open: function(url) {
+      window.open(url);
+    },
+    contribute: function() {
+      this.$router.push({ path: "/contribute" })
+    }
   },
   created: function() {
     this.fetchInfo();
@@ -204,32 +197,41 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+img {
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
+}
+#emptyContri {
+  line-height: 50px;
+}
+
+#contributeButton {
+  background: #0088cc;
+  width: 350px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: Helvetica;
+  font-weight: 100;
+  padding: 14px;
+  border: solid #0088cc 1px;
+  font-size: 28px;
+  font-weight: 100;
+}
+
+#contributeButton:hover {
+  border: solid #979797 1px;
+  background: #979797;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
 .profileBorder {
   width: 100%;
-  padding-right: 20px;
-}
-
-#list {
-  flex-grow: 1;
-  flex-basis: 300px;
   text-align: center;
-  padding: 5px;
-  border: 1px solid #222;
-  margin: 10px;
-  list-style-type: none;
-}
-
-#BriefDescription {
-  display: flex;
-  flex-wrap: wrap;
-  list-style-type: none;
-  line-height: 5px;
-}
-
-img {
-  width: 370px;
-  height: 370px;
 }
 
 #loading {
@@ -237,5 +239,10 @@ img {
   align-items: center;
   display: flex;
   justify-content: center;
+}
+.bottomFooter{
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
 </style>

@@ -1,89 +1,39 @@
 <template>
   <div class="body">
-    <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand href="/searchpage">Fooder</b-navbar-brand>
-
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-      <b-collapse id="nav-collapse" is-nav>
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item href="/searchpage">Search</b-nav-item>
-          <b-nav-item href="/contribute">Contribute</b-nav-item>
-          <b-nav-item href="/favpage">favourites</b-nav-item>
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template #button-content>
-              User
-            </template>
-            <b-dropdown-item href="/profile">Profile</b-dropdown-item>
-            <b-dropdown-item href="/dashboard">Dashboard</b-dropdown-item>
-            <b-dropdown-item v-on:click="logout()">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-    <ul class="ul">
-      <router-link to="/contribute" class="routes">Contribute</router-link>
-      <router-link to="/favpage" class="routes">favpage</router-link>
-      <router-link to="/recipe" class="routes">Recipe</router-link>
-      <router-link to="/preferencing" class="routes">Preferencing</router-link>
-      <router-link to="/restaurant" class="routes">Restaurant</router-link>
-      <router-link to="/searchpage" class="routes">Search Page</router-link>
-      <router-link @click.native="logout" to="/" class="routes"
-        >Logout</router-link
-      >
-      <router-link to="/profile" class="routes">Profile</router-link>
-      <router-link to="/characteristic" class="routes"
-        >Characteristic</router-link
-      >
-      <router-link to="/profileresults" class="routes"
-        >ProfileSearch</router-link
-      >
-    </ul>
-
-    <div id="sortContent" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" v-on:click="closeSort()">&times;</a>
-      <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
-      <a class="dropdown-btn" v-on:click="sort('cuisine')">Cuisine</a>
-      <a class="dropdown-btn" v-on:click="sort('price')">Price</a>
-    </div>
-
-
-    <div id="sortFeature">
-      <span style="font-size:30px;cursor:pointer" v-on:click="openSort()">&#8693; Sort</span>
-    </div>
-    
-
-    <div id="filterContent" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" v-on:click="closeFilter()">&times;</a>
+    <Cheader></Cheader>
+    <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
+    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow>
+      <template #default="{ hide }">
+        <h1>Sort</h1>
+        <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
+        <a class="dropdown-btn" v-on:click="sort('cuisine')">Cuisine</a>
+        <a class="dropdown-btn" v-on:click="sort('price')">Price</a>
       
+        <h1>Filter</h1>
+          <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;
+          </button>
+          <div class="dropdown-container" id="filCuisineChoice">
+          <div  v-for="cuisine in cuisines" v-bind:key="cuisine">
+            <a class="choiceMade" style="cursor:pointer" v-on:click="cuisineChoice=['cuisine', cuisine]">{{cuisine}}</a>
+          </div>
+          
+          </div>
 
-      <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;
-      </button>
-      <div class="dropdown-container" id="filCuisineChoice">
-      <div  v-for="cuisine in cuisines" v-bind:key="cuisine">
-        <a v-on:click="cuisineChoice=['cuisine', cuisine]">{{cuisine}}</a>
-      </div>
-      </div>
+          <button class="dropdown-btn" v-on:click="showPrice()" id="filPrice">Price &#9660;
+          </button>
+          
+          <div class="dropdown-container" id="filPriceChoice">
+            <input  v-on:change="test()" type="range" list="tickmarks" min="0" max="6" value="50" class="slider" id="myRange"><br>
+            <span><strong>Value: <span id="demo"></span></strong></span>
 
-      <button class="dropdown-btn" v-on:click="showPrice()" id="filPrice">Price &#9660;
-      </button>
-      
-      <div class="dropdown-container" id="filPriceChoice">
-        <input  v-on:change="test()" type="range" list="tickmarks" min="0" max="6" value="50" class="slider" id="myRange"><br>
-        <span><strong>Value: <span id="demo"></span></strong></span>
+          </div>
 
-      </div>
-
-      <a id="submit" style="font-size:30px;cursor:pointer;" v-on:click="filtering"><strong>Search</strong></a>
-    </div>
+          <b-button id="submit" v-on:click="filtering" class="ApplyButton">Apply Filter</b-button>
+          <b-button class="closeSidebtn" block @click="hide">Close Sidebar</b-button>
+      </template>
+    </b-sidebar>
 
 
-    <div id="filterSort">
-      <span style="font-size:30px;cursor:pointer" v-on:click="openFilter()">&#9776; Filter</span>
-    </div>
     <br>
 
     <div class="borderDiv">
@@ -93,7 +43,7 @@
           <ul id="BriefDescription">
             <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
               <div class="card" style="width: 25rem;">
-                <img class="img" v-bind:src="restaurant[1].image" alt="Restaurant Image" height="20px">
+                <img class="img" v-bind:src="restaurant[1].image" onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'" height="20px">
                 <div class="card-body">
                   <h5 class="name">{{restaurant[1].name}}</h5>
                   <div id="Description">
@@ -104,6 +54,7 @@
                     <span>Price range: {{restaurant[1].priceRange}}</span>
                     <br />
                     <span>Address: {{restaurant[1].address}}</span>
+                    <br>
                     <button
                       id="restaurantWebsite"
                       v-on:click="go(restaurant[1].websiteLink);"
@@ -133,6 +84,9 @@
                 </div>
                 <br>
                 <br>
+                <br>
+                <br>
+                <br>
                 <span id="credits">Contributed by: {{restaurant[1].contributor}}</span>
                 <br>
                 <br>
@@ -142,10 +96,9 @@
           </ul>
         </div>
       </div>
-      <div class="footerContainer">
-        <p class="footerText">Design by JKJR</p>
-      </div>
+      
     </div>
+    <Cfooter></Cfooter>
   </div>
 </template>
 
@@ -410,8 +363,24 @@ export default {
 </script>
 
 <style scoped>
+.ApplyButton{
+  margin: 10px;
+}
+
+.FnSbtn{
+  margin:60px;
+  padding:10px 50px 10px 50px;
+}
+
 #Description {
   line-height: 23px;
+}
+
+#BriefDescription {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  line-height: 5px;
 }
 
 .img {
@@ -471,11 +440,13 @@ img {
 #credits {
   text-align: right;
   padding-right: 20px;
+  font-style: italic;
+  color: #8a8a8a;
 }
 
 #fav img {
-  height: 35px;
-  width: 35px;
+  height: 36px;
+  width: 36px;
 }
 
 #fav {
@@ -493,7 +464,7 @@ img {
 
 #unfav img {
   height: 30px;
-  width: 33px;
+  width: 34px;
 }
 
 #unfav {
@@ -522,6 +493,7 @@ img {
   border: solid #0088cc 1px;
   margin-bottom: 5px;
 }
+
 
 .miniButton {
   background: turquoise;
@@ -569,7 +541,6 @@ img {
   z-index: 1;
   top: 140px;
   left: 0;
-  background-color: #111;
   overflow-x: hidden;
   transition: 0.5s;
   /*padding-top: 60px;*/
@@ -620,9 +591,11 @@ img {
 }
 
 .dropdown-btn:hover {
-  color: #f1f1f1;
+  color: #2d4fac;
 }
-
+.choiceMade:hover{
+  color: #2d4fac;
+}
 .active {
   background-color: #0088cc;
   color: white;
@@ -630,8 +603,13 @@ img {
 
 .dropdown-container {
   display: none;
-  background-color: #262626;
   padding-left: 8px;
+}
+
+.closeSidebtn{
+  width: 93%;
+  margin-left: 10px;
+
 }
 
 </style>
