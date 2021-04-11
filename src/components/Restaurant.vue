@@ -2,7 +2,7 @@
   <div class="body">
     <Cheader></Cheader>
     <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
-    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow>
+    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow v-if="cuisines.length != 0">
       <template #default="{ hide }">
         <h1>Sort</h1>
         <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
@@ -41,7 +41,7 @@
       <div class="RestaurantContainer">
         <div id="Restaurant">
           <ul id="BriefDescription">
-            <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant">
+            <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant.name">
               <div class="card" style="width: 25rem;">
                 <img class="img" v-bind:src="restaurant[1].image" onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'" height="20px">
                 <div class="card-body">
@@ -124,6 +124,7 @@ export default {
       save: [],
       cuisineChoice: [],
       cuisines: [],
+      isLoading: true,
     };
   },
 
@@ -142,8 +143,8 @@ export default {
             if (this.searchedValue == null) {
               this.restaurants.push([doc.id, doc.data()]);
               this.save.push([doc.id,doc.data()]);
-              if (!this.cuisines.includes(doc.data()["cuisine"])) {
-                this.cuisines.push(doc.data()["cuisine"]);
+              if (!this.cuisines.includes(doc.data().cuisine)) {
+                this.cuisines.push(doc.data().cuisine);
               }
             } else {
               if (
@@ -153,6 +154,9 @@ export default {
                   .includes(this.searchedValue.toUpperCase())
               ) {
                 this.restaurants.push([doc.id, doc.data()]);
+                if (!this.cuisines.includes(doc.data().cuisine)) {
+                this.cuisines.push(doc.data().cuisine);
+              }
               } else if (
                 doc
                   .data()
@@ -160,6 +164,9 @@ export default {
                   .includes(this.searchedValue.toUpperCase())
               ) {
                 this.restaurants.push([doc.id, doc.data()]);
+                if (!this.cuisines.includes(doc.data().cuisine)) {
+                this.cuisines.push(doc.data().cuisine);
+              }
               } else if (
                 doc
                   .data()
@@ -167,6 +174,9 @@ export default {
                   .includes(this.searchedValue.toUpperCase())
               ) {
                 this.restaurants.push([doc.id, doc.data()]);
+                if (!this.cuisines.includes(doc.data().cuisine)) {
+                this.cuisines.push(doc.data().cuisine);
+              }
               } else if (
                 doc
                   .data()
@@ -174,10 +184,14 @@ export default {
                   .includes(this.searchedValue.toUpperCase())
               ) {
                 this.restaurants.push([doc.id, doc.data()]);
+                if (!this.cuisines.includes(doc.data().cuisine)) {
+                this.cuisines.push(doc.data().cuisine);
+              }
               }
             }
           });
           this.isLoading = false;
+          console.log(this.cuisines);
         });
     },
     go: function(url) {
