@@ -1,5 +1,7 @@
+
 <template>
   <div class="body">
+    <Cheader></Cheader>
     <div v-if="isLoaded">
       <radar-chart :parsedData="parsedData"></radar-chart>
     </div>
@@ -10,17 +12,34 @@
       <h2 v-if= "type == 'Adventurous Foodie'" >Here are some restaurants we have for you!</h2>
       <h2 v-if= "type == 'Not-So-Picky Eater'" >Here are some recipes and restaurants we have for you!</h2>
     </div>
-    <li class="characteristicslist" v-for="item in recommendedThings" v-bind:key="item.id">
+
+    
+    <div class="container" >
+    <li class="characteristicslist" v-for="(item) in recommendedThings" v-bind:key="item.id">
+      <div class="pointDiv">
+        {{item.name}}  
+        
+        <img v-bind:src="item.image" alt="Food image" />
+        <button class="myButton smaller" v-on:click="go(item)">Go!</button>
+      </div>
+    </li>
+    </div>
+    
+    
+    <div class="preferenceDiv">
+      <h2>You may also like the following!</h2>
+    </div>
+    <div class="container" >
+    <li class="characteristicslist" v-for="item in possibleReccomendations" v-bind:key="item.id">
       <div class="pointDiv">
         {{item.name}}
         <img v-bind:src="item.image" alt="Food image" />
         <button class="myButton smaller" v-on:click="go(item)">Go!</button>
       </div>
     </li>
-    <b-button href="/searchpage" class="gotoSearchPage">Find your own Recipes and Restaurants!</b-button>
-    <div class="footerContainer">
-      <p class="footerText">Design by JKJR</p>
     </div>
+    <b-button href="/searchpage" class="gotoSearchPage">Find your own Recipes and Restaurants!</b-button>
+    <Cfooter></Cfooter>
   </div>
 </template>
 
@@ -39,6 +58,7 @@ export default {
       cuisine: "",
       type: "",
       recommendedThings: [],
+      possibleReccomendations:[],
       preferences: [],
       isLoaded: false,
     };
@@ -60,6 +80,19 @@ export default {
               this.recommendedThings.push(doc.data());
             });
           });
+        
+        
+        db.collection("recipe")
+          .orderBy("name")
+          .limit(3)
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
+              this.possibleReccomendations.push(doc.data());
+            });
+          });
+        
+        
       } else if (this.preferences[0] > 20 && this.preferences[3] >= 15) {
         this.type = "Home Cook";
         db.collection("recipe")
@@ -71,6 +104,17 @@ export default {
               this.recommendedThings.push(doc.data());
             });
           });
+
+        db.collection("restaurant")
+          .orderBy("name")
+          .limit(3)
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
+              this.possibleReccomendations.push(doc.data());
+            });
+          });
+
       } else {
         this.type = "Not-So-Picky Eater";
         db.collection("recipe")
@@ -89,6 +133,24 @@ export default {
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
               this.recommendedThings.push(doc.data());
+            });
+          });
+        db.collection("recipe")
+          .orderBy("name","desc")
+          .limit(2)
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
+              this.possibleReccomendations.push(doc.data());
+            });
+          });
+        db.collection("restaurant")
+          .orderBy("name","desc")
+          .limit(2)
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
+              this.possibleReccomendations.push(doc.data());
             });
           });
       }
@@ -132,12 +194,31 @@ export default {
 .preferenceDiv {
   text-align: center;
 }
-
+.main {
+  display:flex
+}
 .characteristicslist {
+  padding: 5px;
+  margin: 10px;
+  list-style-type: none; 
+  display:flex;
+  flex-direction: row;
+  width:24%;
+  align-items: center;
+  
+  
+}
+
+.container {
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
   text-align: center;
   padding: 5px;
   margin: 10px;
-  list-style-type: none;
+  margin-left: 60px;
+  align-items: center;
+  
 }
 
 .pointDiv {
@@ -154,6 +235,6 @@ export default {
 }
 
 .smaller {
-  width: 25%;
+  width: 40%;
 }
 </style>

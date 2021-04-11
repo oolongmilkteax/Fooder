@@ -27,7 +27,7 @@
         <b-card-group deck class="mx-auto">
           <li
           id="profilelist"
-          class="ml-3 mx-auto"
+          class="col-md-4"
           v-for="recipe in recipes"
           v-bind:key="recipe.name"
           >  
@@ -50,7 +50,7 @@
         <b-card-group deck class="mx-auto">
           <li
           id="profilelist"
-          class="ml-3 mx-auto"
+          class="col-md-4"
           v-for="restaurant in restaurants"
           v-bind:key="restaurant.name"
           >  
@@ -65,7 +65,7 @@
         
       </ul>
     </div>
-    <Cfooter class="bottomFooter"></Cfooter>
+    <Cfooter class=""></Cfooter>
   </div>
 </template>
 
@@ -95,7 +95,6 @@ export default {
   methods: {
     logout: logout,
     fetchInfo: function() {
-      //this.uid = db.auth().currentUser.uid;
       this.uid = this.$store.state.uid;
       if(this.userProfile == null){
         db.firestore()
