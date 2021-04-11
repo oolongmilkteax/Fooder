@@ -31,7 +31,7 @@
           v-for="restaurant in restaurants"
           v-bind:key="restaurant.name"
           >  
-          <b-card :title="restaurant.name" v-bind:img-src="restaurant.image" v-on:click="searchRestaurant(restaurant.name)" class="mb-4 mx-auto" style="width: 32rem;">
+          <b-card :title="restaurant.name" v-bind:img-src="restaurant.image" v-on:click="searchRestaurant(restaurant.name)" class="mb-4 mx-auto" style="width: 23rem;">
             <b-card-text>
               
             </b-card-text>
@@ -136,7 +136,7 @@ export default {
         name: "FullRecipe",
         params: { i: ingredients, d: directions }
       });
-    },
+    }
   },
   created: function() {
     this.fetchInfo();
@@ -145,6 +145,12 @@ export default {
 </script>
 
 <style>
+img {
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
+}
+
 .favDiv {
   display: flex;
   flex-direction: column;

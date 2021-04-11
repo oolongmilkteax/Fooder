@@ -134,7 +134,7 @@
     <br />
 
     <label for="ingredients">Ingredients: </label>
-    <button type="button" v-on:click="removeIngre">Clear All</button>
+    <button class="clear" type="button" v-on:click="removeIngre">Clear All</button>
     <br />
     <span class="alert" v-show="alert.ingredients"
       >Please input ingredients of recipe.
@@ -157,11 +157,11 @@
       name="ingredients"
       v-model="ingredient"
     />
-    <button type="button" v-on:click="addIngre">Add Ingredient!</button>
+    <button class="add" type="button" v-on:click="addIngre">Add Ingredient!</button>
 
     <br />
     <label for="instructions">Instructions: </label>
-    <button type="button" v-on:click="removeInstru">Clear All</button>
+    <button class="clear" type="button" v-on:click="removeInstru">Clear All</button>
     <br />
     <span class="alert" v-show="alert.directions"
       >Please input instructions of recipe.
@@ -184,7 +184,7 @@
       name="instructions"
       v-model="instruction"
     />
-    <button type="button" v-on:click="addInstru">Add Instruction!</button>
+    <button class="add" type="button" v-on:click="addInstru">Add Instruction!</button>
     <br />
 
     <span class="alert" v-show="alert.submission"
@@ -352,7 +352,6 @@ export default {
   background: #0088cc;
   width: 20%;
   border-radius: 8px;
-  border-radius: 8px;
   color: #ffffff;
   font-family: Helvetica;
   font-size: 28px;
@@ -373,5 +372,46 @@ export default {
 
 .alert {
   color: red;
+}
+
+.clear {
+  background: #0088cc;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: Helvetica;
+  font-size: 15px;
+  font-weight: 100;
+  padding: 5px;
+  border: solid #0088cc 1px;
+  margin-top: 30px;
+}
+
+.clear:hover {
+  border: solid #979797 1px;
+  background: red;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.add {
+  background: #0088cc;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: Helvetica;
+  font-size: 15px;
+  font-weight: 100;
+  padding: 5px;
+  border: solid #0088cc 1px;
+}
+
+.add:hover {
+  border: solid #979797 1px;
+  background: #979797;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 14px;
+  border-radius: 8px;
+  text-decoration: none;
 }
 </style>
