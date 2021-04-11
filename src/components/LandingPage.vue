@@ -60,12 +60,22 @@ export default {
               .doc(firebase.auth().currentUser.uid)
               .get()
               .then(doc => {
+                /*
                 if (doc.data()["firstLogin"] == false) {
                   this.$store.commit("setFirstLogin", false);
+                  this.$store.commit("setPreferencing", true);
                   this.$router.replace({ name: "SearchPage" });
                 } else {
+                  
                   this.$router.replace({ name: "Preferencing" });
                 }
+                */
+                this.$store.commit("setFirstLogin", doc.data()["firstLogin"]);
+                this.$store.commit(
+                  "setPreferencing",
+                  doc.data()["donePreferencing"]
+                );
+                this.$router.replace({ name: "Preferencing" });
               });
             /*
               .then(() => {

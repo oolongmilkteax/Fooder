@@ -8,6 +8,7 @@ const store = new Vuex.Store({
     authenticated: false,
     uid: null,
     firstLogin: true,
+    donePreferencing: false,
   },
   mutations: {
     setAuthentication(state, status) {
@@ -16,8 +17,11 @@ const store = new Vuex.Store({
     setUid(state, uid) {
       state.uid = uid;
     },
-    setFirstLogin(state, uid) {
-      state.firstLogin = uid;
+    setFirstLogin(state, bool) {
+      state.firstLogin = bool;
+    },
+    setPreferencing(state, bool) {
+      state.donePreferencing = bool;
     },
   },
   plugins: [createPersistedState()],

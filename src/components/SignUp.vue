@@ -78,7 +78,8 @@ export default {
               .doc(getUid())
               .update({
                 name: this.titleCase(this.displayName),
-                firstLogin: true
+                firstLogin: true,
+                donePreferencing: false
               });
             alert(
               "Registered successfully. Please verify email before signing in."
