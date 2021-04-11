@@ -44,7 +44,7 @@ hr {
 .site-footer
 {
   background-color:#26272b;
-  padding:45px 0 20px;
+  padding:35px 0 5px;
   font-size:15px;
   line-height:24px;
   color:#737373;
@@ -79,7 +79,7 @@ hr {
 .footer-links
 {
   padding-left:0;
-  list-style:none
+  list-style:none;
 }
 .footer-links li
 {
