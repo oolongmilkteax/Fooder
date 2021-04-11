@@ -1,28 +1,20 @@
 <template>
   <div class="body">
-  <Cheader></Cheader>
+    <Cheader></Cheader>
     <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
     <div v-show="!isLoading" class="profileBorder">
-      <b-card :title="name" bg-variant="secondary" text-variant="white" class="mb-4 ">
-        <b-card-text>
-          {{ email }}
-        </b-card-text>
+      <b-card :title="name" bg-variant="secondary" text-variant="white" class="mb-4">
+        <b-card-text>{{ email }}</b-card-text>
       </b-card>
-      <br>
+      <br />
 
       <div id="emptyContri" v-if="contriRecipes == '' && contriRestaurants == ''">
         <span>You have made 0 contributions so far</span>
-        <br>
-        <button 
-          id="contributeButton"
-          v-on:click="contribute"
-        >Start contributing!
-        </button>
+        <br />
+        <button id="contributeButton" v-on:click="contribute">Start contributing!</button>
       </div>
 
-      <h1 style="text-align:center" v-if="contriRecipes != ''">
-        Contributed Recipes
-      </h1>
+      <h1 style="text-align:center" v-if="contriRecipes != ''">Contributed Recipes</h1>
       <ul id="BriefDescription">
         <b-card-group deck class="mx-auto">
           <li
@@ -39,13 +31,10 @@
           </b-card>
           </li>
         </b-card-group>
-        
       </ul>
-      <br>
-      <br>
-      <h1 style="text-align:center" v-if="contriRestaurants != ''">
-        Contributed Restaurants
-      </h1>
+      <br />
+      <br />
+      <h1 style="text-align:center" v-if="contriRestaurants != ''">Contributed Restaurants</h1>
       <ul id="BriefDescription">
         <b-card-group deck class="mx-auto">
           <li
@@ -62,10 +51,10 @@
           </b-card>
           </li>
         </b-card-group>
-        
       </ul>
     </div>
-    <Cfooter class=""></Cfooter>
+    <Cfooter v-if="contributed"></Cfooter>
+    <Cfooter v-if="contributed == false" class="bottomFooter"></Cfooter>
   </div>
 </template>
 
@@ -84,40 +73,48 @@ export default {
       uid: "",
       restaurants: [],
       recipes: [],
-      name:"",
-      username:"",
-      email:"",
+      name: "",
+      username: "",
+      email: "",
+      contributed: true
     };
   },
   components: {
-    PulseLoader,
+    PulseLoader
   },
   methods: {
     logout: logout,
     fetchInfo: function() {
       this.uid = this.$store.state.uid;
-      if(this.userProfile == null){
+      if (this.userProfile == null) {
         db.firestore()
           .collection("user")
           .doc(this.uid)
-          .get()
-          .then((user) => {
-              this.name = user.data().name;
-              this.email = user.data().email;
-              this.contriRecipes = user.data().contributeRecipe;
-              this.contriRestaurants = user.data().contributeRestaurant;
-              this.fetchRecipes();
-              this.fetchRestaurants(this.uid);
+          .get({ source: "cache" })
+          .then(user => {
+            this.name = user.data().name;
+            this.email = user.data().email;
+            this.contriRecipes = user.data().contributeRecipe;
+            this.contriRestaurants = user.data().contributeRestaurant;
+            this.fetchRecipes();
+            this.fetchRestaurants(this.uid);
           })
           .then(() => {
             this.isLoading = false;
+            if (this.contriRecipes.length == 0) {
+              this.contributed = false;
+            }
+            if (this.contriRestaurants.length == 0) {
+              this.contributed = false;
+            }
+            //alert(this.contributed);
           });
       } else {
         db.firestore()
-        .collection("user")
-        .doc(this.userProfile[0])
-        .get()
-        .then((user) => {
+          .collection("user")
+          .doc(this.userProfile[0])
+          .get({ source: "cache" })
+          .then(user => {
             this.name = user.data().name;
             this.username = user.data().username;
             this.email = user.data().email;
@@ -125,18 +122,24 @@ export default {
             this.contriRestaurants = user.data().contributeRestaurant;
             this.fetchRecipes();
             this.fetchRestaurants(this.uid);
-        })
-        .then(() => {
-          this.isLoading = false;
-        });
+          })
+          .then(() => {
+            this.isLoading = false;
+            if (this.contriRecipes.length == 0) {
+              this.contributed = false;
+            }
+            if (this.contriRestaurants.length == 0) {
+              this.contributed = false;
+            }
+          });
       }
     },
     fetchRecipes: function() {
       db.firestore()
         .collection("recipe")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
+        .get({ source: "cache" })
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
             if (this.contriRecipes.includes(doc.id)) {
               this.recipes.push(doc.data());
             }
@@ -146,20 +149,23 @@ export default {
     fetchRestaurants: function() {
       db.firestore()
         .collection("restaurant")
-        .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
+        .get({ source: "cache" })
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
             if (this.contriRestaurants.includes(doc.id)) {
               this.restaurants.push(doc.data());
             }
           });
         });
     },
-    searchRecipe: function(recipe){
-      this.$router.push({ name: 'Recipe', params: {searchedValue: recipe}})
+    searchRecipe: function(recipe) {
+      this.$router.push({ name: "Recipe", params: { searchedValue: recipe } });
     },
-    searchRestaurant: function(restaurant){
-      this.$router.push({ name: 'Restaurant', params: {searchedValue: restaurant}})
+    searchRestaurant: function(restaurant) {
+      this.$router.push({
+        name: "Restaurant",
+        params: { searchedValue: restaurant }
+      });
     },
     go: function(ingredients, directions) {
       this.$router.push({
@@ -171,12 +177,12 @@ export default {
       window.open(url);
     },
     contribute: function() {
-      this.$router.push({ path: "/contribute" })
+      this.$router.push({ path: "/contribute" });
     }
   },
   created: function() {
     this.fetchInfo();
-  },
+  }
 };
 </script>
 
@@ -223,8 +229,9 @@ img {
   display: flex;
   justify-content: center;
 }
-.bottomFooter{
-  position: absolute;
-  bottom:0;
+.bottomFooter {
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
 </style>

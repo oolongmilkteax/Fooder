@@ -17,14 +17,28 @@ import store from "./store";
 const beforeEnter = function(to, from, next) {
   if (store.state.authenticated == false) {
     next("/");
+  } else if (store.state.donePreferencing == false) {
+    next({ name: "Preferencing" });
   } else {
     next();
   }
 };
 
-const beforeEnter_2 = function(to, from, next) {
+const beforeEnter_pref = function(to, from, next) {
   if (store.state.authenticated == false) {
     next("/");
+  } else if (store.state.donePreferencing == true) {
+    next({ name: "SearchPage" });
+  } else {
+    next();
+  }
+};
+
+const beforeEnter_char = function(to, from, next) {
+  if (store.state.authenticated == false) {
+    next("/");
+  } else if (store.state.donePreferencing == false) {
+    next({ name: "Preferencing" });
   } else if (store.state.firstLogin == false) {
     next({ name: "SearchPage" });
   } else {
@@ -37,6 +51,7 @@ export default [
     name: "DashBoard",
     path: "/dashboard",
     component: DashBoard,
+    beforeEnter: beforeEnter,
   },
   {
     name: "Contribute",
@@ -59,7 +74,7 @@ export default [
     name: "Preferencing",
     path: "/preferencing",
     component: Preferencing,
-    beforeEnter: beforeEnter_2,
+    beforeEnter: beforeEnter_pref,
   },
   {
     name: "Restaurant",
@@ -104,7 +119,7 @@ export default [
     path: "/characteristic",
     component: Characteristic,
     props: true,
-    beforeEnter: beforeEnter_2,
+    beforeEnter: beforeEnter_char,
   },
   {
     name: "ProfileSearch",

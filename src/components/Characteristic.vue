@@ -65,6 +65,11 @@ export default {
   },
   methods: {
     notFirstLogin: function() {
+      firebase
+        .firestore()
+        .collection("user")
+        .doc(this.$store.state.uid)
+        .update({ firstLogin: false });
       this.$store.commit("setFirstLogin", false);
     },
     logout: logout,
@@ -185,6 +190,7 @@ export default {
         this.isLoaded = true;
         this.typeFinder();
       });
+    //this.notFirstLogin();
     window.addEventListener("beforeunload", this.notFirstLogin);
   }
 };
