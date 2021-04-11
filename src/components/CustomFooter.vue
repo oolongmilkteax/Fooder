@@ -1,38 +1,22 @@
 <template>
   <div class="site-footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-md-6">
-            <h6>About</h6>
-            <p class="text-justify">Fooder aims to provide a platform for users to contribute by sharing their own unique take on personal recipes and favourite restaurants, creating a community for foodies to share their passion with like-minded individuals.
-</p>
-          </div>
-          <div class="col-xs-6 col-md-3">
-          </div>
-          <div class="col-xs-6 col-md-3">
-            <h6>About Us</h6>
-            <ul class="footer-links">
-              <li><a href="https://github.com/Telentovj">John Vijay Balasupramaniam</a></li>
-              <li><a href="https://github.com/jaxminx">Jasmine Chen Yu Qing</a></li>
-              <li><a href="https://github.com/Imbabot7">Kenneth Khoo Kai Sheng</a></li>
-              <li><a href="https://github.com/oolongmilkteax">Ho Pei San Rachel</a></li>
-            </ul>
-          </div>
-        </div>
-        <hr>
+    <div class="central">
+      <div>
+      <h6>About</h6>
+      <p class="text-justify">Fooder aims to provide a platform for users to contribute by sharing their own unique take on personal recipes and favourite restaurants, creating a community for foodies to share their passion with like-minded individuals.</p>
+      <h6>About Us</h6>
+      <ul class="footer-links">
+        <li><a href="https://github.com/Telentovj">John Vijay Balasupramaniam</a></li>
+        <li><a href="https://github.com/jaxminx">Jasmine Chen Yu Qing</a></li>
+        <li><a href="https://github.com/Imbabot7">Kenneth Khoo Kai Sheng</a></li>
+        <li><a href="https://github.com/oolongmilkteax">Ho Pei San Rachel</a></li>
+      </ul>
       </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8 col-sm-6 col-xs-12">
-            <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by 
-         <a href="#">JJKH</a>.
-            </p>
-          </div>
-
-          <div class="col-md-4 col-sm-6 col-xs-12"> 
-          </div>
-        </div>
-      </div>
+      <hr>
+      <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by 
+        <a href="#">JJKH</a>.
+      </p>
+    </div>
   </div>
 </template>
 
@@ -43,7 +27,20 @@ export default {
 </script>
 
 <style>
-
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 96%;               
+  background-color:white;
+  height: 1px;
+}
+.central{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .site-footer
 {
   background-color:#26272b;
@@ -52,7 +49,6 @@ export default {
   line-height:24px;
   color:#737373;
   width: 100%;
-  margin-top: 5%;
 }
 .site-footer hr
 {
@@ -118,7 +114,8 @@ export default {
 }
 .copyright-text
 {
-  margin:0
+  margin:0;
+  text-align: center;
 }
 @media (max-width:991px)
 {
@@ -209,4 +206,4 @@ export default {
     font-weight:600
   }
 }
-</style>
+</style>  
