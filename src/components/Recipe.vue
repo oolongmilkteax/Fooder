@@ -2,7 +2,7 @@
   <div class="body">
     <Cheader></Cheader>
     <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
-    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow>
+    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow v-if="cuisines.length != 0">
       <template #default="{ hide }">
         <h1>Sort</h1>
         <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
@@ -63,7 +63,7 @@
       <div class="RecipeContainer">
         <div id="Recipe">
           <ul id="BriefDescription">
-            <li id="list" v-for="recipe in recipes" v-bind:key="recipe">
+            <li id="list" v-for="recipe in recipes" v-bind:key="recipe.name">
               <div class="card" style="width: 23rem;">
                 <img class="img" v-bind:src="recipe[1].image" onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'" height="20px">
                 <div class="card-body">
@@ -179,14 +179,29 @@ export default {
               //if search contain name return recipe
               if(doc.data().name.toUpperCase().includes(this.searchedValue.toUpperCase())) {
                 this.recipes.push([doc.id,doc.data()]);
+                if (!this.cuisines.includes(doc.data()["cuisine"])) {
+                this.cuisines.push(doc.data()["cuisine"]);
+                }
               }else if(doc.data().cuisine.toUpperCase().includes(this.searchedValue.toUpperCase())){
                 this.recipes.push([doc.id,doc.data()]);
+                if (!this.cuisines.includes(doc.data()["cuisine"])) {
+                this.cuisines.push(doc.data()["cuisine"]);
+                }
               }else if(doc.data().difficulty.toUpperCase().includes(this.searchedValue.toUpperCase())){
                 this.recipes.push([doc.id,doc.data()]);
+                if (!this.cuisines.includes(doc.data()["cuisine"])) {
+                this.cuisines.push(doc.data()["cuisine"]);
+                }
               }else if(doc.data().contributor.toUpperCase().includes(this.searchedValue.toUpperCase())){
                 this.recipes.push([doc.id,doc.data()]);
+                if (!this.cuisines.includes(doc.data()["cuisine"])) {
+                this.cuisines.push(doc.data()["cuisine"]);
+                }
               }else if(doc.data().type.toUpperCase().includes(this.searchedValue.toUpperCase())){
                 this.recipes.push([doc.id,doc.data()]);
+                if (!this.cuisines.includes(doc.data()["cuisine"])) {
+                this.cuisines.push(doc.data()["cuisine"]);
+                }
               }
             }
           });

@@ -1,45 +1,66 @@
 <template>
   <div class="body">
     <Cheader></Cheader>
-    <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
+    <PulseLoader id="loading" :loading="isLoading"></PulseLoader> 
+    
     <div v-show="!isLoading" class="profileBorder">
+      <div id="emptyFav" v-if="favRecipe == '' && favRestaurant == ''">
+        <span style="text-align:center">You have liked 0 items so far</span>
+        <br>
+        <div>
+          <button
+            id="favButton"
+            v-on:click="favouriteRecipe"
+          >Find your favourite recipes!
+          </button>
+          <button
+            id="favButton"
+            v-on:click="favouriteRestaurant"
+          >Find your favourite restaurants!
+          </button>
+        </div>
+      </div>
       <h1 style="text-align:center" v-if="favRecipe != ''">Favourite Recipes</h1>
       <ul id="BriefDescription">
         <b-card-group deck class="mx-auto">
           <li
           id="profilelist"
-          class="ml-3 mx-auto"
+          class="col-md-4"
           v-for="recipe in recipes"
-          v-bind:key="recipe.name"
+          v-bind:key="recipe[1].name"
           >  
-          <b-card :title="recipe.name" v-bind:img-src="recipe.image" v-on:click="go(recipe.ingredients, recipe.directions);" class="mb-4 mx-auto" style="width: 23rem;">
-            <b-card-text>
-              
-            </b-card-text>
+          <b-card class="mb-4 mx-auto" style="width: 23rem;" no-body>
+            <b-card-img :src="recipe[1].image" top v-on:click="go(recipe[1].ingredients,recipe[1].directions)" > </b-card-img>
+            <b-card-body>
+              <p style="text-align:center; font-size:24px">{{recipe[1].name}}</p>
+              <b-button pill variant="primary" style="float:right" v-on:click="unfavRecipe(recipe[0])">Unfavourite</b-button>
+            </b-card-body>
 
           </b-card>
           </li>
         </b-card-group>
-          <br />
-      </ul>
+      </ul>    
       <h1 style="text-align:center" v-if="favRestaurant != ''">Favourite Restaurants</h1>
       <ul id="BriefDescription">
         <b-card-group deck class="mx-auto">
           <li
           id="profilelist"
-          class="col-md-6"
+          class="col-md-4"
           v-for="restaurant in restaurants"
-          v-bind:key="restaurant.name"
+          v-bind:key="restaurant[1].name"
           >  
-          <b-card :title="restaurant.name" v-bind:img-src="restaurant.image" v-on:click="searchRestaurant(restaurant.name)" class="mb-4 mx-auto" style="width: 23rem;">
-            <b-card-text>
-              
-            </b-card-text>
+           <b-card class="mb-4 mx-auto" style="width: 23rem;" no-body>
+            <b-card-img :src="restaurant[1].image" top v-on:click="goWebsite(restaurant[1].websiteLink)"> </b-card-img>
+            <b-card-body>
+              <p style="text-align:center; font-size:24px">{{restaurant[1].name}}</p>
+              <b-button pill variant="primary" style="float:right" v-on:click="unfavRestaurant(restaurant[0])">Unfavourite</b-button>
+            </b-card-body>
 
           </b-card>
           </li>
         </b-card-group>
       </ul>
+    
     </div>
     <Cfooter></Cfooter>
   </div>
@@ -93,7 +114,7 @@ export default {
         .then(querySnapshot => {
           querySnapshot.docs.forEach(doc => {
             if (this.favRecipe.includes(doc.id)) {
-              this.recipes.push(doc.data());
+              this.recipes.push([doc.id,doc.data()]);
             }
           });
           /*
@@ -112,7 +133,7 @@ export default {
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
             if (this.favRestaurant.includes(doc.id)) {
-              this.restaurants.push(doc.data());
+              this.restaurants.push([doc.id,doc.data()]);
             }
           });
           /*
@@ -136,7 +157,45 @@ export default {
         name: "FullRecipe",
         params: { i: ingredients, d: directions }
       });
-    }
+    },
+    goWebsite: function(url) {
+      window.open(url);
+    },
+    favouriteRecipe: function() {
+      this.$router.push({ path: "/recipe" })
+    },
+    favouriteRestaurant: function() {
+      this.$router.push({ path: "/restaurant" })
+    },
+    unfavRecipe: function(id) {
+      db.firestore().collection('user').doc(this.$store.state.uid).update({
+        "favRecipe": db.firestore.FieldValue.arrayRemove(id)});
+      for(var i = 0; i < this.recipes.length; i++){ 
+        if ( this.recipes[i][0] === id) { 
+            this.recipes.splice(i, 1); 
+           
+        }
+        if ( this.favRecipe[i] === id) { 
+            this.favRecipe.splice(i, 1); 
+           
+        }
+      } 
+    },
+    unfavRestaurant: function(id) {
+      db.firestore().collection('user').doc(this.$store.state.uid).update({
+        "favRestaurant": db.firestore.FieldValue.arrayRemove(id)});
+      for(var i = 0; i < this.restaurants.length; i++){ 
+        if ( this.restaurants[i][0] === id) { 
+            this.restaurants.splice(i, 1); 
+            
+        }
+        if ( this.favRestaurant[i] === id) { 
+            this.favRestaurant.splice(i, 1); 
+           
+        }
+      } 
+    },
+    
   },
   created: function() {
     this.fetchInfo();
@@ -210,4 +269,34 @@ img {
   display: flex;
   justify-content: center;
 }
+
+#emptyFav {
+  line-height: 50px;
+  text-align: center;
+  font-size: 28px;
+}
+
+#favButton {
+  background: #0088cc;
+  width: 320px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: Helvetica;
+  font-weight: 100;
+  padding: 10px;
+  border: solid #0088cc 1px;
+  font-size: 20px;
+  font-weight: 100;
+  margin:20px;
+}
+
+#contributeButton:hover {
+  border: solid #979797 1px;
+  background: #979797;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
 </style>

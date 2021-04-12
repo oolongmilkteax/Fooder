@@ -1,6 +1,7 @@
 <template>
   <div class="body">
     <Cheader></Cheader>
+
     <div class="BorderDiv">
       <p class="searchHeader">Fooder</p>
       <div class="searchDiv">
@@ -10,32 +11,16 @@
           id="Restaurant"
           class="searchButton"
           v-on:click="Restaurant"
-        >
-          Restaurant
-        </button>
-  
-        <button
-          type="button"
-          id="Recipe"
-          class="searchButton"
-          v-on:click="Recipe"
-        >
-          Recipe
-        </button>
-        <button
-          type="button"
-          id="Profile"
-          class="searchButton"
-          v-on:click="Profile"
-        >
-          Profile
-        </button>
+        >Restaurant</button>
+
+        <button type="button" id="Recipe" class="searchButton" v-on:click="Recipe">Recipe</button>
+        <button type="button" id="Profile" class="searchButton" v-on:click="Profile">Profile</button>
       </div>
       <input
         type="text"
         class="searchInput"
         v-model="searchValue"
-        placeholder="Search for Restaurants or Recipes!"
+        placeholder="Search for Restaurants, Recipes, or Profiles!"
       />
       <div class="button-centraliser">
         <button class="myButton" v-on:click="search()">Search</button>
@@ -80,19 +65,19 @@ export default {
     searchRecipe: function() {
       this.$router.push({
         name: "Recipe",
-        params: { searchedValue: this.searchValue },
+        params: { searchedValue: this.searchValue }
       });
     },
     searchRestaurant: function() {
       this.$router.push({
         name: "Restaurant",
-        params: { searchedValue: this.searchValue },
+        params: { searchedValue: this.searchValue }
       });
     },
     searchProfile: function() {
       this.$router.push({
         name: "ProfileSearch",
-        params: { searchedValue: this.searchValue },
+        params: { searchedValue: this.searchValue }
       });
     },
     search: function() {
@@ -105,17 +90,16 @@ export default {
       if (this.profile) {
         this.searchProfile();
       }
-    },
-    
+    }
   },
   data() {
     return {
       searchValue: "",
       recipe: true,
       restaurant: false,
-      profile: false,
+      profile: false
     };
-  },
+  }
 };
 </script>
 
@@ -197,10 +181,8 @@ export default {
   padding: 20px;
 }
 
-.bottomFooter{
+.bottomFooter {
   position: absolute;
-  bottom:0;
+  bottom: 0;
 }
-
-
 </style>

@@ -65,8 +65,10 @@
         
       </ul>
     </div>
-    <Cfooter class="bottomFooter"></Cfooter>
+    <Cfooter v-if="contributed"></Cfooter>
+    <Cfooter v-if="contributed == false" class="bottomFooter"></Cfooter>
   </div>
+  
 </template>
 
 <script>
@@ -87,6 +89,7 @@ export default {
       name:"",
       username:"",
       email:"",
+      contributed:true,
     };
   },
   components: {
@@ -112,6 +115,12 @@ export default {
           })
           .then(() => {
             this.isLoading = false;
+            if(this.contriRecipes.length == 0){
+              this.contributed = false;
+            }
+            if(this.contriRestaurants.length == 0){
+              this.contributed = false;
+            }
           });
       } else {
         db.firestore()
@@ -129,6 +138,12 @@ export default {
         })
         .then(() => {
           this.isLoading = false;
+          if(this.contriRecipes.length == 0){
+              this.contributed = false;
+            }
+            if(this.contriRestaurants.length == 0){
+              this.contributed = false;
+            }
         });
       }
     },
@@ -225,7 +240,8 @@ img {
   justify-content: center;
 }
 .bottomFooter{
-  position: absolute;
-  bottom:0;
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
 </style>
