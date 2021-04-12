@@ -26,7 +26,7 @@
         <button class="myButton" onclick="location.href='./signup'">Sign Up!</button>
       </div>
     </div>
-    <Cfooter class="bottomFooter"></Cfooter>
+    <Cfooter></Cfooter>
   </div>
 </template>
 
@@ -111,10 +111,7 @@ export default {
 </script>
 
 <style>
-.bottomFooter{
-  position: absolute;
-  bottom:0;
-}
+
 .LandingDiv {
   padding: 3%;
 }

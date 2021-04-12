@@ -14,7 +14,11 @@
           </button>
           <div class="dropdown-container" id="filCuisineChoice">
           <div  v-for="cuisine in cuisines" v-bind:key="cuisine">
+<<<<<<< HEAD
             <a class="choiceMade" style="cursor:pointer" v-bind:id="cuisine" v-on:click="uniqueCuisine(['cuisine', cuisine]);">{{cuisine}}</a>
+=======
+            <a class="choiceMade" style="cursor:pointer" id="cuisine" v-on:click="cuisineChoice=['cuisine', cuisine]">{{cuisine}}</a>
+>>>>>>> ca8996a1d2cc9c736bd19dd8b68ec9452ca9fe50
           </div>
           
           </div>
@@ -38,6 +42,7 @@
 
     <div class="borderDiv">
       <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
+      <h1 v-if="noResult">No Results! :(</h1>
       <div class="RestaurantContainer">
         <div id="Restaurant">
           <ul id="BriefDescription">
@@ -125,6 +130,7 @@ export default {
       cuisineChoice: [],
       cuisines: [],
       isLoading: true,
+      noResult: false,
     };
   },
 
@@ -176,7 +182,9 @@ export default {
             }
           });
           this.isLoading = false;
-          console.log(this.cuisines);
+          if(this.recipes.length == 0){
+            this.noResult = true;
+          }
         });
     },
     go: function(url) {

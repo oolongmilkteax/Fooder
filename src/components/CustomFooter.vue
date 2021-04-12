@@ -6,10 +6,10 @@
       <p class="text-justify">Fooder aims to provide a platform for users to contribute by sharing their own unique take on personal recipes and favourite restaurants, creating a community for foodies to share their passion with like-minded individuals.</p>
       <h6>About Us</h6>
       <ul class="footer-links">
-        <li><a href="https://github.com/Telentovj">John Vijay Balasupramaniam</a></li>
-        <li><a href="https://github.com/jaxminx">Jasmine Chen Yu Qing</a></li>
-        <li><a href="https://github.com/Imbabot7">Kenneth Khoo Kai Sheng</a></li>
-        <li><a href="https://github.com/oolongmilkteax">Ho Pei San Rachel</a></li>
+        <li><button v-on:click="go('https://github.com/Telentovj/Fooder')">John Vijay Balasupramaniam</button></li>
+        <li><button v-on:click="go('https://github.com/jaxminx')">Jasmine Chen Yu Qing</button></li>
+        <li><button v-on:click="go('https://github.com/Imbabot7')">Kenneth Khoo Kai Sheng</button></li>
+        <li><button v-on:click="go('https://github.com/oolongmilkteax')">Ho Pei San Rachel</button></li>
       </ul>
       </div>
       <hr>
@@ -22,7 +22,11 @@
 
 <script>
 export default {
-
+  methods:{
+    go: function(url) {
+      window.open(url);
+    },
+  },
 }
 </script>
 
@@ -41,15 +45,30 @@ hr {
   align-items: center;
   flex-direction: column;
 }
+.footer-links s {
+  background-color:#26272b;
+  color:#737373;
+  border: 0px;
+}
+.footer-links button{
+  background-color:#26272b;
+  color:#737373;
+  border: 0px;
+  padding-left:0;
+}
+.footer-links button:hover{
+  color:#3366cc;
+  cursor: pointer;
+}
 .site-footer
 {
   background-color:#26272b;
-  padding:35px 0 5px;
+  padding: 70px 0 5px;
   font-size:15px;
   line-height:24px;
   color:#737373;
   width: 100%;
-  margin-top:2%;
+  margin-top:15%;
 }
 .site-footer hr
 {
@@ -72,11 +91,6 @@ hr {
 {
   color:#737373;
 }
-.site-footer a:hover
-{
-  color:#3366cc;
-  text-decoration:none;
-}
 .footer-links
 {
   padding-left:0;
@@ -85,15 +99,6 @@ hr {
 .footer-links li
 {
   display:block
-}
-.footer-links a
-{
-  color:#737373
-}
-.footer-links a:active,.footer-links a:focus,.footer-links a:hover
-{
-  color:#3366cc;
-  text-decoration:none;
 }
 .footer-links.inline li
 {
