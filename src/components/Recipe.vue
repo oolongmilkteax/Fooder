@@ -2,7 +2,7 @@
   <div class="body">
     <Cheader></Cheader>
     <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
-    
+    <p>{{difficultyChoice}}</p>
     <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow v-if="cuisines.length != 0">
       <template #default="{ hide }">
         <h1>Sort</h1>
@@ -15,11 +15,11 @@
       <button class="dropdown-btn" v-on:click="showDifficulty()" id="filDifficulty">Difficulty &#9660; 
       </button>
       <div class="dropdown-container" id="filDifficultyChoice">
-        <a class="choiceMade" style="cursor:pointer" v-on:click="difficultyChoice=['difficulty','Easy']">Easy</a>
+        <a class="choiceMade" style="cursor:pointer" v-on:click="difficultyChoice.push(['difficulty','Easy']); uniqueDifficult()">Easy</a>
         <br>
-        <a class="choiceMade" style="cursor:pointer" v-on:click="difficultyChoice=['difficulty','Medium']">Medium</a>
+        <a class="choiceMade" style="cursor:pointer" v-on:click="difficultyChoice.push(['difficulty','Medium']); uniqueDifficult()">Medium</a>
         <br>
-        <a class="choiceMade" style="cursor:pointer" v-on:click="difficultyChoice=['difficulty','Hard']">Hard</a>
+        <a class="choiceMade" style="cursor:pointer" v-on:click="difficultyChoice.push(['difficulty','Hard']); uniqueDifficult()">Hard</a>
       </div>
 
       <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;
@@ -169,7 +169,7 @@ export default {
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
             //if empty search return all
-            this.save.push([doc.id,doc.data()]);
+            //this.save.push([doc.id,doc.data()]);
             if(this.searchedValue == null){
               this.recipes.push([doc.id,doc.data()]);
               if (!this.cuisines.includes(doc.data()["cuisine"])) {
@@ -180,26 +180,31 @@ export default {
               //if search contain name return recipe
               if(doc.data().name.toUpperCase().includes(this.searchedValue.toUpperCase())) {
                 this.recipes.push([doc.id,doc.data()]);
+                this.save.push([doc.id,doc.data()]);
                 if (!this.cuisines.includes(doc.data()["cuisine"])) {
                 this.cuisines.push(doc.data()["cuisine"]);
                 }
               }else if(doc.data().cuisine.toUpperCase().includes(this.searchedValue.toUpperCase())){
                 this.recipes.push([doc.id,doc.data()]);
+                this.save.push([doc.id,doc.data()]);
                 if (!this.cuisines.includes(doc.data()["cuisine"])) {
                 this.cuisines.push(doc.data()["cuisine"]);
                 }
               }else if(doc.data().difficulty.toUpperCase().includes(this.searchedValue.toUpperCase())){
                 this.recipes.push([doc.id,doc.data()]);
+                this.save.push([doc.id,doc.data()]);
                 if (!this.cuisines.includes(doc.data()["cuisine"])) {
                 this.cuisines.push(doc.data()["cuisine"]);
                 }
               }else if(doc.data().contributor.toUpperCase().includes(this.searchedValue.toUpperCase())){
                 this.recipes.push([doc.id,doc.data()]);
+                this.save.push([doc.id,doc.data()]);
                 if (!this.cuisines.includes(doc.data()["cuisine"])) {
                 this.cuisines.push(doc.data()["cuisine"]);
                 }
               }else if(doc.data().type.toUpperCase().includes(this.searchedValue.toUpperCase())){
                 this.recipes.push([doc.id,doc.data()]);
+                this.save.push([doc.id,doc.data()]);
                 if (!this.cuisines.includes(doc.data()["cuisine"])) {
                 this.cuisines.push(doc.data()["cuisine"]);
                 }
@@ -284,6 +289,9 @@ export default {
               if (sortValues[count] == this.recipes[j][1][input]) {
                 newList.push(this.recipes[j])
                 count += 1;
+                this.recipes.splice(j,1);
+                i--;
+                j--;
                 break;
               }            
             }
@@ -368,13 +376,35 @@ export default {
       this.submit=false;
     },
 
+    uniqueDifficult: function() {
+      if (this.difficultyChoice.length != 0) {
+        var difficultyChoices = []
+        for (var i=0; i<this.difficultyChoice.length; i++) {
+          if (difficultyChoices.length == 0) {
+            difficultyChoices.push(this.difficultyChoice[i])
+          } else {
+            for (var j=0; j<difficultyChoices.length; j++) {
+              if (difficultyChoices[j][1] == this.difficultyChoice[i][1]) {
+                break;
+              } else if (j==difficultyChoices.length-1) {
+                difficultyChoices.push(this.difficultyChoice[i])
+              }
+            }
+          }
+        }
+        this.difficultyChoice=difficultyChoices
+      }
+    },
+
     filtering: function() {
 
       if(this.timeValue != "") {
         this.filters.push(['time',this.timeValue]);
       }
       if (this.difficultyChoice.length != 0) {
-        this.filters.push(this.difficultyChoice);
+        for (i=0; i<difficultyChoices.length;i++) {
+          this.filters.push(difficultyChoices[i])
+        }
       }
       if (this.typeChoice.length != 0) {
         this.filters.push(this.typeChoice);
@@ -382,7 +412,19 @@ export default {
       if (this.cuisineChoice.length != 0) {
         this.filters.push(this.cuisineChoice);
       }
+      this.recipes = [...this.save];
+      var newList = []
+      for ( i=0; i<this.recipes.length;i++) {
+        for ( j = 0; j < this.filters.length; j++){
+          if (this.recipes[i][1][this.filters[j][0]] == this.filters[j][1])  {
+            newList.push(this.recipes[i])
+            break;
+          }
+        }
+      }
+      this.recipes=newList;
       //this.recipes = [...this.save];
+      /*
       for (var i = 0; i < this.recipes.length; i++){
         for (var j = 0; j < this.filters.length; j++){
           if (this.recipes[i][1][this.filters[j][0]] != this.filters[j][1])  {
@@ -392,7 +434,8 @@ export default {
           }
         }
       }
- 
+      */
+      
       this.filters.splice(0, this.filters.length);
       this.timeValue = "";
       this.difficultyChoice = [];
@@ -404,6 +447,7 @@ export default {
       this.difficulty=false;
       this.type=false;
       document.getElementById("demo").innerHTML = "";
+      
     
     },
 
