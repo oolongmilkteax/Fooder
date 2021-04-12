@@ -14,7 +14,7 @@
           </button>
           <div class="dropdown-container" id="filCuisineChoice">
           <div  v-for="cuisine in cuisines" v-bind:key="cuisine">
-            <a class="choiceMade" style="cursor:pointer" id="cuisine" v-on:click="cuisineChoice=['cuisine', cuisine]">{{cuisine}}</a>
+            <a class="choiceMade" style="cursor:pointer" v-bind:id="cuisine" v-on:click="uniqueCuisine(['cuisine', cuisine]);">{{cuisine}}</a>
           </div>
           
           </div>
@@ -197,6 +197,26 @@ export default {
             this.noResult = true;
           }
         });
+    },
+    uniqueCuisine: function(option) {
+      if (this.cuisineChoice.length == 0) {
+        this.cuisineChoice.push(option);
+        document.getElementById(option[1]).style.color="Red"
+      } else {
+        for (var i=0; i<this.cuisineChoice.length; i++) {
+          if (option[1] == this.cuisineChoice[i][1]) {
+            this.cuisineChoice.splice(i,1)
+            document.getElementById(option[1]).style.color="#007bff";
+            break
+          }
+          if (i == this.cuisineChoice.length-1) {
+            this.cuisineChoice.push(option);
+            document.getElementById(option[1]).style.color="Red"
+            break;
+          
+          }
+        }
+      }
     },
     go: function(url) {
       window.open(url);

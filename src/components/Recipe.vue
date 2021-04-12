@@ -1,9 +1,7 @@
 <template>
   <div class="body">
     <Cheader></Cheader>
-    <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
-    <p>{{difficultyChoice}}</p>
-    
+    <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>   
     <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow v-if="cuisines.length != 0">
       <template #default="{ hide }">
         <h1>Sort</h1>
