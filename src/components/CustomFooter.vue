@@ -49,6 +49,7 @@ hr {
   line-height:24px;
   color:#737373;
   width: 100%;
+  margin-top:2%;
 }
 .site-footer hr
 {
