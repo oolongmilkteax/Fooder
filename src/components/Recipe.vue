@@ -62,6 +62,7 @@
 
     <div class="borderDiv">
       <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
+      <h1 v-if="noResult">No Results! :(</h1>
       <div class="RecipeContainer">
         <div id="Recipe">
           <ul id="BriefDescription">
@@ -147,7 +148,8 @@ export default {
       cuisineChoice: [],
       typeChoice: [],
       cuisines: [],
-      
+      noResult: false,
+
     };
   },
   
@@ -206,6 +208,9 @@ export default {
               }
             }
           });
+          if(this.recipes.length == 0){
+            this.noResult = true;
+          }
           this.isLoading = false;
         });
     },

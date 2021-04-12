@@ -383,7 +383,7 @@ export default {
   font-weight: 100;
   padding: 5px;
   border: solid #0088cc 1px;
-  margin-top: 30px;
+  margin: 30px 10px 10px 10px;
 }
 
 .clear:hover {
@@ -404,6 +404,7 @@ export default {
   font-weight: 100;
   padding: 5px;
   border: solid #0088cc 1px;
+  margin: 10px;
 }
 
 .add:hover {
