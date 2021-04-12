@@ -12,13 +12,11 @@
       <h2 v-if= "type == 'Adventurous Foodie'" >Here are some restaurants we have for you!</h2>
       <h2 v-if= "type == 'Not-So-Picky Eater'" >Here are some recipes and restaurants we have for you!</h2>
     </div>
-
     
-    <div class="container" >
+    <div class="container">
     <li class="characteristicslist" v-for="(item) in recommendedThings" v-bind:key="item.id">
       <div class="pointDiv">
         {{item.name}}  
-        
         <img v-bind:src="item.image" alt="Food image" />
         <button class="myButton smaller" v-on:click="go(item)">Go!</button>
       </div>
@@ -207,30 +205,48 @@ export default {
   padding: 5px;
   margin: 10px;
   list-style-type: none; 
+  /*
   display:flex;
+  justify-content: center;
+  */
+  /*
   flex-direction: row;
+  */
   width:24%;
+  /*justify-items
   align-items: center;
-  
+  */
+  text-align: center;
   
 }
 
 .container {
+  
   display:flex;
+  
+  /*
   flex-direction: row;
+  */
   justify-content: center;
+  /*
   text-align: center;
+  */
+  /*
   padding: 5px;
   margin: 10px;
-  margin-left: 60px;
-  align-items: center;
+  */
+  /*margin-left: 60px;
+  align-items: center;*/
   
 }
 
 .pointDiv {
+  /*
   flex-direction: column;
   display: flex;
+  */
   align-items: center;
+  
 }
 
 .gotoSearchPage {
@@ -242,5 +258,21 @@ export default {
 
 .smaller {
   width: 40%;
+}
+
+.flex-container {
+  display: flex;
+  background-color: #f1f1f1;
+  justify-content: center;
+}
+
+.flex-container > div {
+  background-color: DodgerBlue;
+  color: white;
+  width: 300px;
+  margin: 10px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
 }
 </style>

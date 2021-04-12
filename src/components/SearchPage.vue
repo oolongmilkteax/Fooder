@@ -28,7 +28,7 @@
       </div>
       <p class="errorMsg2" v-if="noSearch">Please Select a Category</p>
     </div>
-    <Cfooter class="bottomFooter"></Cfooter>
+    <Cfooter></Cfooter>
   </div>
 </template>
 
