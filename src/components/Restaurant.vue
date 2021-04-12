@@ -140,9 +140,9 @@ export default {
         .then((snapshot) => {
           snapshot.docs.forEach((doc) => {
             //if empty search return all
+            this.save.push([doc.id,doc.data()]);
             if (this.searchedValue == null) {
               this.restaurants.push([doc.id, doc.data()]);
-              this.save.push([doc.id,doc.data()]);
               if (!this.cuisines.includes(doc.data().cuisine)) {
                 this.cuisines.push(doc.data().cuisine);
               }

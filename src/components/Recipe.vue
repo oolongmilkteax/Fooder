@@ -54,10 +54,10 @@
        <b-button class="closeSidebtn" block @click="hide">Close Sidebar</b-button>
       </template>
     </b-sidebar>
+    <br>
+    <br>
+   
 
-    <br>
-    <br>
-    
     <div class="borderDiv">
       <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
       <div class="RecipeContainer">
@@ -167,9 +167,9 @@ export default {
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
             //if empty search return all
+            this.save.push([doc.id,doc.data()]);
             if(this.searchedValue == null){
               this.recipes.push([doc.id,doc.data()]);
-              this.save.push([doc.id,doc.data()]);
               if (!this.cuisines.includes(doc.data()["cuisine"])) {
                 this.cuisines.push(doc.data()["cuisine"]);
               }
@@ -298,7 +298,6 @@ export default {
       if (this.cuisineChoice.length != 0) {
         this.filters.push(this.cuisineChoice);
       }
-      
       this.recipes = [...this.save];
       for (var i = 0; i < this.recipes.length; i++){
         for (var j = 0; j < this.filters.length; j++){
