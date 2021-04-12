@@ -26,7 +26,7 @@
         <button class="myButton" v-on:click="search()">Search</button>
       </div>
     </div>
-    <Cfooter class="bottomFooter"></Cfooter>
+    <Cfooter></Cfooter>
   </div>
 </template>
 

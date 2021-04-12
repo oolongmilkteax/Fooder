@@ -3,7 +3,11 @@
       <div class="borderDiv">
             <div class="FullRecipeContainer">
                 <br><br>
+                <!--
                 <a href='javascript:history.go(-1)'>Back</a>
+                -->
+                <p>{{searchedValue}}</p>
+                <a href='javascript:void(0);' v-on:click="visit()">Back</a>
                 <div id="FullRecipe">
                     <h2>Ingredients</h2>
                     <ul v-for="ingredient in recipeIngredients" v-bind:key="ingredient">
@@ -28,10 +32,23 @@
 
 <script>
 export default {
+    props: ["searchedValue"],
     data() {
         return {
             recipeIngredients: this.$route.params.i, 
             recipeDirections: this.$route.params.d
+        }
+    },
+    methods: {
+        visit: function() {
+            if(this.searchedValue == null){
+                window.history.back()
+            } else {
+                this.$router.push({
+                    name: "Recipe",
+                    params: { searchedValue: this.searchedValue }
+                });
+            }
         }
     }
 }

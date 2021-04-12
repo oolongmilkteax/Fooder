@@ -2,6 +2,7 @@
   <div class="body">
     <Cheader></Cheader>
     <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
+    
     <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow v-if="cuisines.length != 0">
       <template #default="{ hide }">
         <h1>Sort</h1>
@@ -152,6 +153,7 @@ export default {
       cuisineChoice: [],
       typeChoice: [],
       cuisines: [],
+      
     };
   },
   
@@ -175,7 +177,6 @@ export default {
               }
             }
             else{
-
               //if search contain name return recipe
               if(doc.data().name.toUpperCase().includes(this.searchedValue.toUpperCase())) {
                 this.recipes.push([doc.id,doc.data()]);
@@ -210,6 +211,87 @@ export default {
     },
 
     sort: function(input){
+      if(this.searchedValue != null) {
+        if(input == 'difficulty') {
+          var easy = [];
+          var medium = [];
+          var hard = [];
+          for (var i=0; i<this.recipes.length; i++) {
+            if(this.recipes[i][1]["difficulty"] == "Easy") {
+              easy.push(this.recipes[i]);
+            }
+            else if (this.recipes[i][1]["difficulty"] == "Medium") {
+              medium.push(this.recipes[i]);
+            } else {
+              hard.push(this.recipes[i]);
+            }
+          }
+          this.recipes = [];
+          for ( i = 0; i < easy.length; i++){
+            this.recipes.push(easy[i]);
+          }
+          for (i = 0; i < medium.length; i++){
+            this.recipes.push(medium[i]);
+          }
+          for (i = 0; i < hard.length; i++){
+            this.recipes.push(hard[i]);
+          }
+        } else if (input =='time') {
+            var shortest = [];
+            var two = [];
+            var three = [];
+            var four = [];
+            var five = [];
+            for ( i=0; i<this.recipes.length; i++) {
+              if (this.recipes[i][1]["time"] == "less than 30mins") {
+                shortest.push(this.recipes[i]);
+              } else if (this.recipes[i][1]["time"] == "30mins to 1h") {
+                two.push(this.recipes[i]);
+              } else if (this.recipes[i][1]["time"] == "1h to 2h") {
+                three.push(this.recipes[i]);
+              } else if (this.recipes[i][1]["time"] == "2h to 3h") {
+                four.push(this.recipes[i]);
+              } else if (this.recipes[i][1]["time"] == "3h to 4h") {
+                five.push(this.recipes[i]);
+              }
+            }
+            this.recipes = [];
+            for ( i = 0; i < shortest.length; i++){
+                this.recipes.push(shortest[i]);
+              }
+              for (i = 0; i < two.length; i++){
+                this.recipes.push(two[i]);
+              }
+              for (i = 0; i < three.length; i++){
+                this.recipes.push(three[i]);
+              }
+              for (i = 0; i < four.length; i++){
+                this.recipes.push(four[i]);
+              }
+              for (i = 0; i < five.length; i++){
+                this.recipes.push(five[i]);
+              }  
+        } else {
+          var newList = [];
+          var sortValues = [];
+          for (i =0; i<this.recipes.length; i++) {
+            sortValues.push(this.recipes[i][1][input]);
+          }
+          sortValues.sort();
+          var count = 0;
+          for (i=0; i<this.recipes.length; i++) {
+            for (var j=0; j<this.recipes.length; j++) {
+              if (sortValues[count] == this.recipes[j][1][input]) {
+                newList.push(this.recipes[j])
+                count += 1;
+                break;
+              }            
+            }
+          }
+          this.recipes = newList
+        }
+      }
+      else {
       this.recipes=[];
       if (input == "difficulty") {
         db.collection("recipe")
@@ -236,7 +318,8 @@ export default {
             this.recipes.push(hard[i]);
           }
         });
-      } else if (input == "time") {
+      } 
+      else if (input == "time") {
           db.collection("recipe")
             .get().then(snapshot => {
               var shortest = [];
@@ -281,6 +364,7 @@ export default {
           });
           });
         }
+      }
       this.submit=false;
     },
 
@@ -298,7 +382,7 @@ export default {
       if (this.cuisineChoice.length != 0) {
         this.filters.push(this.cuisineChoice);
       }
-      this.recipes = [...this.save];
+      //this.recipes = [...this.save];
       for (var i = 0; i < this.recipes.length; i++){
         for (var j = 0; j < this.filters.length; j++){
           if (this.recipes[i][1][this.filters[j][0]] != this.filters[j][1])  {
@@ -334,7 +418,7 @@ export default {
     go: function(ingredients, directions) {
       this.$router.push({
         name: "FullRecipe",
-        params: { i: ingredients, d: directions }
+        params: { i: ingredients, d: directions, searchedValue: this.searchedValue }
       });
     },
     getFavourites: function() {

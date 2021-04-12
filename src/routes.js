@@ -105,6 +105,7 @@ export default [
     name: "FullRecipe",
     path: "/fullrecipe",
     component: FullRecipe,
+    props: true,
     beforeEnter: beforeEnter,
   },
   {

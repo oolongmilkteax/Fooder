@@ -25,7 +25,7 @@
         <b-card-group deck class="mx-auto">
           <li
           id="profilelist"
-          class="col-md-4"
+          class="ml-3"
           v-for="recipe in recipes"
           v-bind:key="recipe[1].name"
           >  
@@ -45,7 +45,7 @@
         <b-card-group deck class="mx-auto">
           <li
           id="profilelist"
-          class="col-md-4"
+          class="ml-3 "
           v-for="restaurant in restaurants"
           v-bind:key="restaurant[1].name"
           >  
