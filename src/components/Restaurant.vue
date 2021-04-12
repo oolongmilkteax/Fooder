@@ -23,7 +23,7 @@
           </button>
           
           <div class="dropdown-container" id="filPriceChoice">
-            <input  v-on:change="test()" type="range" list="tickmarks" min="0" max="6" value="50" class="slider" id="myRange"><br>
+            <input  v-on:change="find()" type="range" list="tickmarks" min="0" max="7" value="50" class="slider" id="myRange"><br>
             <span><strong>Value: <span id="demo"></span></strong></span>
 
           </div>
@@ -142,53 +142,38 @@ export default {
         .then((snapshot) => {
           snapshot.docs.forEach((doc) => {
             //if empty search return all
-            this.save.push([doc.id,doc.data()]);
+            //this.save.push([doc.id,doc.data()]);
             if (this.searchedValue == null) {
               this.restaurants.push([doc.id, doc.data()]);
+              this.save.push([doc.id,doc.data()]);
               if (!this.cuisines.includes(doc.data().cuisine)) {
                 this.cuisines.push(doc.data().cuisine);
               }
             } else {
-              if (
-                doc
-                  .data()
-                  .name.toUpperCase()
-                  .includes(this.searchedValue.toUpperCase())
-              ) {
+              if (doc.data().name.toUpperCase().includes(this.searchedValue.toUpperCase())) {
                 this.restaurants.push([doc.id, doc.data()]);
+                this.save.push([doc.id,doc.data()]);
                 if (!this.cuisines.includes(doc.data().cuisine)) {
                 this.cuisines.push(doc.data().cuisine);
-              }
-              } else if (
-                doc
-                  .data()
-                  .cuisine.toUpperCase()
-                  .includes(this.searchedValue.toUpperCase())
-              ) {
+                }
+              } else if (doc.data().cuisine.toUpperCase().includes(this.searchedValue.toUpperCase())) {
                 this.restaurants.push([doc.id, doc.data()]);
+                this.save.push([doc.id,doc.data()]);
                 if (!this.cuisines.includes(doc.data().cuisine)) {
                 this.cuisines.push(doc.data().cuisine);
-              }
-              } else if (
-                doc
-                  .data()
-                  .contributor.toUpperCase()
-                  .includes(this.searchedValue.toUpperCase())
-              ) {
+                }
+              } else if (doc.data().contributor.toUpperCase().includes(this.searchedValue.toUpperCase())) {
                 this.restaurants.push([doc.id, doc.data()]);
+                this.save.push([doc.id,doc.data()]);
                 if (!this.cuisines.includes(doc.data().cuisine)) {
                 this.cuisines.push(doc.data().cuisine);
-              }
-              } else if (
-                doc
-                  .data()
-                  .address.toUpperCase()
-                  .includes(this.searchedValue.toUpperCase())
-              ) {
+                }
+              } else if (doc.data().address.toUpperCase().includes(this.searchedValue.toUpperCase())) {
                 this.restaurants.push([doc.id, doc.data()]);
+                this.save.push([doc.id,doc.data()]);
                 if (!this.cuisines.includes(doc.data().cuisine)) {
                 this.cuisines.push(doc.data().cuisine);
-              }
+                }
               }
             }
           });
@@ -250,6 +235,79 @@ export default {
         });
     },
     sort: function(input) {
+      if (this.searchedValue != null) {
+        if (input =='price') {
+            var lowest = [];
+            var two = [];
+            var three = [];
+            var four = [];
+            var five = [];
+            var six = [];
+            var highest = [];
+            for (var i=0; i<this.restaurants.length; i++) {
+              if (this.restaurants[i][1]["priceRange"] == "less than $20") {
+                lowest.push(this.restaurants[i]);
+              } else if (this.restaurants[i][1]["priceRange"] == "$20 to $50") {
+                two.push(this.restaurants[i]);
+              } else if (this.restaurants[i][1]["priceRange"] == "$50 to $100") {
+                three.push(this.restaurants[i]);
+              } else if (this.restaurants[i][1]["priceRange"] == "$100 to $150") {
+                four.push(this.restaurants[i]);
+              } else if (this.restaurants[i][1]["priceRange"] == "150 to $200") {
+                five.push(this.restaurants[i]);
+              } else if (this.restaurants[i][1]["priceRange"] == "$200 to $300") {
+                six.push(this.restaurants[i]);
+              } else {
+                highest.push(this.restaurants[i])
+              }
+            }
+          this.restaurants = [];
+          for ( i = 0; i < lowest.length; i++){
+              this.restaurants.push(lowest[i]);
+          }
+          for (i = 0; i < two.length; i++){
+            this.restaurants.push(two[i]);
+          }
+          for (i = 0; i < three.length; i++){
+            this.restaurants.push(three[i]);
+          }
+          for (i = 0; i < four.length; i++){
+            this.restaurants.push(four[i]);
+          }
+          for (i = 0; i < five.length; i++){
+            this.restaurants.push(five[i]);
+          } 
+          for (i = 0; i < six.length; i++) {
+          this.restaurants.push(six[i]);
+          }
+          for (i = 0; i < highest.length; i++) {
+            this.restaurants.push(highest[i]);
+          }
+        } else {
+          var newList = [];
+          var sortValues = [];
+          for (i =0; i<this.restaurants.length; i++) {
+            sortValues.push(this.restaurants[i][1][input]);
+          }
+          sortValues.sort();
+          var count = 0;
+          for (i=0; i<this.restaurants.length; i++) {
+            for (var j=0; j<this.restaurants.length; j++) {
+              if (sortValues[count] == this.restaurants[j][1][input]) {
+                newList.push(this.restaurants[j])
+                count += 1;
+                this.restaurants.splice(j,1);
+                i--;
+                j--;
+                break;
+              }            
+            }
+          }
+          this.restaurants = newList
+        }
+      }
+
+      else {
       this.restaurants = [];
       if (input == "price") {
         db.collection("restaurant")
@@ -312,39 +370,61 @@ export default {
           });
       }
       this.submit = false;
+      }
+    },
+    uniqueCuisine: function(option) {
+      if (this.cuisineChoice.length == 0) {
+        this.cuisineChoice.push(option);
+        document.getElementById(option[1]).style.color="Red"
+      } else {
+        for (var i=0; i<this.cuisineChoice.length; i++) {
+          if (option[1] == this.cuisineChoice[i][1]) {
+            this.cuisineChoice.splice(i,1)
+            document.getElementById(option[1]).style.color="#007bff";
+            break
+          }
+          if (i == this.cuisineChoice.length-1) {
+            this.cuisineChoice.push(option);
+            document.getElementById(option[1]).style.color="Red"
+            break;
+          
+          }
+        }
+      }
     },
 
     filtering: function() {
-      if(this.priceValue != "") {
-        this.filters.push(['priceRange',this.priceValue]);
-      }
-      if (this.cuisineChoice.length != 0) {
-        this.filters.push(this.cuisineChoice);        
-      }
       this.restaurants = [...this.save];
-      for (var i = 0; i < this.restaurants.length; i++){
-        for (var j = 0; j < this.filters.length; j++){
-          if (this.restaurants[i][1][this.filters[j][0]] != this.filters[j][1])  {
-            this.restaurants.splice(i,1);
-            i--;
+      var newList = []
+      if(this.cuisineChoice.length) {
+      for (var i=0; i<this.restaurants.length;i++) {
+        for (var  j = 0; j < this.cuisineChoice.length; j++){
+          if (this.restaurants[i][1][this.cuisineChoice[j][0]] == this.cuisineChoice[j][1])  {
+            newList.push(this.restaurants[i])
             break;
           }
         }
       }
-      this.filters.splice(0, this.filters.length);
-      this.priceValue = "";
-      this.cuisineChoice = [];
-      this.filter=false;
-      this.price=false;
-      this.cuisine=false;
-      document.getElementById("demo").innerHTML = "";
+      this.restaurants=newList;
+      newList = [];
+      }
+      if(this.priceValue != "") {
+        for ( i=0; i<this.restaurants.length;i++) {
+          if(this.restaurants[i][1]['priceRange'] == this.priceValue) {
+            newList.push(this.restaurants[i])
+          }
+        }
+        this.restaurants=newList;
+        newList = [];
+      }
       
     },
 
-    test: function() {
+    find: function() {
       var slider = document.getElementById("myRange");
       var output = document.getElementById("demo");
       var values = [
+        "",
         "less than $20",
         "$20 to $50",
         "$50 to $100",
@@ -536,40 +616,6 @@ img {
 .miniButton {
   background: turquoise;
   border-radius: 8px;
-}
-
-.filterOpt {
-  margin-right: 50px;
-  background: teal;
-  color: #ffffff;
-  font-weight: 100;
-  border-radius: 8px;
-  border: solid teal 1px;
-  width: 80px;
-}
-
-.filterOpt:hover {
-  background-color: #4caf50;
-  color: white;
-}
-
-.filterOpt:focus {
-  background: olive;
-}
-
-#block_container {
-  height: 90px;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-}
-
-#bloc1 {
-  width: 200px;
-  float: left;
-}
-#bloc2 {
-  overflow: hidden;
 }
 
 .sidenav {
