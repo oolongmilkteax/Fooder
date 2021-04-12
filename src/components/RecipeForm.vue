@@ -145,6 +145,7 @@
       <ul v-for="ingredient in recipe.ingredients" v-bind:key="ingredient">
         <li>
           <span>{{ ingredient }}</span>
+          <button type="button" class="remove" v-on:click="removeOneIngre(ingredient)">Remove</button>
         </li>
       </ul>
     </div>
@@ -172,6 +173,7 @@
       <ul v-for="instruction in recipe.directions" v-bind:key="instruction">
         <li>
           <span>{{ instruction }}</span>
+          <button type="button" class="remove" v-on:click="removeOneInstru(instruction)">Remove</button>
         </li>
       </ul>
     </div>
@@ -248,6 +250,14 @@ export default {
     },
     removeInstru: function() {
       this.recipe.directions = [];
+    },
+    removeOneIngre: function(ingredient) {
+      var indexOfIngre = this.recipe.ingredients.indexOf(ingredient);
+      this.recipe.ingredients.splice(indexOfIngre, 1);
+    },
+    removeOneInstru: function(instruction) {
+      var indexOfInstru = this.recipe.directions.indexOf(instruction);
+      this.recipe.directions.splice(indexOfInstru, 1);
     },
     submitRecipe: function() {
       this.alert.cuisine = false;
@@ -413,6 +423,27 @@ export default {
   -webkit-border-radius: 20px;
   -moz-border-radius: 14px;
   border-radius: 8px;
+  text-decoration: none;
+}
+
+.remove {
+  background: #0088cc;
+  border-radius: 5px;
+  color: #ffffff;
+  font-family: Helvetica;
+  font-size: 10px;
+  font-weight: 100;
+  padding: 2px;
+  border: solid #0088cc 1px;
+  margin: 10px;
+}
+
+.remove:hover {
+  border: solid #979797 1px;
+  background: red;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 14px;
+  border-radius: 5px;
   text-decoration: none;
 }
 </style>
