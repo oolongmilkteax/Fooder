@@ -9,25 +9,28 @@
         <div class="pieDiv">
           <DifficultyChart
             :data="difficultyCount"
-            v-if="tooLittleDataA == false && isLoaded_1 && isLoaded_2"
             class="pie"
           ></DifficultyChart>
 
           <PRChart
             :data="priceCount"
-            v-if="tooLittleDataB == false && isLoaded_1 && isLoaded_2"
             class="pie"
           ></PRChart>
         </div>
         <h3
           class="cuisine"
-          v-if="tooLittleDataA"
-        >Please favourite more recipes to generate more insight.</h3>
+          v-if="tooLittleDataA == true && tooLittleDataB == false"
+        >Please favourite more recipes to generate more insight.
+        </h3>
         <h3
           class="cuisine"
-          v-if="tooLittleDataB"
-        >Please favourite more restaurants to generate more insight.</h3>
-
+          v-if="tooLittleDataB == true && tooLittleDataB == false"
+        >Please favourite more restaurants to generate more insight.
+        </h3>
+        <h3 class="cuisine"
+        v-if="tooLittleDataA == true && tooLittleDataB == true">
+          Please favourite more restaurants and recipes to generate more insight.
+        </h3>
         <h3 class="cuisine">{{ "Favourite Cuisine: " + this.cuisine }}</h3>
       </div>
     </div>

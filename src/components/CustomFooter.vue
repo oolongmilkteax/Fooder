@@ -6,7 +6,7 @@
       <p class="text-justify">Fooder aims to provide a platform for users to contribute by sharing their own unique take on personal recipes and favourite restaurants, creating a community for foodies to share their passion with like-minded individuals.</p>
       <h6>About Us</h6>
       <ul class="footer-links">
-        <li><a href="https://github.com/Telentovj">John Vijay Balasupramaniam</a></li>
+        <li><a href="www.github.com/Telentovj">John Vijay Balasupramaniam</a></li>
         <li><a href="https://github.com/jaxminx">Jasmine Chen Yu Qing</a></li>
         <li><a href="https://github.com/Imbabot7">Kenneth Khoo Kai Sheng</a></li>
         <li><a href="https://github.com/oolongmilkteax">Ho Pei San Rachel</a></li>
@@ -22,7 +22,11 @@
 
 <script>
 export default {
-
+  methods:{
+    go: function(url) {
+      window.open(url);
+    },
+  },
 }
 </script>
 
@@ -44,12 +48,12 @@ hr {
 .site-footer
 {
   background-color:#26272b;
-  padding:35px 0 5px;
+  padding: 70px 0 5px;
   font-size:15px;
   line-height:24px;
   color:#737373;
   width: 100%;
-  margin-top:2%;
+  margin-top:15%;
 }
 .site-footer hr
 {
