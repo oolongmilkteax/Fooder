@@ -1,64 +1,26 @@
 <template>
   <form>
-    <label for="name">Name of Restaurant: </label>
-    <span>&nbsp;{{ restaurant.name }}</span>
-    <br />
-    <span class="alert" v-show="alert.name"
-      >Please enter name of restaurant.
-    </span>
+    <label for="name">Name of Restaurant:</label>
+    <p>&nbsp;{{ restaurant.name }}</p>
+    <p class="alert" v-show="alert.name">Please enter name of restaurant.</p>
+    <input class="contriInput" type="text" id="name" name="name" v-model="restaurant.name" />
     <br />
 
-    <input
-      class="contriInput"
-      type="text"
-      id="name"
-      name="name"
-      v-model="restaurant.name"
-    />
+    <label for="address">Address:</label>
+    <p>&nbsp;{{ restaurant.address }}</p>
+    <p class="alert" v-show="alert.address">Please enter address of restaurant.</p>
+    <input class="contriInput" type="text" id="address" name="address" v-model="restaurant.address" />
     <br />
 
-    <label for="address">Address: </label>
-    <span>&nbsp;{{ restaurant.address }}</span>
-    <br />
-    <span class="alert" v-show="alert.address"
-      >Please enter address of restaurant.
-    </span>
+    <label for="cuisine">Cuisine:</label>
+    <p>&nbsp;{{ restaurant.cuisine }}</p>
+    <p class="alert" v-show="alert.cuisine">Please enter cuisine type.</p>
+    <input class="contriInput" type="text" id="cuisine" name="cuisine" v-model="restaurant.cuisine" />
     <br />
 
-    <input
-      class="contriInput"
-      type="text"
-      id="address"
-      name="address"
-      v-model="restaurant.address"
-    />
-    <br />
-
-    <label for="cuisine">Cuisine: </label>
-    <span>&nbsp;{{ restaurant.cuisine }}</span>
-    <br />
-    <span class="alert" v-show="alert.cuisine"
-      >Please enter cuisine type.
-    </span>
-    <br />
-
-    <input
-      class="contriInput"
-      type="text"
-      id="cuisine"
-      name="cuisine"
-      v-model="restaurant.cuisine"
-    />
-    <br />
-
-    <label for="image">ImageURL (for display purposes): </label>
-    <span>{{ restaurant.image }}</span>
-    <br />
-    <span class="alert" v-show="alert.image"
-      >Please enter image URL of restaurant.
-    </span>
-    <br />
-
+    <label for="image">ImageURL (for display purposes):</label>
+    <p>{{ restaurant.image }}</p>
+    <p class="alert" v-show="alert.image">Please enter image URL of restaurant.</p>
     <input
       class="contriInput"
       type="text"
@@ -69,14 +31,9 @@
     />
     <br />
 
-    <label for="openingHours">Opening hours: </label>
-    <span>&nbsp;{{ restaurant.openingHours }}</span>
-    <br />
-    <span class="alert" v-show="alert.openingHours"
-      >Please enter opening hours of restaurant.
-    </span>
-    <br />
-
+    <label for="openingHours">Opening hours:</label>
+    <p>&nbsp;{{ restaurant.openingHours }}</p>
+    <p class="alert" v-show="alert.openingHours">Please enter opening hours of restaurant.</p>
     <input
       class="contriInput"
       type="text"
@@ -87,14 +44,9 @@
     />
     <br />
 
-    <label for="priceRange">Price range: </label>
-    <span>&nbsp;{{ restaurant.priceRange }}</span>
-    <br />
-    <span class="alert" v-show="alert.priceRange"
-      >Please select a price range of restaurant.
-    </span>
-    <br />
-
+    <label for="priceRange">Price range:</label>
+    <p>&nbsp;{{ restaurant.priceRange }}</p>
+    <p class="alert" v-show="alert.priceRange">Please select a price range of restaurant.</p>
     <select
       class="contriInput"
       type="text"
@@ -112,14 +64,9 @@
     </select>
     <br />
 
-    <label for="websiteLink">Website: </label>
-    <span>&nbsp;{{ restaurant.websiteLink }}</span>
-    <br />
-    <span class="alert" v-show="alert.websiteLink"
-      >Please enter website link of restaurant.
-    </span>
-    <br />
-
+    <label for="websiteLink">Website:</label>
+    <p>&nbsp;{{ restaurant.websiteLink }}</p>
+    <p class="alert" v-show="alert.websiteLink">Please enter website link of restaurant.</p>
     <input
       class="contriInput"
       type="text"
@@ -129,18 +76,7 @@
     />
     <br />
 
-    <span class="alert" v-show="alert.submission"
-      >Please make sure to fill in every field before submitting!
-    </span>
-    <br />
-
-    <button
-      type="button"
-      id="submitContributionButton"
-      v-on:click="submitRestaurant"
-    >
-      Submit!
-    </button>
+    <button type="button" id="submitContributionButton" v-on:click="submitRestaurant">Submit!</button>
   </form>
 </template>
 
@@ -159,7 +95,7 @@ export default {
         openingHours: "",
         priceRange: "",
         websiteLink: "",
-        contributor: "",
+        contributor: ""
       },
       alert: {
         address: false,
@@ -169,9 +105,9 @@ export default {
         openingHours: false,
         priceRange: false,
         websiteLink: false,
-        submission: false,
+        submission: false
       },
-      id: "",
+      id: ""
     };
   },
   methods: {
@@ -223,14 +159,14 @@ export default {
       ) {
         db.collection("restaurant")
           .add(this.restaurant)
-          .then((doc) => {
+          .then(doc => {
             this.id = doc.id;
             db.collection("user")
               .doc(this.$store.state.uid)
               .update({
                 contributeRestaurant: firebase.firestore.FieldValue.arrayUnion(
                   this.id
-                ),
+                )
               });
             location.reload();
           });
@@ -240,18 +176,22 @@ export default {
       db.collection("user")
         .doc(this.$store.state.uid)
         .get()
-        .then((doc) => {
+        .then(doc => {
           this.restaurant.contributor = doc.data().name;
         });
-    },
+    }
   },
   created() {
     this.getContributor();
-  },
+  }
 };
 </script>
 
 <style>
+label {
+  margin-bottom: 0px;
+}
+
 .myTitles {
   font-size: 60px;
   margin-bottom: 5px;
@@ -265,8 +205,8 @@ export default {
   border-color: #ffffff;
   border-style: solid;
   outline: none;
-  margin-top: 7px;
-  margin-bottom: 20px;
+  margin-top: 0px;
+  margin-bottom: 30px;
   width: 40%;
 }
 
@@ -295,5 +235,8 @@ export default {
 
 .alert {
   color: red;
+  padding: 0px 0px;
+  margin-bottom: 0px;
+  padding-bottom: 5px;
 }
 </style>

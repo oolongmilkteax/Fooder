@@ -26,7 +26,7 @@
         <button class="myButton" onclick="location.href='./signup'">Sign Up!</button>
       </div>
     </div>
-    <Cfooter class="bottomFooter"></Cfooter>
+    <Cfooter ></Cfooter>
   </div>
 </template>
 

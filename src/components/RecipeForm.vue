@@ -1,51 +1,21 @@
 <template>
   <form>
-    <label for="recipeName">Name of Recipe: </label>
-    <span>&nbsp;{{ recipe.name }}</span>
-    <br />
-    <span class="alert" v-show="alert.name">Please enter name of recipe. </span>
-    <br />
-
-    <input
-      class="contriInput"
-      type="text"
-      id="recipeName"
-      name="recipeName"
-      v-model="recipe.name"
-    />
+    <label for="recipeName">Name of Recipe:</label>
+    <p>&nbsp;{{ recipe.name }}</p>
+    <p class="alert" v-show="alert.name">Please enter name of recipe.</p>
+    <input class="contriInput" type="text" id="recipeName" name="recipeName" v-model="recipe.name" />
     <br />
 
-    <label for="cuisine">Cuisine: </label>
-    <span>&nbsp;{{ recipe.cuisine }}</span>
-    <br />
-    <span class="alert" v-show="alert.cuisine"
-      >Please enter cuisine of recipe.
-    </span>
+    <label for="cuisine">Cuisine:</label>
+    <p>&nbsp;{{ recipe.cuisine }}</p>
+    <p class="alert" v-show="alert.cuisine">Please enter cuisine of recipe.</p>
+    <input class="contriInput" type="text" id="cuisine" name="cuisine" v-model="recipe.cuisine" />
     <br />
 
-    <input
-      class="contriInput"
-      type="text"
-      id="cuisine"
-      name="cuisine"
-      v-model="recipe.cuisine"
-    />
-    <br />
-
-    <label for="difficulty">Difficulty: </label>
-    <span>&nbsp;{{ recipe.difficulty }}</span>
-    <br />
-    <span class="alert" v-show="alert.difficulty"
-      >Please select difficulty of recipe.
-    </span>
-    <br />
-
-    <select
-      class="contriInput"
-      id="difficulty"
-      name="difficulty"
-      v-model="recipe.difficulty"
-    >
+    <label for="difficulty">Difficulty:</label>
+    <p>&nbsp;{{ recipe.difficulty }}</p>
+    <p class="alert" v-show="alert.difficulty">Please select difficulty of recipe.</p>
+    <select class="contriInput" id="difficulty" name="difficulty" v-model="recipe.difficulty">
       <option value="Easy">Easy</option>
       <option value="Medium">Medium</option>
       <option value="Hard">Hard</option>
@@ -53,11 +23,8 @@
     <br />
 
     <label for="image">ImageURL: (for display purposes)</label>
-    <br />
-    <span class="alert" v-show="alert.image"
-      >Please enter image URL of recipe.
-    </span>
-    <br />
+    <p>&nbsp;{{ recipe.image }}</p>
+    <p class="alert" v-show="alert.image">Please enter image URL of recipe.</p>
 
     <input
       class="contriInput"
@@ -69,20 +36,10 @@
     />
     <br />
 
-    <label for="serving">No. of servings: </label>
-    <span>&nbsp;{{ recipe.servings }}</span>
-    <br />
-    <span class="alert" v-show="alert.servings"
-      >Please select serving size of recipe.
-    </span>
-    <br />
-
-    <select
-      class="contriInput"
-      id="serving"
-      name="serving"
-      v-model="recipe.servings"
-    >
+    <label for="serving">No. of servings:</label>
+    <p>&nbsp;{{ recipe.servings }}</p>
+    <p class="alert" v-show="alert.servings">Please select serving size of recipe.</p>
+    <select class="contriInput" id="serving" name="serving" v-model="recipe.servings">
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -93,18 +50,13 @@
       <option value="8">8</option>
       <option value="9">9</option>
       <option value="10">10</option>
-      <option value=">10"> more than 10</option>
+      <option value=">10">more than 10</option>
     </select>
     <br />
 
-    <label for="time">Duration to make: </label>
-    <span>&nbsp;{{ recipe.time }}</span>
-    <br />
-    <span class="alert" v-show="alert.time"
-      >Please select duration to make recipe.
-    </span>
-    <br />
-
+    <label for="time">Duration to make:</label>
+    <p>&nbsp;{{ recipe.time }}</p>
+    <p class="alert" v-show="alert.time">Please select duration to make recipe.</p>
     <select class="contriInput" id="time" name="time" v-model="recipe.time">
       <option value="less than 30mins">less than 30mins</option>
       <option value="30mins to 1h">30mins to 1h</option>
@@ -121,26 +73,18 @@
     </select>
     <br />
 
-    <label for="type">Type: </label>
-    <span>&nbsp;{{ recipe.type }}</span>
-    <br />
-    <span class="alert" v-show="alert.type">Please select recipe type. </span>
-    <br />
-
+    <label for="type">Type:</label>
+    <p>&nbsp;{{ recipe.type }}</p>
+    <p class="alert" v-show="alert.type">Please select recipe type.</p>
     <select class="contriInput" id="type" name="type" v-model="recipe.type">
       <option value="Main">Main</option>
       <option value="Side">Side</option>
     </select>
     <br />
 
-    <label for="ingredients">Ingredients: </label>
+    <label for="ingredients">Ingredients:</label>
     <button class="clear" type="button" v-on:click="removeIngre">Clear All</button>
-    <br />
-    <span class="alert" v-show="alert.ingredients"
-      >Please input ingredients of recipe.
-    </span>
-    <br />
-
+    <p class="alert" v-show="alert.ingredients">Please input ingredients of recipe.</p>
     <div>
       <ul v-for="ingredient in recipe.ingredients" v-bind:key="ingredient">
         <li>
@@ -149,25 +93,14 @@
       </ul>
     </div>
     <br />
-
-    <input
-      class="contriInput"
-      type="text"
-      id="ingredients"
-      name="ingredients"
-      v-model="ingredient"
-    />
+    <input class="contriInput" type="text" id="ingredients" name="ingredients" v-model="ingredient" />
     <button class="add" type="button" v-on:click="addIngre">Add Ingredient!</button>
-
     <br />
-    <label for="instructions">Instructions: </label>
+
+    <label for="instructions">Instructions:</label>
     <button class="clear" type="button" v-on:click="removeInstru">Clear All</button>
     <br />
-    <span class="alert" v-show="alert.directions"
-      >Please input instructions of recipe.
-    </span>
-    <br />
-
+    <p class="alert" v-show="alert.directions">Please input instructions of recipe.</p>
     <div>
       <ul v-for="instruction in recipe.directions" v-bind:key="instruction">
         <li>
@@ -176,7 +109,6 @@
       </ul>
     </div>
     <br />
-
     <input
       class="contriInput"
       type="text"
@@ -187,14 +119,7 @@
     <button class="add" type="button" v-on:click="addInstru">Add Instruction!</button>
     <br />
 
-    <span class="alert" v-show="alert.submission"
-      >Please make sure to fill in every field before submitting!
-    </span>
-    <br />
-
-    <button type="button" id="submitRecipeButton" v-on:click="submitRecipe">
-      Submit!
-    </button>
+    <button type="button" id="submitRecipeButton" v-on:click="submitRecipe">Submit!</button>
   </form>
 </template>
 
@@ -215,7 +140,7 @@ export default {
         servings: "",
         time: "",
         type: "",
-        contributor: "",
+        contributor: ""
       },
       alert: {
         cuisine: false,
@@ -227,11 +152,11 @@ export default {
         servings: false,
         time: false,
         type: false,
-        submission: false,
+        submission: false
       },
       ingredient: "",
       instruction: "",
-      id: "",
+      id: ""
     };
   },
   methods: {
@@ -308,14 +233,14 @@ export default {
       ) {
         db.collection("recipe")
           .add(this.recipe)
-          .then((doc) => {
+          .then(doc => {
             this.id = doc.id;
             db.collection("user")
               .doc(this.$store.state.uid)
               .update({
                 contributeRecipe: firebase.firestore.FieldValue.arrayUnion(
                   this.id
-                ),
+                )
               });
             location.reload();
           });
@@ -325,14 +250,14 @@ export default {
       db.collection("user")
         .doc(this.$store.state.uid)
         .get()
-        .then((doc) => {
+        .then(doc => {
           this.recipe.contributor = doc.data().name;
         });
-    },
+    }
   },
   created() {
     this.getContributor();
-  },
+  }
 };
 </script>
 
@@ -383,7 +308,8 @@ export default {
   font-weight: 100;
   padding: 5px;
   border: solid #0088cc 1px;
-  margin-top: 30px;
+  margin-top: 10px;
+  margin-left: 15px;
 }
 
 .clear:hover {
@@ -404,6 +330,7 @@ export default {
   font-weight: 100;
   padding: 5px;
   border: solid #0088cc 1px;
+  margin-left: 15px;
 }
 
 .add:hover {
