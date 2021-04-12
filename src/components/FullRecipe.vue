@@ -6,7 +6,6 @@
                 <!--
                 <a href='javascript:history.go(-1)'>Back</a>
                 -->
-                <p>{{searchedValue}}</p>
                 <a href='javascript:void(0);' v-on:click="visit()">Back</a>
                 <div id="FullRecipe">
                     <h2>Ingredients</h2>

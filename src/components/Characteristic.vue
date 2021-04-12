@@ -12,23 +12,6 @@
       <h2 v-if= "type == 'Adventurous Foodie'" >Here are some restaurants we have for you!</h2>
       <h2 v-if= "type == 'Not-So-Picky Eater'" >Here are some recipes and restaurants we have for you!</h2>
     </div>
-    <h1>Flexible Items</h1>
-
-    <div class="flex-container">
-      <div>1</div>
-      <div>2</div>
-      <div>3</div> 
-      <div>4</div>
-    </div>
-
-    <p>All direct children of a flexible container becomes flexible items.</p>
-
-    <div class="flex-container" v-for="(item) in recommendedThings" v-bind:key="item.id">
-      <div>{{item.name}}  
-        <img v-bind:src="item.image" alt="Food image" />
-        <button class="myButton smaller" v-on:click="go(item)">Go!</button></div>
-     
-    </div>
     
     <div class="container">
     <li class="characteristicslist" v-for="(item) in recommendedThings" v-bind:key="item.id">
@@ -224,6 +207,7 @@ export default {
   list-style-type: none; 
   /*
   display:flex;
+  justify-content: center;
   */
   /*
   flex-direction: row;
@@ -237,23 +221,32 @@ export default {
 }
 
 .container {
+  
   display:flex;
+  
+  /*
   flex-direction: row;
+  */
   justify-content: center;
   /*
   text-align: center;
   */
+  /*
   padding: 5px;
   margin: 10px;
+  */
   /*margin-left: 60px;
   align-items: center;*/
   
 }
 
 .pointDiv {
+  /*
   flex-direction: column;
   display: flex;
+  */
   align-items: center;
+  
 }
 
 .gotoSearchPage {

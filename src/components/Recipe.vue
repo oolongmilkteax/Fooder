@@ -3,6 +3,7 @@
     <Cheader></Cheader>
     <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
     <p>{{difficultyChoice}}</p>
+    
     <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow v-if="cuisines.length != 0">
       <template #default="{ hide }">
         <h1>Sort</h1>
@@ -15,18 +16,18 @@
       <button class="dropdown-btn" v-on:click="showDifficulty()" id="filDifficulty">Difficulty &#9660; 
       </button>
       <div class="dropdown-container" id="filDifficultyChoice">
-        <a class="choiceMade" style="cursor:pointer" v-on:click="difficultyChoice.push(['difficulty','Easy']); uniqueDifficult()">Easy</a>
+        <a class="choiceMade" style="cursor:pointer" id="Easy" v-on:click="uniqueDifficult(['difficulty','Easy']);">Easy</a>
         <br>
-        <a class="choiceMade" style="cursor:pointer" v-on:click="difficultyChoice.push(['difficulty','Medium']); uniqueDifficult()">Medium</a>
+        <a class="choiceMade" style="cursor:pointer" id="Medium" v-on:click="uniqueDifficult(['difficulty','Medium']);">Medium</a>
         <br>
-        <a class="choiceMade" style="cursor:pointer" v-on:click="difficultyChoice.push(['difficulty','Hard']); uniqueDifficult()">Hard</a>
+        <a class="choiceMade" style="cursor:pointer" id="Hard" v-on:click="uniqueDifficult(['difficulty','Hard']);">Hard</a>
       </div>
 
       <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;
       </button>
       <div class="dropdown-container" id="filCuisineChoice">
       <div  v-for="cuisine in cuisines" v-bind:key="cuisine">
-        <a class="choiceMade" style="cursor:pointer" v-on:click="cuisineChoice=['cuisine', cuisine]">{{cuisine}}</a>
+        <a class="choiceMade" style="cursor:pointer" v-bind:id="cuisine" v-on:click="uniqueCuisine(['cuisine', cuisine]);">{{cuisine}}</a>
       </div>
       </div>
 
@@ -34,7 +35,7 @@
       </button>
       
       <div class="dropdown-container" id="filTimeChoice">
-        <input v-on:change="find()" type="range" list="tickmarks" min="0" max="4" value="50" class="slider" id="myRange"><br>
+        <input v-on:change="find()" type="range" list="tickmarks" min="0" max="5" value="50" class="slider" id="myRange"><br>
         <span><strong>Value: <span id="demo"></span></strong></span>
         
 
@@ -44,9 +45,9 @@
       </button>
       
       <div class="dropdown-container" id="filTypeChoice">
-        <a  class="choiceMade" style="cursor:pointer" v-on:click="typeChoice=['type','Main']" >Main</a>
+        <a  class="choiceMade" style="cursor:pointer" id="Main" v-on:click="uniqueType(['type', 'Main']);" >Main</a>
         <br>
-        <a  class="choiceMade" style="cursor:pointer" v-on:click="typeChoice=['type','Side']">Side</a>
+        <a  class="choiceMade" style="cursor:pointer" id="Side" v-on:click="uniqueType(['type','Side']);">Side</a>
     
 
       </div>
@@ -140,14 +141,7 @@ export default {
       isLoading: true,
       recipes: [],
       favRecipe: [],
-      submit : false,
-      filter : false,
-      difficulty : false,
-      type : false,
-      time: false,
-      cuisine: false,
       timeValue: "",
-      filters: [],
       save: [],
       difficultyChoice: [],
       cuisineChoice: [],
@@ -172,6 +166,7 @@ export default {
             //this.save.push([doc.id,doc.data()]);
             if(this.searchedValue == null){
               this.recipes.push([doc.id,doc.data()]);
+              this.save.push([doc.id,doc.data()]);
               if (!this.cuisines.includes(doc.data()["cuisine"])) {
                 this.cuisines.push(doc.data()["cuisine"]);
               }
@@ -373,80 +368,123 @@ export default {
           });
         }
       }
-      this.submit=false;
     },
 
-    uniqueDifficult: function() {
-      if (this.difficultyChoice.length != 0) {
-        var difficultyChoices = []
+    uniqueDifficult: function(option) {
+
+      if (this.difficultyChoice.length == 0) {
+        this.difficultyChoice.push(option);
+        document.getElementById(option[1]).style.color="Red"
+      } else {
         for (var i=0; i<this.difficultyChoice.length; i++) {
-          if (difficultyChoices.length == 0) {
-            difficultyChoices.push(this.difficultyChoice[i])
-          } else {
-            for (var j=0; j<difficultyChoices.length; j++) {
-              if (difficultyChoices[j][1] == this.difficultyChoice[i][1]) {
-                break;
-              } else if (j==difficultyChoices.length-1) {
-                difficultyChoices.push(this.difficultyChoice[i])
-              }
-            }
+          if (option[1] == this.difficultyChoice[i][1]) {
+            this.difficultyChoice.splice(i,1)
+            document.getElementById(option[1]).style.color="#007bff";
+            break
+          }
+          if (i == this.difficultyChoice.length-1) {
+            this.difficultyChoice.push(option);
+            document.getElementById(option[1]).style.color="Red"
+            break;
+          
           }
         }
-        this.difficultyChoice=difficultyChoices
+      }
+    },
+    uniqueCuisine: function(option) {
+      if (this.cuisineChoice.length == 0) {
+        this.cuisineChoice.push(option);
+        document.getElementById(option[1]).style.color="Red"
+      } else {
+        for (var i=0; i<this.cuisineChoice.length; i++) {
+          if (option[1] == this.cuisineChoice[i][1]) {
+            this.cuisineChoice.splice(i,1)
+            document.getElementById(option[1]).style.color="#007bff";
+            break
+          }
+          if (i == this.cuisineChoice.length-1) {
+            this.cuisineChoice.push(option);
+            document.getElementById(option[1]).style.color="Red"
+            break;
+          
+          }
+        }
+      }
+    },
+    uniqueType: function(option) {
+      if (this.typeChoice.length == 0) {
+        this.typeChoice.push(option);
+        document.getElementById(option[1]).style.color="Red"
+      } else {
+        for (var i=0; i<this.typeChoice.length; i++) {
+          if (option[1] == this.typeChoice[i][1]) {
+            this.typeChoice.splice(i,1)
+            document.getElementById(option[1]).style.color="#007bff";
+            break
+          }
+          if (i == this.typeChoice.length-1) {
+            this.typeChoice.push(option);
+            document.getElementById(option[1]).style.color="Red"
+            break;
+          
+          }
+        }
       }
     },
 
     filtering: function() {
-
-      if(this.timeValue != "") {
-        this.filters.push(['time',this.timeValue]);
-      }
-      if (this.difficultyChoice.length != 0) {
-        for (i=0; i<difficultyChoices.length;i++) {
-          this.filters.push(difficultyChoices[i])
-        }
-      }
-      if (this.typeChoice.length != 0) {
-        this.filters.push(this.typeChoice);
-      }
-      if (this.cuisineChoice.length != 0) {
-        this.filters.push(this.cuisineChoice);
-      }
+      
       this.recipes = [...this.save];
       var newList = []
-      for ( i=0; i<this.recipes.length;i++) {
-        for ( j = 0; j < this.filters.length; j++){
-          if (this.recipes[i][1][this.filters[j][0]] == this.filters[j][1])  {
+
+      if(this.difficultyChoice.length>0) {
+      for (var i=0; i<this.recipes.length;i++) {
+        for ( var j = 0; j < this.difficultyChoice.length; j++){
+          if (this.recipes[i][1][this.difficultyChoice[j][0]] == this.difficultyChoice[j][1])  {
             newList.push(this.recipes[i])
             break;
           }
         }
       }
       this.recipes=newList;
-      //this.recipes = [...this.save];
-      /*
-      for (var i = 0; i < this.recipes.length; i++){
-        for (var j = 0; j < this.filters.length; j++){
-          if (this.recipes[i][1][this.filters[j][0]] != this.filters[j][1])  {
-            this.recipes.splice(i,1);
-            i--;
+      newList = [];
+      }
+
+      if(this.cuisineChoice.length) {
+      for ( i=0; i<this.recipes.length;i++) {
+        for (  j = 0; j < this.cuisineChoice.length; j++){
+          if (this.recipes[i][1][this.cuisineChoice[j][0]] == this.cuisineChoice[j][1])  {
+            newList.push(this.recipes[i])
             break;
           }
         }
       }
-      */
-      
-      this.filters.splice(0, this.filters.length);
-      this.timeValue = "";
-      this.difficultyChoice = [];
-      this.cuisineChoice = [];
-      this.typeChoice = [];
-      this.filter=false;
-      this.time=false;
-      this.cuisine=false;
-      this.difficulty=false;
-      this.type=false;
-      document.getElementById("demo").innerHTML = "";
+      this.recipes=newList;
+      newList = [];
+      }
+
+      if(this.typeChoice.length) {
+      for ( i=0; i<this.recipes.length;i++) {
+        for (  j = 0; j < this.typeChoice.length; j++){
+          if (this.recipes[i][1][this.typeChoice[j][0]] == this.typeChoice[j][1])  {
+            newList.push(this.recipes[i])
+            break;
+          }
+        }
+      }
+      this.recipes=newList;
+      newList = [];
+      }
+
+      if(this.timeValue != "") {
+        for ( i=0; i<this.recipes.length;i++) {
+          if(this.recipes[i][1]['time'] == this.timeValue) {
+            newList.push(this.recipes[i])
+          }
+        }
+        this.recipes=newList;
+        newList = [];
+      }
       
     
     },
@@ -454,7 +492,7 @@ export default {
     find: function() {
       var slider = document.getElementById("myRange");
       var output = document.getElementById("demo");
-      var values = ["less than 30mins", "30mins to 1h", "1h to 2h", "2h to 3h", "3h to 4h"];
+      var values = ["","less than 30mins", "30mins to 1h", "1h to 2h", "2h to 3h", "3h to 4h"];
       output.innerHTML = values[slider.value];
       this.timeValue = values[slider.value];
     },
