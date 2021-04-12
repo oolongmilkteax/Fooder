@@ -2,7 +2,6 @@
   <div class="body">
     <Cheader></Cheader>
     <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
-    <p>{{difficultyChoice}}</p>
     
     <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow v-if="cuisines.length != 0">
       <template #default="{ hide }">
@@ -247,6 +246,13 @@ export default {
             var three = [];
             var four = [];
             var five = [];
+            var six = [];
+            var seven = [];
+            var eight = [];
+            var nine = [];
+            var ten = [];
+            var eleven = [];
+            var longest = [];
             for ( i=0; i<this.recipes.length; i++) {
               if (this.recipes[i][1]["time"] == "less than 30mins") {
                 shortest.push(this.recipes[i]);
@@ -258,6 +264,20 @@ export default {
                 four.push(this.recipes[i]);
               } else if (this.recipes[i][1]["time"] == "3h to 4h") {
                 five.push(this.recipes[i]);
+              } else if (this.recipes[i][1]["time"] == "4h to 5h") {
+                six.push(this.recipes[i]);
+              } else if (this.recipes[i][1]["time"] == "5h to 6h") {
+                seven.push(this.recipes[i]);
+              } else if (this.recipes[i][1]["time"] == "6h to 7h") {
+                eight.push(this.recipes[i]);
+              } else if (this.recipes[i][1]["time"] == "7h to 8h") {
+                nine.push(this.recipes[i]);
+              } else if (this.recipes[i][1]["time"] == "8h to 9h") {
+                ten.push(this.recipes[i]);
+              } else if (this.recipes[i][1]["time"] == "9h to 10h") {
+                eleven.push(this.recipes[i]);
+              } else {
+                longest.push(this.recipes[i])
               }
             }
             this.recipes = [];
@@ -276,6 +296,27 @@ export default {
               for (i = 0; i < five.length; i++){
                 this.recipes.push(five[i]);
               }  
+              for (i = 0; i < six.length; i++){
+                this.recipes.push(six[i]);
+              }
+              for (i = 0; i < seven.length; i++){
+                this.recipes.push(seven[i]);
+              }
+              for (i = 0; i < eight.length; i++){
+                this.recipes.push(eight[i]);
+              }
+              for (i = 0; i < nine.length; i++){
+                this.recipes.push(nine[i]);
+              }
+              for (i = 0; i < ten.length; i++){
+                this.recipes.push(ten[i]);
+              }
+              for (i = 0; i < eleven.length; i++){
+                this.recipes.push(eleven[i]);
+              }
+              for (i = 0; i < longest.length; i++){
+                this.recipes.push(longest[i]);
+              }
         } else {
           var newList = [];
           var sortValues = [];
@@ -299,6 +340,7 @@ export default {
           this.recipes = newList
         }
       }
+
       else {
       this.recipes=[];
       if (input == "difficulty") {
@@ -335,6 +377,13 @@ export default {
               var three = [];
               var four = [];
               var five = [];
+              var six = [];
+              var seven = [];
+              var eight = [];
+              var nine = [];
+              var ten = [];
+              var eleven = [];
+              var longest = [];
               snapshot.docs.forEach(doc => {
                 if (doc.data()["time"] == "less than 30mins") {
                   shortest.push([doc.id,doc.data()]);
@@ -346,6 +395,20 @@ export default {
                   four.push([doc.id,doc.data()]);
                 } else if (doc.data()["time"] == "3h to 4h") {
                   five.push([doc.id,doc.data()]);
+                } else if (doc.data()["time"] == "4h to 5h") {
+                  six.push([doc.id,doc.data()]);
+                } else if (doc.data()["time"] == "5h to 6h") {
+                  seven.push([doc.id,doc.data()]);
+                } else if (doc.data()["time"] == "6h to 7h") {
+                  eight.push([doc.id,doc.data()]);
+                } else if (doc.data()["time"] == "7h to 8h") {
+                  nine.push([doc.id,doc.data()]);
+                } else if (doc.data()["time"] == "8h to 9h") {
+                  ten.push([doc.id,doc.data()]);
+                } else if (doc.data()["time"] == "9h to 10h") {
+                  eleven.push([doc.id,doc.data()]);
+                } else {
+                  longest.push([doc.id,doc.data()])
                 }
             });
               for (var i = 0; i < shortest.length; i++){
@@ -362,6 +425,27 @@ export default {
               }
               for (i = 0; i < five.length; i++){
                 this.recipes.push(five[i]);
+              }
+              for (i = 0; i < six.length; i++){
+                this.recipes.push(six[i]);
+              }
+              for (i = 0; i < seven.length; i++){
+                this.recipes.push(seven[i]);
+              }
+              for (i = 0; i < eight.length; i++){
+                this.recipes.push(eight[i]);
+              }
+              for (i = 0; i < nine.length; i++){
+                this.recipes.push(nine[i]);
+              }
+              for (i = 0; i < ten.length; i++){
+                this.recipes.push(ten[i]);
+              }
+              for (i = 0; i < eleven.length; i++){
+                this.recipes.push(eleven[i]);
+              }
+              for (i = 0; i < longest.length; i++){
+                this.recipes.push(longest[i]);
               }
             });
       } else {
@@ -438,10 +522,8 @@ export default {
     },
 
     filtering: function() {
-      
       this.recipes = [...this.save];
       var newList = []
-
       if(this.difficultyChoice.length>0) {
       for (var i=0; i<this.recipes.length;i++) {
         for ( var j = 0; j < this.difficultyChoice.length; j++){
