@@ -22,9 +22,11 @@
         v-model="searchValue"
         placeholder="Search for Restaurants, Recipes, or Profiles!"
       />
+
       <div class="button-centraliser">
         <button class="myButton" v-on:click="search()">Search</button>
       </div>
+      <p class="errorMsg2" v-if="noSearch">Please Select a Category</p>
     </div>
     <Cfooter class="bottomFooter"></Cfooter>
   </div>
@@ -45,6 +47,7 @@ export default {
       this.recipe = false;
       this.restaurant = true;
       this.profile = false;
+      this.noSearch = false;
     },
     Recipe: function() {
       document.getElementById("Restaurant").style.background = "#0088cc";
@@ -53,6 +56,7 @@ export default {
       this.recipe = true;
       this.restaurant = false;
       this.profile = false;
+      this.noSearch = false;
     },
     Profile: function() {
       document.getElementById("Restaurant").style.background = "#0088cc";
@@ -61,6 +65,7 @@ export default {
       this.recipe = false;
       this.restaurant = false;
       this.profile = true;
+      this.noSearch = false;
     },
     searchRecipe: function() {
       this.$router.push({
@@ -89,15 +94,18 @@ export default {
       }
       if (this.profile) {
         this.searchProfile();
+      } else {
+        this.noSearch = true;
       }
     }
   },
   data() {
     return {
       searchValue: "",
-      recipe: true,
+      recipe: false,
       restaurant: false,
-      profile: false
+      profile: false,
+      noSearch: false
     };
   }
 };
@@ -115,8 +123,7 @@ export default {
   font-weight: 100;
   padding: 5px;
   border: solid #0088cc 1px;
-  margin-top: 30px;
-  margin: 5px;
+  margin: 0px 5px 5px 5px;
 }
 .searchDiv {
   display: flex;
@@ -137,6 +144,10 @@ export default {
 }
 
 /* search page */
+#Restaurant {
+  background-color: #0088cc;
+}
+
 .searchInput {
   padding: 15px;
   border-radius: 30px;
@@ -184,5 +195,10 @@ export default {
 .bottomFooter {
   position: absolute;
   bottom: 0;
+}
+
+.errorMsg2 {
+  text-align: center;
+  color: red;
 }
 </style>

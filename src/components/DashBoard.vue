@@ -4,31 +4,36 @@
     <div class="DashDiv">
       <PulseLoader id="loading" :loading="isLoading_1 || isLoading_2"></PulseLoader>
       <div v-if="isLoaded_1 && isLoaded_2">
-        <radar-chart :parsedData="parsedData"></radar-chart>
-        <favChart :data="chart1"></favChart>
-        <div class="pieDiv">
-          <DifficultyChart
-            :data="difficultyCount"
-            v-if="tooLittleDataA == false && isLoaded_1 && isLoaded_2"
-            class="pie"
-          ></DifficultyChart>
-
-          <PRChart
-            :data="priceCount"
-            v-if="tooLittleDataB == false && isLoaded_1 && isLoaded_2"
-            class="pie"
-          ></PRChart>
+        <div id="radarContainer">
+          <radar-chart :parsedData="parsedData"></radar-chart>
+          <p id="favCuisine">{{ "Favourite Cuisine: " + this.cuisine }}</p>
         </div>
-        <h3
-          class="cuisine"
-          v-if="tooLittleDataA"
-        >Please favourite more recipes to generate more insight.</h3>
-        <h3
-          class="cuisine"
-          v-if="tooLittleDataB"
-        >Please favourite more restaurants to generate more insight.</h3>
 
-        <h3 class="cuisine">{{ "Favourite Cuisine: " + this.cuisine }}</h3>
+        <div id="favContainer">
+          <favChart :data="chart1"></favChart>
+        </div>
+
+        <div id="pieContainer">
+          <div class="pieDiv">
+            <DifficultyChart :data="difficultyCount" class="pie"></DifficultyChart>
+            <PRChart :data="priceCount" class="pie"></PRChart>
+          </div>
+          <p
+            class="cuisine"
+            id="moreRecipes"
+            v-if="tooLittleDataA == true && tooLittleDataB == false"
+          >Please favourite more recipes to generate better insights.</p>
+          <h3
+            class="cuisine"
+            id="moreRestaurants"
+            v-if="tooLittleDataB == true && tooLittleDataA == false"
+          >Please favourite more restaurants to generate better insights.</h3>
+          <h3
+            class="cuisine"
+            id="moreBoth"
+            v-if="tooLittleDataA == true && tooLittleDataB == true"
+          >Please favourite more restaurants and recipes to generate better insights.</h3>
+        </div>
       </div>
     </div>
     <Cfooter></Cfooter>
@@ -179,14 +184,59 @@ export default {
   display: flex;
   flex-direction: row;
   width: 100%;
+  margin-top: 30px;
 }
+
+.pie {
+  width: 50%;
+}
+
+.spacing {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .cuisine {
-  height: 10em;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.pie {
-  width: 50%;
+
+#moreRestaurants {
+  margin-left: 50%;
+  font-size: 20px;
+}
+
+#moreRecipes {
+  margin-right: 50%;
+  font-size: 20px;
+}
+
+#moreBoth {
+  font-size: 25px;
+}
+
+#radarContainer {
+  background-color: #f8f8f8;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+#favContainer {
+  background-color: #f5f5f5;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#pieContainer {
+  background-color: #eeeeee;
+  padding-bottom: 20px;
+}
+
+#favCuisine {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 </style>
