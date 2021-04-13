@@ -5,7 +5,7 @@
     <div id="radarCont" v-if="isLoaded">
       <radar-chart :parsedData="parsedData"></radar-chart>
     </div>
-    <div id="preferenceDiv">
+    <div id="type">
       <p>{{ "Favourite Cuisine: " + this.cuisine }}</p>
       <p>{{ "Type of Eater: " + this.type }}</p>
     </div>
@@ -207,18 +207,22 @@ export default {
   margin-top: 20px;
 }
 
-#preferenceDiv {
+#type {
   text-align: center;
   margin-top: 20px;
   font-size: 23px;
 }
 
-#preferenceDiv p {
+#type p {
   margin-bottom: 0px;
 }
 
 #recomContainer {
   text-align: center;
+  margin-top: 40px;
+}
+
+.preferenceDiv {
   margin-top: 40px;
 }
 
@@ -229,26 +233,16 @@ export default {
   padding: 5px;
   margin: 10px;
   list-style-type: none;
-  display: flex;
-  flex-direction: row;
   width: 24%;
-  align-items: center;
+  text-align: center;
 }
 
 .container {
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  text-align: center;
-  padding: 5px;
-  margin: 10px;
-  margin-left: 60px;
-  align-items: center;
 }
 
 .pointDiv {
-  flex-direction: column;
-  display: flex;
   align-items: center;
 }
 
@@ -256,6 +250,7 @@ export default {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 30px;
   width: 23%;
   height: 48px;
   font-size: 22px;
@@ -263,5 +258,21 @@ export default {
 
 .smaller {
   width: 40%;
+}
+
+.flex-container {
+  display: flex;
+  background-color: #f1f1f1;
+  justify-content: center;
+}
+
+.flex-container > div {
+  background-color: DodgerBlue;
+  color: white;
+  width: 300px;
+  margin: 10px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
 }
 </style>

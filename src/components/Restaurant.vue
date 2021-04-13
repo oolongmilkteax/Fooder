@@ -2,39 +2,60 @@
   <div class="body">
     <Cheader></Cheader>
     <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
-    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow v-if="cuisines.length != 0">
+    <b-sidebar
+      id="sidebar-no-header"
+      aria-labelledby="sidebar-no-header-title"
+      no-header
+      shadow
+      v-if="cuisines.length != 0"
+    >
       <template #default="{ hide }">
         <h1>Sort</h1>
         <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
         <a class="dropdown-btn" v-on:click="sort('cuisine')">Cuisine</a>
         <a class="dropdown-btn" v-on:click="sort('price')">Price</a>
-      
+
         <h1>Filter</h1>
-          <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;
-          </button>
-          <div class="dropdown-container" id="filCuisineChoice">
-          <div  v-for="cuisine in cuisines" v-bind:key="cuisine">
-            <a class="choiceMade" style="cursor:pointer" id="cuisine" v-on:click="cuisineChoice=['cuisine', cuisine]">{{cuisine}}</a>
+        <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;</button>
+        <div class="dropdown-container" id="filCuisineChoice">
+          <div v-for="cuisine in cuisines" v-bind:key="cuisine">
+            <a
+              class="choiceMade"
+              style="cursor:pointer"
+              v-bind:id="cuisine"
+              v-on:click="uniqueCuisine(['cuisine', cuisine]);"
+            >{{cuisine}}</a>
           </div>
-          
-          </div>
+        </div>
 
-          <button class="dropdown-btn" v-on:click="showPrice()" id="filPrice">Price &#9660;
-          </button>
-          
-          <div class="dropdown-container" id="filPriceChoice">
-            <input  v-on:change="test()" type="range" list="tickmarks" min="0" max="6" value="50" class="slider" id="myRange"><br>
-            <span><strong>Value: <span id="demo"></span></strong></span>
+        <button class="dropdown-btn" v-on:click="showPrice()" id="filPrice">Price &#9660;</button>
 
-          </div>
+        <div class="dropdown-container" id="filPriceChoice">
+          <input
+            v-on:change="find()"
+            type="range"
+            list="tickmarks"
+            min="0"
+            max="7"
+            value="50"
+            class="slider"
+            id="myRange"
+          />
+          <br />
+          <span>
+            <strong>
+              Value:
+              <span id="demo"></span>
+            </strong>
+          </span>
+        </div>
 
-          <b-button id="submit" v-on:click="filtering" class="ApplyButton">Apply Filter</b-button>
-          <b-button class="closeSidebtn" block @click="hide">Close Sidebar</b-button>
+        <b-button id="submit" v-on:click="filtering" class="ApplyButton">Apply Filter</b-button>
+        <b-button class="closeSidebtn" block @click="hide">Close Sidebar</b-button>
       </template>
     </b-sidebar>
 
-
-    <br>
+    <br />
 
     <div class="borderDiv">
       <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
@@ -44,7 +65,12 @@
           <ul id="BriefDescription">
             <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant.name">
               <div class="card" style="width: 25rem;">
-                <img class="img" v-bind:src="restaurant[1].image" onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'" height="20px">
+                <img
+                  class="img"
+                  v-bind:src="restaurant[1].image"
+                  onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'"
+                  height="20px"
+                />
                 <div class="card-body">
                   <h5 class="name">{{restaurant[1].name}}</h5>
                   <div id="Description">
@@ -55,49 +81,47 @@
                     <span>Price range: {{restaurant[1].priceRange}}</span>
                     <br />
                     <span>Address: {{restaurant[1].address}}</span>
-                    <br>
+                    <br />
                     <button
                       id="restaurantWebsite"
                       v-on:click="go(restaurant[1].websiteLink);"
-                    >Visit Restaurant's Website!
+                    >Visit Restaurant's Website!</button>
+                    <button
+                      v-if="favRestaurantCheck(restaurant[0])"
+                      v-on:click="unfav(restaurant[0])"
+                      id="fav"
+                      title="Unfavourite"
+                    >
+                      <img
+                        src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
+                      />
                     </button>
                     <button
-                      v-if = "favRestaurantCheck(restaurant[0])"
-                      v-on:click = "unfav(restaurant[0])" 
-                      id = "fav"
-                      title = "Unfavourite"
+                      v-if="!favRestaurantCheck(restaurant[0])"
+                      v-on:click="fav(restaurant[0])"
+                      id="unfav"
+                      title="Favourite"
                     >
-                      <img 
-                        src ="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
-                      >
-                    </button>
-                    <button 
-                      v-if= "!favRestaurantCheck(restaurant[0])" 
-                      v-on:click = "fav(restaurant[0])"
-                      id = "unfav"
-                      title = "Favourite"
-                    >
-                      <img 
-                        src ="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
-                      >
+                      <img
+                        src="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
+                      />
                     </button>
                   </div>
                 </div>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
                 <span id="credits">Contributed by: {{restaurant[1].contributor}}</span>
-                <br>
-                <br>
-                <br>
+                <br />
+                <br />
+                <br />
               </div>
             </li>
           </ul>
         </div>
       </div>
-      
     </div>
     <Cfooter></Cfooter>
   </div>
@@ -126,12 +150,12 @@ export default {
       cuisineChoice: [],
       cuisines: [],
       isLoading: true,
-      noResult: false,
+      noResult: false
     };
   },
 
   components: {
-    PulseLoader,
+    PulseLoader
   },
 
   methods: {
@@ -139,12 +163,13 @@ export default {
     fetchItems: function() {
       db.collection("restaurant")
         .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
             //if empty search return all
+            //this.save.push([doc.id,doc.data()]);
             if (this.searchedValue == null) {
               this.restaurants.push([doc.id, doc.data()]);
-              this.save.push([doc.id,doc.data()]);
+              this.save.push([doc.id, doc.data()]);
               if (!this.cuisines.includes(doc.data().cuisine)) {
                 this.cuisines.push(doc.data().cuisine);
               }
@@ -156,9 +181,10 @@ export default {
                   .includes(this.searchedValue.toUpperCase())
               ) {
                 this.restaurants.push([doc.id, doc.data()]);
+                this.save.push([doc.id, doc.data()]);
                 if (!this.cuisines.includes(doc.data().cuisine)) {
-                this.cuisines.push(doc.data().cuisine);
-              }
+                  this.cuisines.push(doc.data().cuisine);
+                }
               } else if (
                 doc
                   .data()
@@ -166,9 +192,10 @@ export default {
                   .includes(this.searchedValue.toUpperCase())
               ) {
                 this.restaurants.push([doc.id, doc.data()]);
+                this.save.push([doc.id, doc.data()]);
                 if (!this.cuisines.includes(doc.data().cuisine)) {
-                this.cuisines.push(doc.data().cuisine);
-              }
+                  this.cuisines.push(doc.data().cuisine);
+                }
               } else if (
                 doc
                   .data()
@@ -176,9 +203,10 @@ export default {
                   .includes(this.searchedValue.toUpperCase())
               ) {
                 this.restaurants.push([doc.id, doc.data()]);
+                this.save.push([doc.id, doc.data()]);
                 if (!this.cuisines.includes(doc.data().cuisine)) {
-                this.cuisines.push(doc.data().cuisine);
-              }
+                  this.cuisines.push(doc.data().cuisine);
+                }
               } else if (
                 doc
                   .data()
@@ -186,17 +214,37 @@ export default {
                   .includes(this.searchedValue.toUpperCase())
               ) {
                 this.restaurants.push([doc.id, doc.data()]);
+                this.save.push([doc.id, doc.data()]);
                 if (!this.cuisines.includes(doc.data().cuisine)) {
-                this.cuisines.push(doc.data().cuisine);
-              }
+                  this.cuisines.push(doc.data().cuisine);
+                }
               }
             }
           });
           this.isLoading = false;
-          if(this.recipes.length == 0){
+          if (this.recipes.length == 0) {
             this.noResult = true;
           }
         });
+    },
+    uniqueCuisine: function(option) {
+      if (this.cuisineChoice.length == 0) {
+        this.cuisineChoice.push(option);
+        document.getElementById(option[1]).style.color = "Red";
+      } else {
+        for (var i = 0; i < this.cuisineChoice.length; i++) {
+          if (option[1] == this.cuisineChoice[i][1]) {
+            this.cuisineChoice.splice(i, 1);
+            document.getElementById(option[1]).style.color = "#007bff";
+            break;
+          }
+          if (i == this.cuisineChoice.length - 1) {
+            this.cuisineChoice.push(option);
+            document.getElementById(option[1]).style.color = "Red";
+            break;
+          }
+        }
+      }
     },
     go: function(url) {
       window.open(url);
@@ -205,7 +253,7 @@ export default {
       db.collection("user")
         .doc(this.$store.state.uid)
         .get()
-        .then((doc) => {
+        .then(doc => {
           this.favRestaurant = doc.data().favRestaurant;
         });
     },
@@ -218,7 +266,7 @@ export default {
       db.collection("user")
         .doc(this.$store.state.uid)
         .update({
-          favRestaurant: firebase.firestore.FieldValue.arrayRemove(id),
+          favRestaurant: firebase.firestore.FieldValue.arrayRemove(id)
         });
     },
     fav: function(id) {
@@ -226,112 +274,187 @@ export default {
       db.collection("user")
         .doc(this.$store.state.uid)
         .update({
-          favRestaurant: firebase.firestore.FieldValue.arrayUnion(id),
+          favRestaurant: firebase.firestore.FieldValue.arrayUnion(id)
         });
     },
     sort: function(input) {
-      this.restaurants = [];
-      if (input == "price") {
-        db.collection("restaurant")
-          .get()
-          .then((snapshot) => {
-            var lowest = [];
-            var two = [];
-            var three = [];
-            var four = [];
-            var five = [];
-            var six = [];
-            var highest = [];
-            snapshot.docs.forEach((doc) => {
-              if (doc.data()["priceRange"] == "less than $20") {
-                lowest.push([doc.id, doc.data()]);
-              } else if (doc.data()["priceRange"] == "$20 to $50") {
-                two.push([doc.id, doc.data()]);
-              } else if (doc.data()["priceRange"] == "$50 to $100") {
-                three.push([doc.id, doc.data()]);
-              } else if (doc.data()["priceRange"] == "$100 to $150") {
-                four.push([doc.id, doc.data()]);
-              } else if (doc.data()["priceRange"] == "$150 to $200") {
-                five.push([doc.id, doc.data()]);
-              } else if (doc.data()["priceRange"] == "$200 to $300") {
-                six.push([doc.id, doc.data()]);
-              } else {
-                highest.push([doc.id, doc.data()]);
+      if (this.searchedValue != null) {
+        if (input == "price") {
+          var lowest = [];
+          var two = [];
+          var three = [];
+          var four = [];
+          var five = [];
+          var six = [];
+          var highest = [];
+          for (var i = 0; i < this.restaurants.length; i++) {
+            if (this.restaurants[i][1]["priceRange"] == "less than $20") {
+              lowest.push(this.restaurants[i]);
+            } else if (this.restaurants[i][1]["priceRange"] == "$20 to $50") {
+              two.push(this.restaurants[i]);
+            } else if (this.restaurants[i][1]["priceRange"] == "$50 to $100") {
+              three.push(this.restaurants[i]);
+            } else if (this.restaurants[i][1]["priceRange"] == "$100 to $150") {
+              four.push(this.restaurants[i]);
+            } else if (this.restaurants[i][1]["priceRange"] == "150 to $200") {
+              five.push(this.restaurants[i]);
+            } else if (this.restaurants[i][1]["priceRange"] == "$200 to $300") {
+              six.push(this.restaurants[i]);
+            } else {
+              highest.push(this.restaurants[i]);
+            }
+          }
+          this.restaurants = [];
+          for (i = 0; i < lowest.length; i++) {
+            this.restaurants.push(lowest[i]);
+          }
+          for (i = 0; i < two.length; i++) {
+            this.restaurants.push(two[i]);
+          }
+          for (i = 0; i < three.length; i++) {
+            this.restaurants.push(three[i]);
+          }
+          for (i = 0; i < four.length; i++) {
+            this.restaurants.push(four[i]);
+          }
+          for (i = 0; i < five.length; i++) {
+            this.restaurants.push(five[i]);
+          }
+          for (i = 0; i < six.length; i++) {
+            this.restaurants.push(six[i]);
+          }
+          for (i = 0; i < highest.length; i++) {
+            this.restaurants.push(highest[i]);
+          }
+        } else {
+          var newList = [];
+          var sortValues = [];
+          for (i = 0; i < this.restaurants.length; i++) {
+            sortValues.push(this.restaurants[i][1][input]);
+          }
+          sortValues.sort();
+          var count = 0;
+          for (i = 0; i < this.restaurants.length; i++) {
+            for (var j = 0; j < this.restaurants.length; j++) {
+              if (sortValues[count] == this.restaurants[j][1][input]) {
+                newList.push(this.restaurants[j]);
+                count += 1;
+                this.restaurants.splice(j, 1);
+                i--;
+                j--;
+                break;
+              }
+            }
+          }
+          this.restaurants = newList;
+        }
+      } else {
+        this.restaurants = [];
+        if (input == "price") {
+          db.collection("restaurant")
+            .get()
+            .then(snapshot => {
+              var lowest = [];
+              var two = [];
+              var three = [];
+              var four = [];
+              var five = [];
+              var six = [];
+              var highest = [];
+              snapshot.docs.forEach(doc => {
+                if (doc.data()["priceRange"] == "less than $20") {
+                  lowest.push([doc.id, doc.data()]);
+                } else if (doc.data()["priceRange"] == "$20 to $50") {
+                  two.push([doc.id, doc.data()]);
+                } else if (doc.data()["priceRange"] == "$50 to $100") {
+                  three.push([doc.id, doc.data()]);
+                } else if (doc.data()["priceRange"] == "$100 to $150") {
+                  four.push([doc.id, doc.data()]);
+                } else if (doc.data()["priceRange"] == "$150 to $200") {
+                  five.push([doc.id, doc.data()]);
+                } else if (doc.data()["priceRange"] == "$200 to $300") {
+                  six.push([doc.id, doc.data()]);
+                } else {
+                  highest.push([doc.id, doc.data()]);
+                }
+              });
+              for (var i = 0; i < lowest.length; i++) {
+                this.restaurants.push(lowest[i]);
+              }
+              for (i = 0; i < two.length; i++) {
+                this.restaurants.push(two[i]);
+              }
+              for (i = 0; i < three.length; i++) {
+                this.restaurants.push(three[i]);
+              }
+              for (i = 0; i < four.length; i++) {
+                this.restaurants.push(four[i]);
+              }
+              for (i = 0; i < five.length; i++) {
+                this.restaurants.push(five[i]);
+              }
+              for (i = 0; i < six.length; i++) {
+                this.restaurants.push(six[i]);
+              }
+              for (i = 0; i < highest.length; i++) {
+                this.restaurants.push(highest[i]);
               }
             });
-            for (var i = 0; i < lowest.length; i++) {
-              this.restaurants.push(lowest[i]);
-            }
-            for (i = 0; i < two.length; i++) {
-              this.restaurants.push(two[i]);
-            }
-            for (i = 0; i < three.length; i++) {
-              this.restaurants.push(three[i]);
-            }
-            for (i = 0; i < four.length; i++) {
-              this.restaurants.push(four[i]);
-            }
-            for (i = 0; i < five.length; i++) {
-              this.restaurants.push(five[i]);
-            }
-            for (i = 0; i < six.length; i++) {
-              this.restaurants.push(six[i]);
-            }
-            for (i = 0; i < highest.length; i++) {
-              this.restaurants.push(highest[i]);
-            }
-          });
-      } else {
-        db.collection("restaurant")
-          .orderBy(input)
-          .get()
-          .then((snapshot) => {
-            snapshot.docs.forEach((doc) => {
-              this.restaurants.push([doc.id, doc.data()]);
+        } else {
+          db.collection("restaurant")
+            .orderBy(input)
+            .get()
+            .then(snapshot => {
+              snapshot.docs.forEach(doc => {
+                this.restaurants.push([doc.id, doc.data()]);
+              });
             });
-          });
+        }
+        this.submit = false;
       }
-      this.submit = false;
     },
 
     filtering: function() {
-      if(this.priceValue != "") {
-        this.filters.push(['priceRange',this.priceValue]);
-      }
-      if (this.cuisineChoice.length != 0) {
-        this.filters.push(this.cuisineChoice);        
-      }
       this.restaurants = [...this.save];
-      for (var i = 0; i < this.restaurants.length; i++){
-        for (var j = 0; j < this.filters.length; j++){
-          if (this.restaurants[i][1][this.filters[j][0]] != this.filters[j][1])  {
-            this.restaurants.splice(i,1);
-            i--;
-            break;
+      var newList = [];
+      if (this.cuisineChoice.length) {
+        for (var i = 0; i < this.restaurants.length; i++) {
+          for (var j = 0; j < this.cuisineChoice.length; j++) {
+            if (
+              this.restaurants[i][1][this.cuisineChoice[j][0]] ==
+              this.cuisineChoice[j][1]
+            ) {
+              newList.push(this.restaurants[i]);
+              break;
+            }
           }
         }
+        this.restaurants = newList;
+        newList = [];
       }
-      this.filters.splice(0, this.filters.length);
-      this.priceValue = "";
-      this.cuisineChoice = [];
-      this.filter=false;
-      this.price=false;
-      this.cuisine=false;
-      document.getElementById("demo").innerHTML = "";
-      
+      if (this.priceValue != "") {
+        for (i = 0; i < this.restaurants.length; i++) {
+          if (this.restaurants[i][1]["priceRange"] == this.priceValue) {
+            newList.push(this.restaurants[i]);
+          }
+        }
+        this.restaurants = newList;
+        newList = [];
+      }
     },
 
-    test: function() {
+    find: function() {
       var slider = document.getElementById("myRange");
       var output = document.getElementById("demo");
       var values = [
+        "",
         "less than $20",
         "$20 to $50",
         "$50 to $100",
         "$100 to $150",
         "$150 to $200",
         "$200 to $300",
-        "above $300",
+        "above $300"
       ];
       output.innerHTML = values[slider.value];
       this.priceValue = values[slider.value];
@@ -349,26 +472,21 @@ export default {
       document.getElementById("filterContent").style.width = "0";
     },
     showCuisine: function() {
-      
-      if (document.getElementById("filCuisineChoice").style.display === "block") {
+      if (
+        document.getElementById("filCuisineChoice").style.display === "block"
+      ) {
         document.getElementById("filCuisineChoice").style.display = "none";
+      } else {
+        document.getElementById("filCuisineChoice").style.display = "block";
       }
-       else {
-         document.getElementById("filCuisineChoice").style.display = "block";
-
-       }
-       
     },
     showPrice: function() {
-      
       if (document.getElementById("filPriceChoice").style.display === "block") {
         document.getElementById("filPriceChoice").style.display = "none";
+      } else {
+        document.getElementById("filPriceChoice").style.display = "block";
       }
-       else {
-         document.getElementById("filPriceChoice").style.display = "block";
-       }
-       
-    },
+    }
   },
   created() {
     this.fetchItems();
@@ -376,18 +494,18 @@ export default {
   },
   updated() {
     this.getFavourites();
-  },
+  }
 };
 </script>
 
 <style scoped>
-.ApplyButton{
+.ApplyButton {
   margin: 10px;
 }
 
-.FnSbtn{
-  margin:60px;
-  padding:10px 50px 10px 50px;
+.FnSbtn {
+  margin: 60px;
+  padding: 10px 50px 10px 50px;
 }
 
 #Description {
@@ -431,7 +549,7 @@ export default {
   padding: 10px;
   border: solid #0088cc 1px;
   text-decoration: none;
-  transform: translate(0px, 10px)
+  transform: translate(0px, 10px);
 }
 
 #restaurantWebsite:hover {
@@ -473,7 +591,7 @@ img {
   text-align: center;
   border-radius: 8px;
   background: white;
-  transform: translate(0px, 10px)
+  transform: translate(0px, 10px);
 }
 
 #fav:hover {
@@ -492,7 +610,7 @@ img {
   border-radius: 8px;
   padding-top: 5px;
   background: white;
-  transform: translate(0px, 10px)
+  transform: translate(0px, 10px);
 }
 
 #unfav:hover {
@@ -512,44 +630,9 @@ img {
   margin-bottom: 5px;
 }
 
-
 .miniButton {
   background: turquoise;
   border-radius: 8px;
-}
-
-.filterOpt {
-  margin-right: 50px;
-  background: teal;
-  color: #ffffff;
-  font-weight: 100;
-  border-radius: 8px;
-  border: solid teal 1px;
-  width: 80px;
-}
-
-.filterOpt:hover {
-  background-color: #4caf50;
-  color: white;
-}
-
-.filterOpt:focus {
-  background: olive;
-}
-
-#block_container {
-  height: 90px;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-}
-
-#bloc1 {
-  width: 200px;
-  float: left;
-}
-#bloc2 {
-  overflow: hidden;
 }
 
 .sidenav {
@@ -577,7 +660,7 @@ img {
   color: #f1f1f1;
 }
 
-#submit:hover  {
+#submit:hover {
   color: #f1f1f1;
 }
 
@@ -590,7 +673,7 @@ img {
 }
 
 #main {
-  transition: margin-left .5s;
+  transition: margin-left 0.5s;
   padding: 16px;
 }
 
@@ -611,7 +694,7 @@ img {
 .dropdown-btn:hover {
   color: #2d4fac;
 }
-.choiceMade:hover{
+.choiceMade:hover {
   color: #2d4fac;
 }
 .active {
@@ -624,10 +707,8 @@ img {
   padding-left: 8px;
 }
 
-.closeSidebtn{
+.closeSidebtn {
   width: 93%;
   margin-left: 10px;
-
 }
-
 </style>

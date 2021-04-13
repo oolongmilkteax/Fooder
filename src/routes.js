@@ -34,6 +34,7 @@ const beforeEnter_pref = function(to, from, next) {
   }
 };
 
+/*
 const beforeEnter_char = function(to, from, next) {
   if (store.state.authenticated == false) {
     next("/");
@@ -45,6 +46,7 @@ const beforeEnter_char = function(to, from, next) {
     next();
   }
 };
+*/
 
 export default [
   {
@@ -105,6 +107,7 @@ export default [
     name: "FullRecipe",
     path: "/fullrecipe",
     component: FullRecipe,
+    props: true,
     beforeEnter: beforeEnter,
   },
   {
@@ -119,7 +122,7 @@ export default [
     path: "/characteristic",
     component: Characteristic,
     props: true,
-    beforeEnter: beforeEnter_char,
+    //beforeEnter: beforeEnter_char,
   },
   {
     name: "ProfileSearch",

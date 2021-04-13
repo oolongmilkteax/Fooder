@@ -28,7 +28,7 @@
       </div>
       <p class="errorMsg2" v-if="noSearch">Please Select a Category</p>
     </div>
-    <Cfooter class="bottomFooter"></Cfooter>
+    <Cfooter></Cfooter>
   </div>
 </template>
 
@@ -114,7 +114,7 @@ export default {
 <style>
 .searchButton {
   background: #0088cc;
-  width: 10%;
+  width: 7%;
   border-radius: 8px;
   border-radius: 8px;
   color: #ffffff;
@@ -146,6 +146,7 @@ export default {
 /* search page */
 #Restaurant {
   background-color: #0088cc;
+  margin-left: 20px;
 }
 
 .searchInput {
