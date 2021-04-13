@@ -2,43 +2,53 @@
 <template>
   <div class="body">
     <Cheader></Cheader>
-    <div v-if="isLoaded">
+    <div id="radarCont" v-if="isLoaded">
       <radar-chart :parsedData="parsedData"></radar-chart>
     </div>
-    <div class="preferenceDiv">
-      <h3>{{ "Favourite Cuisine: " + this.cuisine }}</h3>
-      <h3>{{ "Type of Eater: " + this.type }}</h3>
-      <h2 v-if= "type == 'Home Cook'" >Here are some recipes we have for you!</h2>
-      <h2 v-if= "type == 'Adventurous Foodie'" >Here are some restaurants we have for you!</h2>
-      <h2 v-if= "type == 'Not-So-Picky Eater'" >Here are some recipes and restaurants we have for you!</h2>
+    <div id="preferenceDiv">
+      <p>{{ "Favourite Cuisine: " + this.cuisine }}</p>
+      <p>{{ "Type of Eater: " + this.type }}</p>
     </div>
 
-    
-    <div class="container" >
-    <li class="characteristicslist" v-for="(item) in recommendedThings" v-bind:key="item.id">
-      <div class="pointDiv">
-        {{item.name}}  
-        
-        <img v-bind:src="item.image" alt="Food image" />
-        <button class="myButton smaller" v-on:click="go(item)">Go!</button>
+    <div id="recomContainer">
+      <h3 v-if="type == 'Home Cook'">Here are some recipes we think you'll love!</h3>
+      <h3 v-if="type == 'Adventurous Foodie'">Here are some restaurants we think you'll love!</h3>
+      <h3
+        v-if="type == 'Not-So-Picky Eater'"
+      >Here are some recipes and restaurants we think you'll love!</h3>
+
+      <div class="container">
+        <li class="characteristicslist" v-for="(item) in recommendedThings" v-bind:key="item.id">
+          <div class="pointDiv">
+            {{item.name}}
+            <img v-bind:src="item.image" alt="Food image" />
+            <button class="myButton smaller" v-on:click="go(item)">Go!</button>
+          </div>
+        </li>
       </div>
-    </li>
-    </div>
-    
-    
-    <div class="preferenceDiv">
-      <h2>You may also like the following!</h2>
-    </div>
-    <div class="container" >
-    <li class="characteristicslist" v-for="item in possibleReccomendations" v-bind:key="item.id">
-      <div class="pointDiv">
-        {{item.name}}
-        <img v-bind:src="item.image" alt="Food image" />
-        <button class="myButton smaller" v-on:click="go(item)">Go!</button>
+
+      <div class="preferenceDiv">
+        <h3>Other suggestions for you to explore:</h3>
       </div>
-    </li>
+      <div class="container">
+        <li
+          class="characteristicslist"
+          v-for="item in possibleReccomendations"
+          v-bind:key="item.id"
+        >
+          <div class="pointDiv">
+            {{item.name}}
+            <img v-bind:src="item.image" alt="Food image" />
+            <button class="myButton smaller" v-on:click="go(item)">Go!</button>
+          </div>
+        </li>
+      </div>
     </div>
-    <b-button href="/searchpage" class="gotoSearchPage">Find your own Recipes and Restaurants!</b-button>
+
+    <b-button
+      href="/searchpage"
+      class="gotoSearchPage"
+    >Start finding your own Recipes and Restaurants!</b-button>
     <Cfooter></Cfooter>
   </div>
 </template>
@@ -58,9 +68,9 @@ export default {
       cuisine: "",
       type: "",
       recommendedThings: [],
-      possibleReccomendations:[],
+      possibleReccomendations: [],
       preferences: [],
-      isLoaded: false,
+      isLoaded: false
     };
   },
   methods: {
@@ -85,8 +95,7 @@ export default {
               this.recommendedThings.push(doc.data());
             });
           });
-        
-        
+
         db.collection("recipe")
           .orderBy("name")
           .limit(3)
@@ -96,8 +105,6 @@ export default {
               this.possibleReccomendations.push(doc.data());
             });
           });
-        
-        
       } else if (this.preferences[0] > 20 && this.preferences[3] >= 15) {
         this.type = "Home Cook";
         db.collection("recipe")
@@ -119,7 +126,6 @@ export default {
               this.possibleReccomendations.push(doc.data());
             });
           });
-
       } else {
         this.type = "Not-So-Picky Eater";
         db.collection("recipe")
@@ -141,7 +147,7 @@ export default {
             });
           });
         db.collection("recipe")
-          .orderBy("name","desc")
+          .orderBy("name", "desc")
           .limit(2)
           .get()
           .then(snapshot => {
@@ -150,7 +156,7 @@ export default {
             });
           });
         db.collection("restaurant")
-          .orderBy("name","desc")
+          .orderBy("name", "desc")
           .limit(2)
           .get()
           .then(snapshot => {
@@ -197,26 +203,40 @@ export default {
 </script>
 
 <style>
-.preferenceDiv {
-  text-align: center;
+#radarCont {
+  margin-top: 20px;
 }
+
+#preferenceDiv {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 23px;
+}
+
+#preferenceDiv p {
+  margin-bottom: 0px;
+}
+
+#recomContainer {
+  text-align: center;
+  margin-top: 40px;
+}
+
 .main {
-  display:flex
+  display: flex;
 }
 .characteristicslist {
   padding: 5px;
   margin: 10px;
-  list-style-type: none; 
-  display:flex;
+  list-style-type: none;
+  display: flex;
   flex-direction: row;
-  width:24%;
+  width: 24%;
   align-items: center;
-  
-  
 }
 
 .container {
-  display:flex;
+  display: flex;
   flex-direction: row;
   justify-content: center;
   text-align: center;
@@ -224,7 +244,6 @@ export default {
   margin: 10px;
   margin-left: 60px;
   align-items: center;
-  
 }
 
 .pointDiv {
@@ -237,7 +256,9 @@ export default {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 20%;
+  width: 23%;
+  height: 48px;
+  font-size: 22px;
 }
 
 .smaller {
