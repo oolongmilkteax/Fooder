@@ -5,22 +5,15 @@
       <h1 class="myTitles">Contribute to Fooder!</h1>
       <label for="contributing">Contributing:</label>
       <br />
-      <button
-        type="button"
-        id="Restaurant"
-        class="selectButton"
-        v-on:click="Restaurant"
-      >
-        Restaurant
-      </button>
-      <button
-        type="button"
-        id="Recipe"
-        class="selectButton"
-        v-on:click="Recipe"
-      >
-        Recipe
-      </button>
+      <div class="buttonContainer">
+        <button
+          type="button"
+          id="Restaurant"
+          class="selectButton"
+          v-on:click="Restaurant"
+        >Restaurant</button>
+        <button type="button" id="Recipe" class="selectButton" v-on:click="Recipe">Recipe</button>
+      </div>
       <br />
       <div v-show="contributeType === 'restaurant'">
         <restaurantform></restaurantform>
@@ -28,7 +21,6 @@
       <div v-show="contributeType === 'recipe'">
         <recipeform></recipeform>
       </div>
-      
     </div>
     <Cfooter></Cfooter>
   </div>
@@ -40,7 +32,7 @@ import logout from "./logout.js";
 export default {
   data() {
     return {
-      contributeType: "restaurant",
+      contributeType: "restaurant"
     };
   },
   methods: {
@@ -57,12 +49,16 @@ export default {
     },
     created() {
       alert(this.$store.state.authenticated);
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style>
+#Restaurant {
+  background-color: #979797;
+}
+
 .ContriDiv {
   margin: 0% 5% 0% 5%;
 }
@@ -94,5 +90,9 @@ export default {
   -moz-border-radius: 14px;
   border-radius: 8px;
   text-decoration: none;
+}
+
+.buttonContainer {
+  margin-bottom: 20px;
 }
 </style>
