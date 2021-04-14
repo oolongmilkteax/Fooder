@@ -3,7 +3,7 @@
     <Cheader></Cheader>
 
     <div class="BorderDiv">
-      <p class="searchHeader">Fooder</p>
+      <p style="margin-top:20px" class="searchHeader">Fooder</p>
       <div class="searchDiv">
         <h2>Search for:</h2>
         <button
@@ -26,7 +26,7 @@
       <div class="button-centraliser">
         <button class="myButton" v-on:click="search()">Search</button>
       </div>
-      <p class="errorMsg2" v-if="noSearch">Please Select a Category</p>
+      <p class="errorMsg2" v-if="noSearch">Please select a category to proceed.</p>
     </div>
     <Cfooter></Cfooter>
   </div>
@@ -201,5 +201,9 @@ export default {
 .errorMsg2 {
   text-align: center;
   color: red;
+}
+
+.BorderDiv {
+  min-height: 56%;
 }
 </style>

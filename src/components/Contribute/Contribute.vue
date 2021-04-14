@@ -2,11 +2,16 @@
   <div class="body">
     <Cheader></Cheader>
     <div class="ContriDiv">
-      <h1 class="myTitles">Contribute to Fooder!</h1>
+      <h1 style="margin-top: 40px; margin-bottom: 15px" class="myTitles">Contribute to Fooder!</h1>
       <label for="contributing">Contributing:</label>
       <br />
       <div class="buttonContainer">
-        <button type="button" id="ContriRestaurant" class="selectButton leftSelectButton" v-on:click="Restaurant">Restaurant</button>
+        <button
+          type="button"
+          id="ContriRestaurant"
+          class="selectButton leftSelectButton"
+          v-on:click="Restaurant"
+        >Restaurant</button>
         <button type="button" id="ContriRecipe" class="selectButton" v-on:click="Recipe">Recipe</button>
       </div>
       <br />
@@ -51,20 +56,19 @@ export default {
 </script>
 
 <style>
-
-
 .ContriDiv {
   margin: 0% 5% 0% 5%;
 }
+
 .myTitles {
   font-size: 60px;
-  margin-bottom: 5px;
-  margin-top: 30px;
+  margin-bottom: 10px;
+  margin-top: 100px;
   text-align: left;
 }
 
 .selectButton {
-  background-color: #0088cc ;
+  background-color: #0088cc;
   width: 20%;
   border-radius: 8px;
   color: #ffffff;
@@ -76,7 +80,6 @@ export default {
   margin-top: 30px;
   margin: 5px;
 }
-
 
 .leftSelectButton {
   margin-left: 0px;

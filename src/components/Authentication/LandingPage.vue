@@ -1,29 +1,31 @@
 <template>
   <div class="body">
-    <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand href="/">Fooder</b-navbar-brand>
+    <div class="minHeight">
+      <b-navbar toggleable="lg" type="dark" variant="dark">
+        <b-navbar-brand href="/">Fooder</b-navbar-brand>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <b-collapse id="nav-collapse" is-nav>
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item href="/signup">Sign Up</b-nav-item>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-    <div class="LandingDiv">
-      <h1 class="signinHeader">Sign In to Fooder</h1>
-      <input type="text" class="signinInput" v-model="email" placeholder="Email" />
-      <input type="password" class="signinInput" v-model="password" placeholder="Password" />
-      <div class="button-centraliser">
-        <button class="myButton" v-on:click="userLogin()">Sign In!</button>
-        <p v-show="this.showErrMsg" class="errMsg">Invalid email / password. Please try again.</p>
-        <p v-show="this.verifyEmail" class="errMsg">Please verify email before signing in.</p>
-      </div>
-      <h3 class="member">Not a member yet?</h3>
-      <div class="button-centraliser">
-        <button class="myButton" onclick="location.href='./signup'">Sign Up!</button>
+        <b-collapse id="nav-collapse" is-nav>
+          <!-- Right aligned nav items -->
+          <b-navbar-nav class="ml-auto">
+            <b-nav-item href="/signup">Sign Up</b-nav-item>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
+      <div class="LandingDiv">
+        <h1 class="signinHeader">Sign In to Fooder</h1>
+        <input type="text" class="signinInput" v-model="email" placeholder="Email" />
+        <input type="password" class="signinInput" v-model="password" placeholder="Password" />
+        <div class="button-centraliser">
+          <button class="myButton" v-on:click="userLogin()">Sign In!</button>
+          <p v-show="this.showErrMsg" class="errMsg">Invalid email / password. Please try again.</p>
+          <p v-show="this.verifyEmail" class="errMsg">Please verify email before signing in.</p>
+        </div>
+        <h3 class="member">Not a member yet?</h3>
+        <div class="button-centraliser">
+          <button class="myButton" onclick="location.href='./signup'">Sign Up!</button>
+        </div>
       </div>
     </div>
     <Cfooter></Cfooter>
@@ -161,6 +163,10 @@ h1 {
   font-family: Helvetica;
   font-size: 10px;
   color: black;
+}
+
+.minHeight {
+  min-height: 63%;
 }
 
 .signinInput {
