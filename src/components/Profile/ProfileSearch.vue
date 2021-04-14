@@ -110,6 +110,7 @@ export default {
 
 .ProfileDiv {
   margin-top: 50px;
+  min-height: 56%;
 }
 /*
 .ProfileDiv {

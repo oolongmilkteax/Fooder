@@ -1,125 +1,127 @@
 <template>
   <div class="body">
     <Cheader></Cheader>
-    <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
-    <b-sidebar
-      id="sidebar-no-header"
-      aria-labelledby="sidebar-no-header-title"
-      no-header
-      shadow
-      v-if="cuisines.length != 0"
-    >
-      <template #default="{ hide }">
-        <h1>Sort</h1>
-        <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
-        <a class="dropdown-btn" v-on:click="sort('cuisine')">Cuisine</a>
-        <a class="dropdown-btn" v-on:click="sort('price')">Price</a>
+    <div class="minHeight">
+      <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
+      <b-sidebar
+        id="sidebar-no-header"
+        aria-labelledby="sidebar-no-header-title"
+        no-header
+        shadow
+        v-if="cuisines.length != 0"
+      >
+        <template #default="{ hide }">
+          <h1>Sort</h1>
+          <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
+          <a class="dropdown-btn" v-on:click="sort('cuisine')">Cuisine</a>
+          <a class="dropdown-btn" v-on:click="sort('price')">Price</a>
 
-        <h1>Filter</h1>
-        <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;</button>
-        <div class="dropdown-container" id="filCuisineChoice">
-          <div v-for="cuisine in cuisines" v-bind:key="cuisine">
-            <a
-              class="choiceMade"
-              style="cursor:pointer"
-              v-bind:id="cuisine"
-              v-on:click="uniqueCuisine(['cuisine', cuisine]);"
-            >{{cuisine}}</a>
+          <h1>Filter</h1>
+          <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;</button>
+          <div class="dropdown-container" id="filCuisineChoice">
+            <div v-for="cuisine in cuisines" v-bind:key="cuisine">
+              <a
+                class="choiceMade"
+                style="cursor:pointer"
+                v-bind:id="cuisine"
+                v-on:click="uniqueCuisine(['cuisine', cuisine]);"
+              >{{cuisine}}</a>
+            </div>
           </div>
-        </div>
 
-        <button class="dropdown-btn" v-on:click="showPrice()" id="filPrice">Price &#9660;</button>
+          <button class="dropdown-btn" v-on:click="showPrice()" id="filPrice">Price &#9660;</button>
 
-        <div class="dropdown-container" id="filPriceChoice">
-          <input
-            v-on:change="find()"
-            type="range"
-            list="tickmarks"
-            min="0"
-            max="7"
-            value="50"
-            class="slider"
-            id="myRange"
-          />
-          <br />
-          <span>
-            <strong>
-              Value:
-              <span id="demo"></span>
-            </strong>
-          </span>
-        </div>
+          <div class="dropdown-container" id="filPriceChoice">
+            <input
+              v-on:change="find()"
+              type="range"
+              list="tickmarks"
+              min="0"
+              max="7"
+              value="50"
+              class="slider"
+              id="myRange"
+            />
+            <br />
+            <span>
+              <strong>
+                Value:
+                <span id="demo"></span>
+              </strong>
+            </span>
+          </div>
 
-        <b-button id="submit" v-on:click="filtering" class="ApplyButton">Apply Filter</b-button>
-        <b-button class="closeSidebtn" block @click="hide">Close Sidebar</b-button>
-      </template>
-    </b-sidebar>
+          <b-button id="submit" v-on:click="filtering" class="ApplyButton">Apply Filter</b-button>
+          <b-button class="closeSidebtn" block @click="hide">Close Sidebar</b-button>
+        </template>
+      </b-sidebar>
 
-    <br />
+      <br />
 
-    <div class="borderDiv">
-      <PulseLoader id="loading" color="#0088 cc" :loading="isLoading"></PulseLoader>
-      <h1 v-if="noResult">No Results! :(</h1>
-      <div class="RestaurantContainer">
-        <div>
-          <ul id="BriefDescription">
-            <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant.name">
-              <div class="card" style="width: 25rem;">
-                <img
-                  class="img"
-                  v-bind:src="restaurant[1].image"
-                  onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'"
-                  height="20px"
-                />
-                <div class="card-body">
-                  <h5 class="name">{{restaurant[1].name}}</h5>
-                  <div id="Description">
-                    <span>Cuisine: {{restaurant[1].cuisine}}</span>
-                    <br />
-                    <span>Opening hours: {{restaurant[1].openingHours}}</span>
-                    <br />
-                    <span>Price range: {{restaurant[1].priceRange}}</span>
-                    <br />
-                    <span>Address: {{restaurant[1].address}}</span>
-                    <br />
-                    <button
-                      id="restaurantWebsite"
-                      v-on:click="go(restaurant[1].websiteLink);"
-                    >Visit Restaurant's Website!</button>
-                    <button
-                      v-if="favRestaurantCheck(restaurant[0])"
-                      v-on:click="unfav(restaurant[0])"
-                      id="fav"
-                      title="Unfavourite"
-                    >
-                      <img
-                        src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
-                      />
-                    </button>
-                    <button
-                      v-if="!favRestaurantCheck(restaurant[0])"
-                      v-on:click="fav(restaurant[0])"
-                      id="unfav"
-                      title="Favourite"
-                    >
-                      <img
-                        src="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
-                      />
-                    </button>
+      <div class="borderDiv">
+        <PulseLoader id="loading" color="#0088 cc" :loading="isLoading"></PulseLoader>
+        <h1 style="margin-top:100px" v-if="noResult">No results for your search.</h1>
+        <div class="RestaurantContainer">
+          <div>
+            <ul id="BriefDescription">
+              <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant.name">
+                <div class="card" style="width: 25rem;">
+                  <img
+                    class="img"
+                    v-bind:src="restaurant[1].image"
+                    onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'"
+                    height="20px"
+                  />
+                  <div class="card-body">
+                    <h5 class="name">{{restaurant[1].name}}</h5>
+                    <div id="Description">
+                      <span>Cuisine: {{restaurant[1].cuisine}}</span>
+                      <br />
+                      <span>Opening hours: {{restaurant[1].openingHours}}</span>
+                      <br />
+                      <span>Price range: {{restaurant[1].priceRange}}</span>
+                      <br />
+                      <span>Address: {{restaurant[1].address}}</span>
+                      <br />
+                      <button
+                        id="restaurantWebsite"
+                        v-on:click="go(restaurant[1].websiteLink);"
+                      >Visit Restaurant's Website!</button>
+                      <button
+                        v-if="favRestaurantCheck(restaurant[0])"
+                        v-on:click="unfav(restaurant[0])"
+                        id="fav"
+                        title="Unfavourite"
+                      >
+                        <img
+                          src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
+                        />
+                      </button>
+                      <button
+                        v-if="!favRestaurantCheck(restaurant[0])"
+                        v-on:click="fav(restaurant[0])"
+                        id="unfav"
+                        title="Favourite"
+                      >
+                        <img
+                          src="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
+                        />
+                      </button>
+                    </div>
                   </div>
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <span id="credits">Contributed by: {{restaurant[1].contributor}}</span>
+                  <br />
+                  <br />
+                  <br />
                 </div>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <span id="credits">Contributed by: {{restaurant[1].contributor}}</span>
-                <br />
-                <br />
-                <br />
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -710,5 +712,9 @@ img {
 .closeSidebtn {
   width: 93%;
   margin-left: 10px;
+}
+
+.minHeight {
+  min-height: 56%;
 }
 </style>

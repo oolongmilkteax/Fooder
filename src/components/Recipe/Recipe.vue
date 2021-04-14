@@ -1,170 +1,176 @@
 <template>
   <div class="body">
     <Cheader></Cheader>
-    <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
+    <div class="minHeight">
+      <b-button v-b-toggle.sidebar-no-header class="FnSbtn">Sort & Filter</b-button>
 
-    <b-sidebar
-      id="sidebar-no-header"
-      aria-labelledby="sidebar-no-header-title"
-      no-header
-      shadow
-      v-if="cuisines.length != 0"
-    >
-      <template #default="{ hide }">
-        <h1>Sort</h1>
-        <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
-        <a class="dropdown-btn" v-on:click="sort('cuisine')">Cuisine</a>
-        <a class="dropdown-btn" v-on:click="sort('difficulty')">Difficulty</a>
-        <a class="dropdown-btn" v-on:click="sort('time')">Time</a>
-        <a class="dropdown-btn" v-on:click="sort('type')">Type</a>
-        <h1>Filter</h1>
-        <button
-          class="dropdown-btn"
-          v-on:click="showDifficulty()"
-          id="filDifficulty"
-        >Difficulty &#9660;</button>
-        <div class="dropdown-container" id="filDifficultyChoice">
-          <a
-            class="choiceMade"
-            style="cursor:pointer"
-            id="Easy"
-            v-on:click="uniqueDifficult(['difficulty','Easy']);"
-          >Easy</a>
-          <br />
-          <a
-            class="choiceMade"
-            style="cursor:pointer"
-            id="Medium"
-            v-on:click="uniqueDifficult(['difficulty','Medium']);"
-          >Medium</a>
-          <br />
-          <a
-            class="choiceMade"
-            style="cursor:pointer"
-            id="Hard"
-            v-on:click="uniqueDifficult(['difficulty','Hard']);"
-          >Hard</a>
-        </div>
-
-        <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;</button>
-        <div class="dropdown-container" id="filCuisineChoice">
-          <div v-for="cuisine in cuisines" v-bind:key="cuisine">
+      <b-sidebar
+        id="sidebar-no-header"
+        aria-labelledby="sidebar-no-header-title"
+        no-header
+        shadow
+        v-if="cuisines.length != 0"
+      >
+        <template #default="{ hide }">
+          <h1>Sort</h1>
+          <a class="dropdown-btn" v-on:click="sort('name')">Name</a>
+          <a class="dropdown-btn" v-on:click="sort('cuisine')">Cuisine</a>
+          <a class="dropdown-btn" v-on:click="sort('difficulty')">Difficulty</a>
+          <a class="dropdown-btn" v-on:click="sort('time')">Time</a>
+          <a class="dropdown-btn" v-on:click="sort('type')">Type</a>
+          <h1>Filter</h1>
+          <button
+            class="dropdown-btn"
+            v-on:click="showDifficulty()"
+            id="filDifficulty"
+          >Difficulty &#9660;</button>
+          <div class="dropdown-container" id="filDifficultyChoice">
             <a
               class="choiceMade"
               style="cursor:pointer"
-              v-bind:id="cuisine"
-              v-on:click="uniqueCuisine(['cuisine', cuisine]);"
-            >{{cuisine}}</a>
+              id="Easy"
+              v-on:click="uniqueDifficult(['difficulty','Easy']);"
+            >Easy</a>
+            <br />
+            <a
+              class="choiceMade"
+              style="cursor:pointer"
+              id="Medium"
+              v-on:click="uniqueDifficult(['difficulty','Medium']);"
+            >Medium</a>
+            <br />
+            <a
+              class="choiceMade"
+              style="cursor:pointer"
+              id="Hard"
+              v-on:click="uniqueDifficult(['difficulty','Hard']);"
+            >Hard</a>
           </div>
-        </div>
 
-        <button class="dropdown-btn" v-on:click="showTime()" id="filTime">Time &#9660;</button>
+          <button class="dropdown-btn" v-on:click="showCuisine()" id="filCuisine">Cuisine &#9660;</button>
+          <div class="dropdown-container" id="filCuisineChoice">
+            <div v-for="cuisine in cuisines" v-bind:key="cuisine">
+              <a
+                class="choiceMade"
+                style="cursor:pointer"
+                v-bind:id="cuisine"
+                v-on:click="uniqueCuisine(['cuisine', cuisine]);"
+              >{{cuisine}}</a>
+            </div>
+          </div>
 
-        <div class="dropdown-container" id="filTimeChoice">
-          <input
-            v-on:change="find()"
-            type="range"
-            list="tickmarks"
-            min="0"
-            max="5"
-            value="50"
-            class="slider"
-            id="myRange"
-          />
-          <br />
-          <span>
-            <strong>
-              Value:
-              <span id="demo"></span>
-            </strong>
-          </span>
-        </div>
+          <button class="dropdown-btn" v-on:click="showTime()" id="filTime">Time &#9660;</button>
 
-        <button class="dropdown-btn" v-on:click="showType()" id="filType">Type &#9660;</button>
+          <div class="dropdown-container" id="filTimeChoice">
+            <input
+              v-on:change="find()"
+              type="range"
+              list="tickmarks"
+              min="0"
+              max="5"
+              value="50"
+              class="slider"
+              id="myRange"
+            />
+            <br />
+            <span>
+              <strong>
+                Value:
+                <span id="demo"></span>
+              </strong>
+            </span>
+          </div>
 
-        <div class="dropdown-container" id="filTypeChoice">
-          <a
-            class="choiceMade"
-            style="cursor:pointer"
-            id="Main"
-            v-on:click="uniqueType(['type', 'Main']);"
-          >Main</a>
-          <br />
-          <a
-            class="choiceMade"
-            style="cursor:pointer"
-            id="Side"
-            v-on:click="uniqueType(['type','Side']);"
-          >Side</a>
-        </div>
+          <button class="dropdown-btn" v-on:click="showType()" id="filType">Type &#9660;</button>
 
-        <b-button id="submit" v-on:click="filtering" class="ApplyButton">Apply Filter</b-button>
-        <b-button class="closeSidebtn" block @click="hide">Close Sidebar</b-button>
-      </template>
-    </b-sidebar>
-    <br />
-    <br />
+          <div class="dropdown-container" id="filTypeChoice">
+            <a
+              class="choiceMade"
+              style="cursor:pointer"
+              id="Main"
+              v-on:click="uniqueType(['type', 'Main']);"
+            >Main</a>
+            <br />
+            <a
+              class="choiceMade"
+              style="cursor:pointer"
+              id="Side"
+              v-on:click="uniqueType(['type','Side']);"
+            >Side</a>
+          </div>
 
-    <div class="borderDiv">
-      <PulseLoader id="loading" color="#0088cc" :loading="isLoading"></PulseLoader>
-      <h1 v-if="noResult">No Results! :(</h1>
-      <div class="RecipeContainer">
-        <div id="Recipe">
-          <ul id="BriefDescription">
-            <li id="list" v-for="recipe in recipes" v-bind:key="recipe.name">
-              <div class="card" style="width: 23rem;">
-                <img
-                  class="img"
-                  v-bind:src="recipe[1].image"
-                  onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'"
-                  height="20px"
-                />
-                <div class="card-body">
-                  <h5 class="name">{{recipe[1].name}}</h5>
-                  <div id="Description">
-                    <span>Cuisine: {{recipe[1].cuisine}}</span>
+          <b-button id="submit" v-on:click="filtering" class="ApplyButton">Apply Filter</b-button>
+          <b-button class="closeSidebtn" block @click="hide">Close Sidebar</b-button>
+        </template>
+      </b-sidebar>
+      <br />
+      <br />
+
+      <div class="borderDiv">
+        <PulseLoader id="loading" color="#0088cc" :loading="isLoading"></PulseLoader>
+        <h1 style="margin-top:100px" v-if="noResult">No results for your search.</h1>
+        <div class="RecipeContainer">
+          <div id="Recipe">
+            <ul id="BriefDescription">
+              <li id="list" v-for="recipe in recipes" v-bind:key="recipe.name">
+                <div class="card" style="width: 23rem;">
+                  <img
+                    class="img"
+                    v-bind:src="recipe[1].image"
+                    onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'"
+                    height="20px"
+                  />
+                  <div class="card-body">
+                    <h5 class="name">{{recipe[1].name}}</h5>
+                    <div id="Description">
+                      <span>Cuisine: {{recipe[1].cuisine}}</span>
+                      <br />
+                      <span>Type: {{recipe[1].type}}</span>
+                      <br />
+                      <span>Difficulty: {{recipe[1].difficulty}}</span>
+                      <br />
+                      <span>Number of servings: {{recipe[1].servings}}</span>
+                      <br />
+                      <span>Total preparation time: {{recipe[1].time}}</span>
+                    </div>
+                    <div id="buttons">
+                      <button
+                        id="beginCookingButton"
+                        v-on:click="go(recipe[1].name,recipe[1].ingredients, recipe[1].directions);"
+                      >Begin Cooking!</button>
+                      <button
+                        v-if="favRecipeCheck(recipe[0])"
+                        v-on:click="unfav(recipe[0])"
+                        id="fav"
+                      >
+                        <img
+                          src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
+                        />
+                      </button>
+                      <button
+                        v-if="!favRecipeCheck(recipe[0])"
+                        v-on:click="fav(recipe[0])"
+                        id="unfav"
+                      >
+                        <img
+                          src="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
+                        />
+                      </button>
+                    </div>
                     <br />
-                    <span>Type: {{recipe[1].type}}</span>
                     <br />
-                    <span>Difficulty: {{recipe[1].difficulty}}</span>
                     <br />
-                    <span>Number of servings: {{recipe[1].servings}}</span>
                     <br />
-                    <span>Total preparation time: {{recipe[1].time}}</span>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <span id="credits">Contributed by: {{recipe[1].contributor}}</span>
                   </div>
-                  <div id="buttons">
-                    <button
-                      id="beginCookingButton"
-                      v-on:click="go(recipe[1].name,recipe[1].ingredients, recipe[1].directions);"
-                    >Begin Cooking!</button>
-                    <button v-if="favRecipeCheck(recipe[0])" v-on:click="unfav(recipe[0])" id="fav">
-                      <img
-                        src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png"
-                      />
-                    </button>
-                    <button
-                      v-if="!favRecipeCheck(recipe[0])"
-                      v-on:click="fav(recipe[0])"
-                      id="unfav"
-                    >
-                      <img
-                        src="https://uxwing.com/wp-content/themes/uxwing/download/15-healthcare-and-medical/heart-black.png"
-                      />
-                    </button>
-                  </div>
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <span id="credits">Contributed by: {{recipe[1].contributor}}</span>
                 </div>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -174,8 +180,8 @@
 
 <script>
 import logout from "../Authentication/logout.js";
-import firebase from '../Authentication/firebase.js'
-import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+import firebase from "../Authentication/firebase.js";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 var db = firebase.firestore();
 
@@ -661,7 +667,7 @@ export default {
       this.timeValue = values[slider.value];
     },
 
-    go: function(name,ingredients, directions) {
+    go: function(name, ingredients, directions) {
       this.$router.push({
         name: "FullRecipe",
         params: {
@@ -949,6 +955,10 @@ export default {
 .dropdown-container {
   display: none;
   padding-left: 8px;
+}
+
+.minHeight {
+  min-height: 56%;
 }
 </style>
 

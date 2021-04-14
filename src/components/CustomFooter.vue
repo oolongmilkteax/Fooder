@@ -2,11 +2,11 @@
   <div class="site-footer">
     <div class="central">
       <div>
-        <h6>About</h6>
+        <h6>About fooder</h6>
         <p
           class="text-justify"
         >Fooder aims to provide a platform for users to contribute by sharing their own unique take on personal recipes and favourite restaurants, creating a community for foodies to share their passion with like-minded individuals.</p>
-        <h6>About Us</h6>
+        <h6>Lets get in touch</h6>
         <ul class="footer-links">
           <li>
             <button
@@ -80,7 +80,11 @@ hr {
   line-height: 24px;
   color: #737373;
   width: 100%;
-  margin-top: 15%;
+  margin-top: 5%;
+  position: relative;
+  bottom: 0px;
+  height: 430px;
+  vertical-align: centre;
 }
 .site-footer hr {
   border-top-color: #bbb;
@@ -91,11 +95,16 @@ hr {
 }
 .site-footer h6 {
   color: #fff;
-  font-size: 16px;
+  font-size: 20px;
   text-transform: uppercase;
-  margin-top: 5px;
   letter-spacing: 2px;
 }
+
+.site-footer p {
+  font-size: 17px;
+  margin-bottom: 20px;
+}
+
 .site-footer a {
   color: #737373;
 }
@@ -105,6 +114,7 @@ hr {
 }
 .footer-links li {
   display: block;
+  font-size: 17px;
 }
 .footer-links.inline li {
   display: inline-block;
@@ -124,6 +134,8 @@ hr {
 .copyright-text {
   margin: 0;
   text-align: center;
+  margin-top: 10px;
+  font-size: 17px;
 }
 @media (max-width: 991px) {
   .site-footer [class^="col-"] {
