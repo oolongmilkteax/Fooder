@@ -2,7 +2,7 @@
   <div class="body">
     <Cheader></Cheader>
     <div class="ProfileDiv">
-      <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
+      <PulseLoader id="loading" color="#0088cc" :loading="isLoading"></PulseLoader>
       <b-card-group deck>
         <li
           id="profilelist"

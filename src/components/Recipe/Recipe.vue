@@ -106,7 +106,7 @@
     <br />
 
     <div class="borderDiv">
-      <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
+      <PulseLoader id="loading" color="#0088cc" :loading="isLoading"></PulseLoader>
       <h1 v-if="noResult">No Results! :(</h1>
       <div class="RecipeContainer">
         <div id="Recipe">
@@ -135,7 +135,7 @@
                   <div id="buttons">
                     <button
                       id="beginCookingButton"
-                      v-on:click="go(recipe[1].ingredients, recipe[1].directions);"
+                      v-on:click="go(recipe[1].name,recipe[1].ingredients, recipe[1].directions);"
                     >Begin Cooking!</button>
                     <button v-if="favRecipeCheck(recipe[0])" v-on:click="unfav(recipe[0])" id="fav">
                       <img
@@ -661,10 +661,11 @@ export default {
       this.timeValue = values[slider.value];
     },
 
-    go: function(ingredients, directions) {
+    go: function(name,ingredients, directions) {
       this.$router.push({
         name: "FullRecipe",
         params: {
+          n: name,
           i: ingredients,
           d: directions,
           searchedValue: this.searchedValue

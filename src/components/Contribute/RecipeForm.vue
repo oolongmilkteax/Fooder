@@ -261,7 +261,7 @@ export default {
         .doc(this.$store.state.uid)
         .get()
         .then(doc => {
-          this.recipe.contributor = doc.data().name;
+          this.recipe.contributor = doc.data().email;
         });
     }
   },

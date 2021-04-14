@@ -1,7 +1,7 @@
 <template>
   <div class="body">
     <Cheader></Cheader>
-    <PulseLoader id="loading" :loading="isLoading"></PulseLoader> 
+    <PulseLoader  color="#0088cc" id="loading" :loading="isLoading"></PulseLoader> 
     
     <div v-show="!isLoading" class="profileBorder">
       <div id="emptyFav" v-if="favRecipe == '' && favRestaurant == ''">

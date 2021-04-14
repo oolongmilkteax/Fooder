@@ -58,10 +58,10 @@
     <br />
 
     <div class="borderDiv">
-      <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
+      <PulseLoader id="loading" color="#0088 cc" :loading="isLoading"></PulseLoader>
       <h1 v-if="noResult">No Results! :(</h1>
       <div class="RestaurantContainer">
-        <div id="Restaurant">
+        <div>
           <ul id="BriefDescription">
             <li id="list" v-for="restaurant in restaurants" v-bind:key="restaurant.name">
               <div class="card" style="width: 25rem;">
@@ -222,7 +222,7 @@ export default {
             }
           });
           this.isLoading = false;
-          if (this.recipes.length == 0) {
+          if (this.restaurants.length == 0) {
             this.noResult = true;
           }
         });

@@ -2,7 +2,7 @@
   <div class="body">
     <Cheader></Cheader>
     <div class="DashDiv">
-      <PulseLoader id="loading" :loading="isLoading_1 || isLoading_2"></PulseLoader>
+      <PulseLoader  color="#0088cc" id="loading" :loading="isLoading_1 || isLoading_2"></PulseLoader>
       <div v-if="isLoaded_1 && isLoaded_2">
         <div id="radarContainer">
           <radar-chart :parsedData="parsedData"></radar-chart>

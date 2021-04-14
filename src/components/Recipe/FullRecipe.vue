@@ -1,13 +1,13 @@
 <template>
   <div class="body">
-      <div class="borderDiv">
+      <div class="RecipeborderDiv">
             <div class="FullRecipeContainer">
                 <br><br>
                 <!--
                 <a href='javascript:history.go(-1)'>Back</a>
                 -->
-                <a href='javascript:void(0);' v-on:click="visit()">Back</a>
-                <div id="FullRecipe">
+                <h2 class="recipeName">{{this.recipeName}}</h2>
+                <div id="FullRecipe">                                                       
                     <h2>Ingredients</h2>
                     <ul v-for="ingredient in recipeIngredients" v-bind:key="ingredient">
                         <li>
@@ -22,6 +22,7 @@
                     </ul>
                 </div>
             </div>
+            <a href='javascript:void(0);' v-on:click="visit()" class="backBtn">Back</a>                                                         
             <div class="footerContainer">
                 <p class="footerText">Design by JKJR</p>
             </div>
@@ -34,6 +35,7 @@ export default {
     props: ["searchedValue"],
     data() {
         return {
+            recipeName: this.$route.params.n,
             recipeIngredients: this.$route.params.i, 
             recipeDirections: this.$route.params.d
         }
@@ -54,6 +56,12 @@ export default {
 </script>
 
 <style scoped>
+.RecipeborderDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 #FullRecipe {
     padding: 20px;
 }
@@ -62,7 +70,7 @@ export default {
     list-style-type: none;
 }
 a{
-    background: red;
+    background: #0088cc;
     border-radius: 8px;
     color: #ffffff;
     font-family: Helvetica;
@@ -84,4 +92,15 @@ a:hover{
     text-decoration: none;
     
 } 
+.recipeName{
+    padding: 10px 10px 10px 20px;
+    font-size: 36px;
+    font-weight: 600;
+    text-transform:capitalize;
+    text-align: center;
+}
+.backBtn{
+    padding: 5px 20px 5px 20px;
+    margin-left: 0px;
+}
 </style>

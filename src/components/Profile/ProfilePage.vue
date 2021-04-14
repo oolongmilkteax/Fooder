@@ -1,7 +1,7 @@
 <template>
   <div class="body">
   <Cheader></Cheader>
-    <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
+    <PulseLoader id="loading" color="#0088cc" :loading="isLoading"></PulseLoader>
     <div v-show="!isLoading" class="profileBorder">
       <b-card :title="name" bg-variant="secondary" text-variant="white" class="mb-4 ">
         <b-card-text>
@@ -10,7 +10,7 @@
       </b-card>
       <br>
 
-      <div id="emptyContri" v-if="contriRecipes == '' && contriRestaurants == ''">
+      <div id="emptyContri" v-if="contriRecipes == '' && contriRestaurants == '' && selfProfile == true">
         <span>You have made 0 contributions so far</span>
         <br>
         <button 
@@ -20,11 +20,23 @@
         </button>
       </div>
 
+      <div id="emptyContri" v-if="contriRecipes == '' && contriRestaurants == '' && selfProfile == false">
+        <h1>This User has not contributed any Recipes or Restaurants</h1>
+      </div>
+      
+      <div id="emptyContri" v-if="contriRestaurants != '' && contriRecipes == '' && selfProfile == false">
+        <h1>This User has not contributed any Recipes</h1>
+      </div>
+
+      <div id="emptyContri" v-if="contriRecipes != '' && contriRestaurants == '' && selfProfile == false">
+        <h1>This User has not contributed any Restaurants</h1>
+      </div>
+
       <h1 style="text-align:center" v-if="contriRecipes != ''">
         Contributed Recipes
       </h1>
       <ul id="BriefDescription">
-        <b-card-group deck class="mx-auto">
+        <b-card-group deck class="mx-auto widthManager">
           <li
           id="profilelist"
           class="ml-3 mx-auto"
@@ -47,10 +59,10 @@
         Contributed Restaurants
       </h1>
       <ul id="BriefDescription">
-        <b-card-group deck class="mx-auto">
+        <b-card-group deck class="mx-auto widthManager">
           <li
           id="profilelist"
-          class="ml-3 mx-auto"
+          class="ml-3 mx-auto widthManager"
           v-for="restaurant in restaurants"
           v-bind:key="restaurant.name"
           >  
@@ -65,8 +77,7 @@
         
       </ul>
     </div>
-    <Cfooter v-if="contributed"></Cfooter>
-    <Cfooter v-if="contributed == false" class="bottomFooter"></Cfooter>
+    <Cfooter></Cfooter>
   </div>
   
 </template>
@@ -89,7 +100,7 @@ export default {
       name:"",
       username:"",
       email:"",
-      contributed:true,
+      selfProfile: false,
     };
   },
   components: {
@@ -115,13 +126,12 @@ export default {
           })
           .then(() => {
             this.isLoading = false;
-            if(this.contriRecipes.length == 0){
-              this.contributed = false;
+            if(this.userProfile == null){
+              this.selfProfile = true;
+            }else{
+              this.selfProfile = false;
             }
-            if(this.contriRestaurants.length == 0){
-              this.contributed = false;
-            }
-          });
+          })
       } else {
         db.firestore()
         .collection("user")
@@ -197,6 +207,9 @@ export default {
 </script>
 
 <style scoped>
+.widthManager{
+  margin-top: 10px;
+}
 img {
   width: 100%;
   height: 15rem;
