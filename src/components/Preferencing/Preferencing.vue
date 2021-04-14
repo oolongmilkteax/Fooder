@@ -144,8 +144,8 @@
 </template>
 
 <script>
-import firebase from "../firebase.js";
-import logout from "./logout.js";
+import firebase from "../Authentication/firebase.js";
+import logout from "../Authentication/logout.js";
 export default {
   name: "Preferencing",
   props: {},

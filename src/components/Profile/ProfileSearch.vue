@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import firebase from "../firebase.js";
+import firebase from "../Authentication/firebase.js";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-import logout from "./logout.js";
+import logout from "../Authentication/logout.js";
 var db = firebase.firestore();
 
 export default {

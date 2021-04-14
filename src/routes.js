@@ -1,18 +1,17 @@
-import Contribute from "./components/Contribute.vue";
-import FavPage from "./components/FavPage.vue";
-import LandingPage from "./components/LandingPage.vue";
-import Preferencing from "./components/Preferencing.vue";
-import Restaurant from "./components/Restaurant.vue";
+import Contribute from "./components/Contribute/Contribute.vue";
+import FavPage from "./components/Profile/FavPage.vue";
+import LandingPage from "./components/Authentication/LandingPage.vue";
+import Preferencing from "./components/Preferencing/Preferencing.vue";
+import Restaurant from "./components/Restaurant/Restaurant.vue";
 import SearchPage from "./components/SearchPage.vue";
-import SignUp from "./components/SignUp.vue";
-import Recipe from "./components/Recipe.vue";
-import FullRecipe from "./components/FullRecipe.vue";
-import ProfilePage from "./components/ProfilePage";
-import Characteristic from "./components/Characteristic";
-import ProfileSearch from "./components/ProfileSearch";
-import DashBoard from "./components/DashBoard.vue";
-
-import store from "./store";
+import SignUp from "./components/Authentication/SignUp.vue";
+import Recipe from "./components/Recipe/Recipe.vue";
+import FullRecipe from "./components/Recipe/FullRecipe.vue";
+import ProfilePage from "./components/Profile/ProfilePage";
+import Characteristic from "./components/Preferencing/Characteristic";
+import ProfileSearch from "./components/Profile/ProfileSearch";
+import DashBoard from "./components/Dashboard/DashBoard.vue";
+import store from "./components/Authentication/store";
 
 const beforeEnter = function(to, from, next) {
   if (store.state.authenticated == false) {

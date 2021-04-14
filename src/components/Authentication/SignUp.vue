@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import firebase from "../firebase.js";
-import { makeUser, getUid } from "../userObj.js";
+import firebase from "./firebase.js";
+import { makeUser, getUid } from "./userObj.js";
 
 export default {
   data() {

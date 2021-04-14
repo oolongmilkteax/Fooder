@@ -104,8 +104,8 @@
 </template>
 
 <script>
-import firebase from "../firebase.js";
-import logout from "./logout.js";
+import firebase from "../Authentication/firebase.js";
+import logout from "../Authentication/logout.js";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 var db = firebase.firestore();
@@ -372,26 +372,7 @@ export default {
       this.submit = false;
       }
     },
-    uniqueCuisine: function(option) {
-      if (this.cuisineChoice.length == 0) {
-        this.cuisineChoice.push(option);
-        document.getElementById(option[1]).style.color="Red"
-      } else {
-        for (var i=0; i<this.cuisineChoice.length; i++) {
-          if (option[1] == this.cuisineChoice[i][1]) {
-            this.cuisineChoice.splice(i,1)
-            document.getElementById(option[1]).style.color="#007bff";
-            break
-          }
-          if (i == this.cuisineChoice.length-1) {
-            this.cuisineChoice.push(option);
-            document.getElementById(option[1]).style.color="Red"
-            break;
-          
-          }
-        }
-      }
-    },
+
 
     filtering: function() {
       this.restaurants = [...this.save];

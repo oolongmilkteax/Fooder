@@ -42,10 +42,10 @@
 </template>
 
 <script>
-import firebase from "../firebase.js";
+import firebase from "../Authentication/firebase.js";
 var db = firebase.firestore();
-import RadarChart from "./RadarChart.js";
-import logout from "./logout.js";
+import RadarChart from "../Dashboard/RadarChart.js";
+import logout from "../Authentication/logout.js";
 export default {
   components: {
     RadarChart

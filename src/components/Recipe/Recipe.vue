@@ -128,8 +128,8 @@
 </template>
 
 <script>
-import logout from "./logout.js";
-import firebase from '../firebase.js'
+import logout from "../Authentication/logout.js";
+import firebase from '../Authentication/firebase.js'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 var db = firebase.firestore()

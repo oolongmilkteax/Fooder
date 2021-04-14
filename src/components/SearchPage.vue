@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import logout from "./logout.js";
+import logout from "./Authentication/logout.js";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 

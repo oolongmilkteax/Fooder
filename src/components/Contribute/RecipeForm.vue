@@ -201,7 +201,7 @@
 </template>
 
 <script>
-import firebase from "../firebase.js";
+import firebase from "../Authentication/firebase.js";
 var db = firebase.firestore();
 
 export default {

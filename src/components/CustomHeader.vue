@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import logout from "./logout.js";
+import logout from "./Authentication/logout.js";
 export default {
   methods: {
       logout: logout,

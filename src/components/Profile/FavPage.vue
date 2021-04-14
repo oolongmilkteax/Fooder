@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import db from "../firebase.js";
-import logout from "./logout.js";
+import db from "../Authentication/firebase.js";
+import logout from "../Authentication/logout.js";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {

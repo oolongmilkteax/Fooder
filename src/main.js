@@ -1,10 +1,9 @@
 import Vue from "vue";
 import App from "./App.vue";
 import VueRouter from "vue-router";
-
 import routes from "./routes.js";
-import RecipeForm from "./components/RecipeForm.vue";
-import RestaurantForm from "./components/RestaurantForm.vue";
+import RecipeForm from "./components/Contribute/RecipeForm.vue";
+import RestaurantForm from "./components/Contribute/RestaurantForm.vue";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import CFooter from "./components/CustomFooter.vue";
 import CustomHeader from "./components/CustomHeader.vue";
@@ -28,7 +27,7 @@ const myRouter = new VueRouter({
 
 import Vuex from "vuex";
 Vue.use(Vuex);
-import store from "./store.js";
+import store from "./components/Authentication/store.js";
 
 new Vue({
   render: (h) => h(App),
