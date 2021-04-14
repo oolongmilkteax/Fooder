@@ -126,7 +126,7 @@
       <div class="myQuestions">
         <h1>Complete the questionaire by clicking the submit button!</h1>
         <div class="button-centraliser">
-          <button class="myButton" v-on:click="submitQuestionaire()">Submit</button>
+          <button class="myButton" @click.stop="submitQuestionaire()">Submit</button>
         </div>
       </div>
     </div>
@@ -325,18 +325,17 @@ export default {
       if (!checker) {
         alert("Please answer all required questions!");
       } else {
+        firebase
+          .firestore()
+          .collection("user")
+          .doc(this.$store.state.uid)
+          .update({ donePreferencing: true });
+        this.$store.commit("setPreferencing", true);
         this.preferenceCalculator();
         this.$router.push({
           name: "Characteristic"
         });
       }
-      //this.$store.commit("setFirstLogin", false);
-      firebase
-        .firestore()
-        .collection("user")
-        .doc(this.$store.state.uid)
-        .update({ donePreferencing: true });
-      this.$store.commit("setPreferencing", true);
     }
   },
   created: function() {

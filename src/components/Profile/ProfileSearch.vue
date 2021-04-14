@@ -5,19 +5,22 @@
       <PulseLoader id="loading" :loading="isLoading"></PulseLoader>
       <b-card-group deck>
         <li
-        id="profilelist"
-        class="col-md-4"
-        v-for="profile in profiles"
-        v-bind:key="profile.email"
-        v-on:click="gotoProfile(profile)"
-        >  
-        <b-card :title="profile[1].name" bg-variant="secondary" text-variant="white" class="mb-4 mx-auto" style="max-width: 24rem;">
-          <b-card-text>
-            {{ profile[1].email }}
-          </b-card-text>
-
-       </b-card>
-       </li>
+          id="profilelist"
+          class="col-md-4"
+          v-for="profile in profiles"
+          v-bind:key="profile.email"
+          v-on:click="gotoProfile(profile)"
+        >
+          <b-card
+            :title="profile[1].name"
+            bg-variant="secondary"
+            text-variant="white"
+            class="mb-4 mx-auto"
+            style="max-width: 24rem;"
+          >
+            <b-card-text>{{ profile[1].email }}</b-card-text>
+          </b-card>
+        </li>
       </b-card-group>
     </div>
     <Cfooter></Cfooter>
@@ -35,11 +38,11 @@ export default {
   data() {
     return {
       isLoading: true,
-      profiles: [],
+      profiles: []
     };
   },
   components: {
-    PulseLoader,
+    PulseLoader
   },
   methods: {
     logout: logout,
@@ -48,17 +51,27 @@ export default {
       this.uid = this.$store.state.uid;
       db.collection("user")
         .get()
-        .then((snapshot) => {
-          snapshot.docs.forEach((doc) => {
-            if(this.searchedValue == null){
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            if (this.searchedValue == null) {
               if (doc.id != this.uid) {
                 this.profiles.push([doc.id, doc.data()]);
               }
             } else {
-              if(doc.data().name.toUpperCase().includes(this.searchedValue.toUpperCase())) {
-                this.profiles.push([doc.id,doc.data()]);
-              }else if(doc.data().email.toUpperCase().includes(this.searchedValue.toUpperCase())){
-                this.profiles.push([doc.id,doc.data()]);
+              if (
+                doc
+                  .data()
+                  .name.toUpperCase()
+                  .includes(this.searchedValue.toUpperCase())
+              ) {
+                this.profiles.push([doc.id, doc.data()]);
+              } else if (
+                doc
+                  .data()
+                  .email.toUpperCase()
+                  .includes(this.searchedValue.toUpperCase())
+              ) {
+                this.profiles.push([doc.id, doc.data()]);
               }
             }
           });
@@ -66,13 +79,16 @@ export default {
         });
     },
     gotoProfile: function(profile) {
-      this.$router.push({ name: "ProfilePage", params: { userProfile: profile } });
-    },
+      this.$router.push({
+        name: "ProfilePage",
+        params: { userProfile: profile }
+      });
+    }
   },
 
   created: function() {
     this.getProfiles();
-  },
+  }
 };
 </script>
 
@@ -90,6 +106,10 @@ export default {
 
 #profilelist:hover {
   cursor: pointer;
+}
+
+.ProfileDiv {
+  margin-top: 50px;
 }
 /*
 .ProfileDiv {

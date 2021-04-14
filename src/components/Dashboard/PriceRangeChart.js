@@ -35,6 +35,7 @@ export default {
         title: {
           display: true,
           text: "Price Range of the Restaurants your favourite",
+          fontSize: 18,
         },
         responsive: true,
         maintainAspectRatio: false,

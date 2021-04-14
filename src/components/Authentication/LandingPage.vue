@@ -33,7 +33,6 @@
 <script>
 import firebase from "./firebase.js";
 
-
 export default {
   data() {
     return {
@@ -111,7 +110,6 @@ export default {
 </script>
 
 <style>
-
 .LandingDiv {
   padding: 3%;
 }

@@ -94,7 +94,7 @@ export default {
       }
       if (this.profile) {
         this.searchProfile();
-      }else{
+      } else {
         this.noSearch = true;
       }
     }
@@ -105,16 +105,16 @@ export default {
       recipe: false,
       restaurant: false,
       profile: false,
-      noSearch:false
+      noSearch: false
     };
-  },
+  }
 };
 </script>
 
 <style>
 .searchButton {
   background: #0088cc;
-  width: 10%;
+  width: 7%;
   border-radius: 8px;
   border-radius: 8px;
   color: #ffffff;
@@ -144,6 +144,11 @@ export default {
 }
 
 /* search page */
+#Restaurant {
+  background-color: #0088cc;
+  margin-left: 20px;
+}
+
 .searchInput {
   padding: 15px;
   border-radius: 30px;
