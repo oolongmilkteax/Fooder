@@ -114,7 +114,7 @@ export default {
 <style>
 .searchButton {
   background: #0088cc;
-  width: 7%;
+  width: 8%;
   border-radius: 8px;
   border-radius: 8px;
   color: #ffffff;
