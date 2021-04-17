@@ -106,7 +106,16 @@ export default {
     logout: logout,
 
     getDifficulty: function() {
-      if (this.difficulty.length < 4) {
+      var flag = false;
+      for(var i = 0; i < this.difficulty.length;i++){
+        if(this.difficulty[i] != 0){
+          flag = true;
+        }
+      }
+      if(!flag){
+        this.tooLittleDataA = true;
+      }
+      if(this.price.length == 0){
         this.tooLittleDataA = true;
       }
       db.collection("recipe")
@@ -124,7 +133,7 @@ export default {
               }
             }
           });
-          console.log("difficulty count: " + this.difficultyCount);
+
           db.collection("user")
             .doc(this.$store.state.uid)
             .update({
@@ -136,7 +145,16 @@ export default {
     },
 
     getPrice: function() {
-      if (this.price.length < 4) {
+      var flag = false;
+      for(var i = 0; i < this.price.length;i++){
+        if(this.price[i] != 0){
+          flag = true;
+        }
+      }
+      if(!flag){
+        this.tooLittleDataB = true;
+      }
+      if(this.price.length == 0){
         this.tooLittleDataB = true;
       }
       db.collection("restaurant")
@@ -162,7 +180,7 @@ export default {
               }
             }
           });
-          console.log("price count: " + this.priceCount);
+
           db.collection("user")
             .doc(this.$store.state.uid)
             .update({

@@ -177,7 +177,7 @@ export default {
         .doc(this.$store.state.uid)
         .get()
         .then(doc => {
-          this.restaurant.contributor = doc.data().email;
+          this.restaurant.contributor = doc.data().name;
         });
     }
   },
