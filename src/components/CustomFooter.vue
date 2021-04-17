@@ -57,6 +57,8 @@ hr {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding-left: 3%;
+  padding-right: 3%;
 }
 .footer-links s {
   background-color: #26272b;
