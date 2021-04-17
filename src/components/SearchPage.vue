@@ -24,7 +24,8 @@
       />
 
       <div class="button-centraliser">
-        <button class="myButton" v-on:click="search()">Search</button>
+        <button class="myButton" v-on:click="search()" v-if="searchValue.length == 0">Search All</button>
+        <button class="myButton" v-on:click="search()" v-if="searchValue.length != 0">Search</button>
       </div>
       <p class="errorMsg2" v-if="noSearch">Please select a category to proceed.</p>
     </div>
@@ -105,7 +106,7 @@ export default {
       recipe: false,
       restaurant: false,
       profile: false,
-      noSearch: false
+      noSearch: false,
     };
   }
 };

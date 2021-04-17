@@ -6,7 +6,7 @@
 
       <div v-show="!isLoading" class="profileBorder">
         <div id="emptyFav" v-if="favRecipe == '' && favRestaurant == ''">
-          <span style="text-align:center">You have liked 0 items so far</span>
+          <p class="itemsLiked">You have liked 0 items so far</p>
           <br />
           <div>
             <button id="favButton" v-on:click="favouriteRecipe">Find your favourite recipes!</button>
@@ -230,6 +230,11 @@ img {
   margin: auto;
 }
 
+.itemsLiked{
+  text-align:center; 
+  padding-top: 50px;
+}
+
 .resultsHeader {
   text-align: center;
   color: black;
@@ -290,11 +295,11 @@ img {
   color: #ffffff;
   font-family: Helvetica;
   font-weight: 100;
-  padding: 10px;
+  padding: 5px;
   border: solid #0088cc 1px;
   font-size: 20px;
   font-weight: 100;
-  margin: 20px;
+  margin: 0px 20px 20px 20px;
 }
 
 #contributeButton:hover {
