@@ -128,7 +128,8 @@ export default {
 .bottomFooter{
   position: absolute;
   bottom:0px;
-  width:100%
+  width:100%;
+  max-height: 30%;
 }
 .errorMsg {
   text-align: left;
