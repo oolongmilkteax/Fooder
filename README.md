@@ -26,11 +26,10 @@ yarn install
 ```
 yarn run serve
 ```
+### Created By:
+- John Vijay Balasupramaniam
+- Jasmine Chen Yu Qing
+- Kenneth Khoo Kai Sheng
+- Ho Pei San Rachel
 
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-# Fooder
 
