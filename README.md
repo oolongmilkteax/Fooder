@@ -6,11 +6,11 @@ In addition, it aims to provide a platform for users to contribute by sharing th
 [Live Demo](https://fooder-22493.web.app)
 
 <p align="center">
-      <img src="/readme_assets/login.png" width=75% height=75%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <img src="/readme_assets/favourites.png" width=75% height=75%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img src="/readme_assets/login.png" width=100% height=100%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img src="/readme_assets/favourites.png" width=100% height=100%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    <br>
-      <img src="/readme_assets/RestaurantSearch.png" width=75% height=75%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <img src="/readme_assets/dashboard.png" width=75% height=75%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img src="/readme_assets/RestaurantSearch.png" width=100% height=100%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img src="/readme_assets/dashboard.png"width=100% height=100%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </p>
 
 ## Tech Stack
