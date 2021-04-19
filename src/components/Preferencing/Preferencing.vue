@@ -205,6 +205,7 @@ export default {
         optionsOfQuestion[i].style.background = "#0088cc";
       }
       document.getElementById(optionChosen).style.background = "#979797";
+      this.plusSlides(1);
     },
     preferenceCalculator: function() {
       var ans1 = this.responses[0];

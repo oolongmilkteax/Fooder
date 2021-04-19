@@ -118,72 +118,9 @@ export default {
               }
             });
           });
-        db.collection("recipe")
-          .get()
-          .then(snapshot => {
-            snapshot.docs.forEach(doc => {
-              if (this.cuisine == "Chinese Food") {
-                if(doc.data().cuisine == "Chinese"){
-                  this.recommendedThings.push(doc.data());
-                }
-              }
-              if (this.cuisine  == "Italian Food") {
-                if(doc.data().cuisine == "Italian"){
-                  this.recommendedThings.push(doc.data());
-                }
-              }
-              if (this.cuisine  == "Singaporean Food") {
-                if(doc.data().cuisine == "Singaporean"){
-                  this.recommendedThings.push(doc.data());
-                }
-              }
-              if (this.cuisine  == "Thai Food") {
-                if(doc.data().cuisine == "Thai"){
-                  this.recommendedThings.push(doc.data());
-                }
-              }
-              if (this.cuisine  == "Western Food") {
-                if(doc.data().cuisine == "Western"){
-                  this.recommendedThings.push(doc.data());
-                }
-              }
-            });
-          });
       } else if (this.preferences[0] > 20 && this.preferences[3] >= 15) {
         this.type = "Home Cook";
         db.collection("recipe")
-          .get()
-          .then(snapshot => {
-            snapshot.docs.forEach(doc => {
-              if (this.cuisine == "Chinese Food") {
-                if(doc.data().cuisine == "Chinese"){
-                  this.recommendedThings.push(doc.data());
-                }
-              }
-              if (this.cuisine  == "Italian Food") {
-                if(doc.data().cuisine == "Italian"){
-                  this.recommendedThings.push(doc.data());
-                }
-              }
-              if (this.cuisine  == "Singaporean Food") {
-                if(doc.data().cuisine == "Singaporean"){
-                  this.recommendedThings.push(doc.data());
-                }
-              }
-              if (this.cuisine  == "Thai Food") {
-                if(doc.data().cuisine == "Thai"){
-                  this.recommendedThings.push(doc.data());
-                }
-              }
-              if (this.cuisine  == "Western Food") {
-                if(doc.data().cuisine == "Western"){
-                  this.recommendedThings.push(doc.data());
-                }
-              }
-            });
-          });
-
-        db.collection("restaurant")
           .get()
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
