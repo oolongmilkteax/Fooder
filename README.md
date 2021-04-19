@@ -15,7 +15,7 @@ In addition, it aims to provide a platform for users to contribute by sharing th
 
 ## Tech Stack
 
-Fooder was created with VueJS, VueBootStrap and Firebase.
+Fooder was created with VueJS, VueBootStrap, ChartJS and Firebase.
 
 ## Project setup
 ```
