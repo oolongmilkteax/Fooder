@@ -12,7 +12,7 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <div class="borderDiv">
+    <div style="margin-top: 30px; min-height: 50%" class="borderDiv">
       <p class="signupHeader">Welcome to Fooder!</p>
       <input type="text" class="signupInput" v-model="displayName" placeholder="Full Name" />
       <p class="errorMsg" v-show="this.emptyNameErr">Pease enter your full name.</p>
@@ -120,9 +120,9 @@ export default {
 </script>
 
 <style>
-.bottomFooter{
+.bottomFooter {
   position: absolute;
-  bottom:0;
+  bottom: 0;
 }
 .errorMsg {
   text-align: left;
