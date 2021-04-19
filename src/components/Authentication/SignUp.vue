@@ -12,7 +12,7 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <div  class="SignUpDiv">
+    <div class="SignUpDiv">
       <p class="signupHeader">Welcome to Fooder!</p>
       <input type="text" class="signupInput" v-model="displayName" placeholder="Full Name" />
       <p class="errorMsg" v-show="this.emptyNameErr">Pease enter your full name.</p>
@@ -84,7 +84,7 @@ export default {
                 donePreferencing: false
               });
             alert(
-              "Registered successfully. Please verify email before signing in."
+              "Registered successfully! You will be redirected to the sign in page in a moment."
             );
             // somehow without the timeout, the userobj doesnt get created in the firebase
             setTimeout(function() {
