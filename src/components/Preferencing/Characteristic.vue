@@ -118,6 +118,13 @@ export default {
               }
             });
           });
+          db.collection("recipe").orderBy("name").limit(3)
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
+              this.possibleReccomendations.push(doc.data());
+            });
+          });
       } else if (this.preferences[0] > 20 && this.preferences[3] >= 15) {
         this.type = "Home Cook";
         db.collection("recipe")
@@ -149,6 +156,13 @@ export default {
                   this.recommendedThings.push(doc.data());
                 }
               }
+            });
+          });
+        db.collection("restaurant").orderBy("name").limit(3)
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
+              this.possibleReccomendations.push(doc.data());
             });
           });
       } else {
