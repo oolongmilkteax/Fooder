@@ -12,7 +12,7 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <div style="margin-top: 30px; min-height: 50%" class="borderDiv">
+    <div  class="SignUpDiv">
       <p class="signupHeader">Welcome to Fooder!</p>
       <input type="text" class="signupInput" v-model="displayName" placeholder="Full Name" />
       <p class="errorMsg" v-show="this.emptyNameErr">Pease enter your full name.</p>
@@ -26,7 +26,9 @@
         <button class="signupButton" v-on:click="registerUser()">C R E A T E</button>
       </div>
     </div>
-    <Cfooter class="bottomFooter"></Cfooter>
+    <div class="bottomFooter">
+      <Cfooter></Cfooter>
+    </div>
   </div>
 </template>
 
@@ -120,9 +122,14 @@ export default {
 </script>
 
 <style>
+.SignUpDiv {
+  padding: 5%;
+}
 .bottomFooter {
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
+  width: 100%;
+  max-height: 30%;
 }
 .errorMsg {
   text-align: left;

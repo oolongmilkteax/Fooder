@@ -49,14 +49,14 @@
             name="question3"
             v-on:click="makeSelection('Italian Food', 2)"
             id="Italian Food"
-          >Indian Food</button>
+          >Italian Food</button>
           <br />
           <button
             class="myButton"
             name="question3"
             v-on:click="makeSelection('Singaporean Food', 2)"
             id="Singaporean Food"
-          >Western Food</button>
+          >Singaporean Food</button>
           <br />
           <button
             class="myButton"
@@ -70,7 +70,7 @@
             name="question3"
             v-on:click="makeSelection('Western Food', 2)"
             id="Western Food"
-          >Viet Food</button>
+          >Western Food</button>
         </div>
       </div>
       <div class="myQuestions">

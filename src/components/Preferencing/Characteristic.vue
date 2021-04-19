@@ -87,81 +87,257 @@ export default {
       if (this.preferences[1] > 20 && this.preferences[2] >= 15) {
         this.type = "Adventurous Foodie";
         db.collection("restaurant")
-          .orderBy("name")
-          .limit(3)
           .get()
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
-              this.recommendedThings.push(doc.data());
+              console.log(this.cuisine);
+              if (this.cuisine == "Chinese Food") {
+                if(doc.data().cuisine == "Chinese"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Italian Food") {
+                if(doc.data().cuisine == "Italian"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Singaporean Food") {
+                if(doc.data().cuisine == "Singaporean"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Thai Food") {
+                if(doc.data().cuisine == "Thai"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Western Food") {
+                if(doc.data().cuisine == "Western"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
             });
           });
-
         db.collection("recipe")
-          .orderBy("name")
-          .limit(3)
           .get()
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
-              this.possibleReccomendations.push(doc.data());
+              if (this.cuisine == "Chinese Food") {
+                if(doc.data().cuisine == "Chinese"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Italian Food") {
+                if(doc.data().cuisine == "Italian"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Singaporean Food") {
+                if(doc.data().cuisine == "Singaporean"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Thai Food") {
+                if(doc.data().cuisine == "Thai"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Western Food") {
+                if(doc.data().cuisine == "Western"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
             });
           });
       } else if (this.preferences[0] > 20 && this.preferences[3] >= 15) {
         this.type = "Home Cook";
         db.collection("recipe")
-          .orderBy("name")
-          .limit(3)
           .get()
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
-              this.recommendedThings.push(doc.data());
+              if (this.cuisine == "Chinese Food") {
+                if(doc.data().cuisine == "Chinese"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Italian Food") {
+                if(doc.data().cuisine == "Italian"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Singaporean Food") {
+                if(doc.data().cuisine == "Singaporean"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Thai Food") {
+                if(doc.data().cuisine == "Thai"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Western Food") {
+                if(doc.data().cuisine == "Western"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
             });
           });
 
         db.collection("restaurant")
-          .orderBy("name")
-          .limit(3)
           .get()
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
-              this.possibleReccomendations.push(doc.data());
+              if (this.cuisine == "Chinese Food") {
+                if(doc.data().cuisine == "Chinese"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Italian Food") {
+                if(doc.data().cuisine == "Italian"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Singaporean Food") {
+                if(doc.data().cuisine == "Singaporean"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Thai Food") {
+                if(doc.data().cuisine == "Thai"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Western Food") {
+                if(doc.data().cuisine == "Western"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
             });
           });
       } else {
         this.type = "Not-So-Picky Eater";
         db.collection("recipe")
-          .orderBy("name")
-          .limit(2)
           .get()
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
-              this.recommendedThings.push(doc.data());
+              if (this.cuisine == "Chinese Food") {
+                if(doc.data().cuisine == "Chinese"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Italian Food") {
+                if(doc.data().cuisine == "Italian"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Singaporean Food") {
+                if(doc.data().cuisine == "Singaporean"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Thai Food") {
+                if(doc.data().cuisine == "Thai"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Western Food") {
+                if(doc.data().cuisine == "Western"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
             });
           });
         db.collection("restaurant")
-          .orderBy("name")
-          .limit(2)
           .get()
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
-              this.recommendedThings.push(doc.data());
+              if (this.cuisine == "Chinese Food") {
+                if(doc.data().cuisine == "Chinese"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Italian Food") {
+                if(doc.data().cuisine == "Italian"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Singaporean Food") {
+                if(doc.data().cuisine == "Singaporean"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Thai Food") {
+                if(doc.data().cuisine == "Thai"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Western Food") {
+                if(doc.data().cuisine == "Western"){
+                  this.recommendedThings.push(doc.data());
+                }
+              }
             });
           });
         db.collection("recipe")
-          .orderBy("name", "desc")
-          .limit(2)
           .get()
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
-              this.possibleReccomendations.push(doc.data());
+              if (this.cuisine == "Chinese Food") {
+                if(doc.data().cuisine == "Chinese"){
+                  this.possibleReccomendations.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Italian Food") {
+                if(doc.data().cuisine == "Italian"){
+                  this.possibleReccomendations.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Singaporean Food") {
+                if(doc.data().cuisine == "Singaporean"){
+                  this.possibleReccomendations.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Thai Food") {
+                if(doc.data().cuisine == "Thai"){
+                  this.possibleReccomendations.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Western Food") {
+                if(doc.data().cuisine == "Western"){
+                  this.possibleReccomendations.push(doc.data());
+                }
+              }
             });
           });
         db.collection("restaurant")
-          .orderBy("name", "desc")
-          .limit(2)
           .get()
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
-              this.possibleReccomendations.push(doc.data());
+              if (this.cuisine == "Chinese Food") {
+                if(doc.data().cuisine == "Chinese"){
+                  this.possibleReccomendations.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Italian Food") {
+                if(doc.data().cuisine == "Italian"){
+                  this.possibleReccomendations.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Singaporean Food") {
+                if(doc.data().cuisine == "Singaporean"){
+                  this.possibleReccomendations.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Thai Food") {
+                if(doc.data().cuisine == "Thai"){
+                  this.possibleReccomendations.push(doc.data());
+                }
+              }
+              if (this.cuisine  == "Western Food") {
+                if(doc.data().cuisine == "Western"){
+                  this.possibleReccomendations.push(doc.data());
+                }
+              }
             });
           });
       }
@@ -192,9 +368,9 @@ export default {
         if (this.preferences.length == 5) {
           this.cuisine = this.preferences.pop();
           this.parsedData = this.preferences;
+          this.typeFinder(this.cuisine);
         }
         this.isLoaded = true;
-        this.typeFinder();
       });
     //this.notFirstLogin();
     window.addEventListener("beforeunload", this.notFirstLogin);
