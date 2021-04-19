@@ -5,6 +5,14 @@ In addition, it aims to provide a platform for users to contribute by sharing th
 
 [Live Demo](https://fooder-22493.web.app)
 
+<p align="center">
+      <img src="/readme_assets/personality_choice.png" width=30% height=30%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img src="/readme_assets/attraction.png" width=30% height=30%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <br>
+      <img src="/readme_assets/map.gif" width=30% height=30%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img src="/readme_assets/itinerary.gif" width=30% height=30%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+
 ## Tech Stack
 
 Fooder was created with VueJS, VueBootStrap and Firebase.
