@@ -3,7 +3,7 @@ Fooder, aims to streamline the process of finding the perfect recipes or restaur
 
 In addition, it aims to provide a platform for users to contribute by sharing their own unique take on personal recipes and favourite restaurants, creating a community for foodies to share their passion with like-minded individuals.
 
-[Live Demo](https://fooder-22493.firebaseapp.com/)
+[Live Demo](https://fooder-22493.web.app/)
 
 <p align="center">
       <img src="/readme_assets/login.png" width=100% height=100%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
