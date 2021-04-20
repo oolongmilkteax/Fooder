@@ -279,12 +279,13 @@ export default {
                   this.cuisines.push(doc.data()["cuisine"]);
                 }
               }
+              this.isLoading = false;
             }
           });
+          this.isLoading = false;
           if (this.recipes.length == 0) {
             this.noResult = true;
           }
-          this.isLoading = false;
         });
     },
 

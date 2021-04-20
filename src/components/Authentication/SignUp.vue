@@ -15,13 +15,13 @@
     <div class="SignUpDiv">
       <p class="signupHeader">Welcome to Fooder!</p>
       <input type="text" class="signupInput" v-model="displayName" placeholder="Full Name" />
-      <p class="errorMsg" v-show="this.emptyNameErr">Pease enter your full name.</p>
+      <p class="errorMsg" v-show="this.emptyNameErr">Please enter your full name.</p>
       <input type="text" class="signupInput" v-model="email" placeholder="Email" />
-      <p class="errorMsg" v-show="this.invalidEmailErr">Pease enter a valid email address.</p>
+      <p class="errorMsg" v-show="this.invalidEmailErr">Please enter a valid email address.</p>
       <p class="errorMsg" v-show="this.usedEmailErr">This email is already in use.</p>
       <input type="password" class="signupInput" v-model="password" placeholder="Password" />
-      <p class="errorMsg" v-show="this.emptyPasswordErr">Pease enter a password.</p>
-      <p class="errorMsg" v-show="this.weakPasswordErr">Pease enter a stronger password.</p>
+      <p class="errorMsg" v-show="this.emptyPasswordErr">Please enter a password.</p>
+      <p class="errorMsg" v-show="this.weakPasswordErr">Please enter a stronger password.</p>
       <div class="button-centraliser">
         <button class="signupButton" v-on:click="registerUser()">C R E A T E</button>
       </div>

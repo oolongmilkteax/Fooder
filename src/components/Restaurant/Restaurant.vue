@@ -221,6 +221,7 @@ export default {
                   this.cuisines.push(doc.data().cuisine);
                 }
               }
+              this.isLoading = false;
             }
           });
           this.isLoading = false;

@@ -22,10 +22,10 @@
                     </ul>
                 </div>
             </div>
-            <a href='javascript:void(0);' v-on:click="visit()" class="backBtn">Back</a>                                                         
-            <div class="footerContainer">
-                <p class="footerText">Design by JKJR</p>
-            </div>
+        </div>
+        <a href='javascript:void(0);' v-on:click="visit()" class="backBtn">Back</a>                                                         
+        <div class="footerContainer">
+            <p class="footerText">Design by JKJR</p>
         </div>
     </div>
 </template>
@@ -59,8 +59,8 @@ export default {
 .RecipeborderDiv{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
 }
 #FullRecipe {
     padding: 20px;
@@ -100,7 +100,6 @@ a:hover{
     text-align: center;
 }
 .backBtn{
-    padding: 5px 20px 5px 20px;
-    margin-left: 0px;
+    text-align: center;
 }
 </style>
