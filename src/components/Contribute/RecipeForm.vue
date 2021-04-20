@@ -21,9 +21,16 @@
       <option value="Hard">Hard</option>
     </select>
     <br />
-
+    
     <label for="image">ImageURL: (for display purposes)</label>
-    <p>&nbsp;{{ recipe.image }}</p>
+    <br>
+    <img
+        class="imgForm"
+        v-bind:src="recipe.image"
+        onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'"
+        alt="Please insert valid url for recipe image"
+      />
+    <br>
     <p class="alert" v-show="alert.image">Please enter image URL of recipe.</p>
 
     <input
@@ -89,7 +96,7 @@
       <ul v-for="ingredient in recipe.ingredients" v-bind:key="ingredient">
         <li>
           <span>{{ ingredient }}</span>
-          <button type="button" class="remove" v-on:click="removeOneIngre(ingredient)">X</button>
+          <button type="button" class="removeX" v-on:click="removeOneIngre(ingredient)">X</button>
         </li>
       </ul>
     </div>
@@ -97,6 +104,7 @@
     <input class="contriInput" type="text" id="ingredients" name="ingredients" v-model="ingredient" />
     <button class="add" type="button" v-on:click="addIngre">Add Ingredient!</button>
     <br />
+    <p class="errorMsg3" v-if="emptyIngredient">Please input an ingredient!</p>
 
     <label for="instructions">Instructions:</label>
     <button class="clear" type="button" v-on:click="removeInstru">Clear All</button>
@@ -120,6 +128,7 @@
     />
     <button class="add" type="button" v-on:click="addInstru">Add Instruction!</button>
     <br />
+    <p class="errorMsg3" v-if="emptyInstruction">Please input an instruction!</p>
 
     <button type="button" id="submitRecipeButton" v-on:click="submitRecipe">Submit!</button>
   </form>
@@ -132,6 +141,8 @@ var db = firebase.firestore();
 export default {
   data() {
     return {
+      emptyInstruction: false,
+      emptyIngredient: false,
       recipe: {
         cuisine: "",
         difficulty: "",
@@ -163,12 +174,22 @@ export default {
   },
   methods: {
     addIngre: function() {
-      this.recipe.ingredients.push(this.ingredient);
-      this.ingredient = "";
+      if(this.ingredient != ""){
+        this.recipe.ingredients.push(this.ingredient);
+        this.ingredient = "";
+        this.emptyIngredient = false;
+      }else{
+        this.emptyIngredient = true;
+      }
     },
     addInstru: function() {
-      this.recipe.directions.push(this.instruction);
-      this.instruction = "";
+      if(this.instruction != ""){
+        this.recipe.directions.push(this.instruction);
+        this.instruction = "";
+        this.emptyInstruction = false;
+      }else{
+        this.emptyInstruction = true;
+      }
     },
     removeIngre: function() {
       this.recipe.ingredients = [];
@@ -252,6 +273,7 @@ export default {
                   this.id
                 )
               });
+            alert("Recipe added to Fooder!")
             location.reload();
           });
       }
@@ -309,6 +331,10 @@ export default {
   color: red;
 }
 
+.errorMsg3 {
+  color: red;
+}
+
 .clear {
   background: #0088cc;
   border-radius: 8px;
@@ -352,6 +378,28 @@ export default {
   text-decoration: none;
 }
 
+.removeX {
+  background: #0088cc;
+  border-radius: 5px;
+  color: #ffffff;
+  font-family: Helvetica;
+  font-size: 10px;
+  font-weight: 100;
+  padding: 2px;
+  border: solid #0088cc 1px;
+  margin: 10px;
+  width: 25px;
+}
+
+.removeX:hover {
+  border: solid #979797 1px;
+  background: red;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 14px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
 .remove {
   background: #0088cc;
   border-radius: 5px;
@@ -362,7 +410,6 @@ export default {
   padding: 2px;
   border: solid #0088cc 1px;
   margin: 10px;
-  width: 18px;
 }
 
 .remove:hover {
@@ -373,4 +420,12 @@ export default {
   border-radius: 5px;
   text-decoration: none;
 }
+
+.imgForm {
+  width: 20%;
+  height: 20%;
+  object-fit: cover;
+  margin: 20px 20px 20px 0px;
+}
+
 </style>

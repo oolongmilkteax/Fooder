@@ -17,9 +17,15 @@
     <p class="alert" v-show="alert.cuisine">Please enter cuisine type.</p>
     <input class="contriInput" type="text" id="cuisine" name="cuisine" v-model="restaurant.cuisine" />
     <br />
-
     <label for="image">ImageURL (for display purposes):</label>
-    <p>{{ restaurant.image }}</p>
+    <br>
+    <img
+        class="imgForm"
+        v-bind:src="restaurant.image"
+        onerror="this.onerror=null;this.src='https://s3-ap-southeast-1.amazonaws.com/itask-dev/task/not_available.png'"
+        alt="Please insert valid url for restaurant image"
+    />
+    <br>
     <p class="alert" v-show="alert.image">Please enter image URL of restaurant.</p>
     <input
       class="contriInput"
@@ -168,6 +174,7 @@ export default {
                   this.id
                 )
               });
+            alert("Restaurant added to Fooder!")
             location.reload();
           });
       }
