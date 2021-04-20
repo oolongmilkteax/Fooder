@@ -60,5 +60,17 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "description": "Fooder, aims to streamline the process of finding the perfect recipes or restaurants to suit our users’ diverse needs and wants, taking into account their preferences and patterns.",
+  "main": "babel.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Telentovj/Fooder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Telentovj/Fooder/issues"
+  },
+  "homepage": "https://github.com/Telentovj/Fooder#readme"
 }
